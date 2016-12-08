@@ -1,0 +1,47 @@
+﻿h1{
+   font-size:30px;
+   font-family:Arial;
+   color:#000000;
+   text-align:center;
+}
+
+h4{
+text-indent: 11px;	
+   line-height: 14px;/*interlineado*/
+   font-family: arial;
+}
+
+h5{
+text-indent: 14px;	
+   line-height: 14px;/*interlineado*/
+   font-family: arial;
+}
+
+h5{
+text-indent: 14px;	
+   line-height: 14px;/*interlineado*/
+   font-family: arial;
+}
+
+li{
+     text-indent: 11px;	
+   text-align: justify;
+   line-height: 14px;/*interlineado*/
+   font-family: arial;
+}
+
+ul{
+     text-indent: 11px;	
+   text-align: justify;
+   line-height: 14px;/*interlineado*/
+   font-family: arial;
+}
+
+legend{
+text-indent: 11px;
+font-family: arial;		
+}
+
+img{
+text-align:center
+}
