@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Clinica;
+use App\User;
+use App\Alumno;
 
 class ExpedienteController extends Controller
 {
@@ -20,10 +22,20 @@ class ExpedienteController extends Controller
         //Load header.blade.php and send to index and every page from provider
 
         //*******prueba eloquent***********/List...
-        $clinica = Clinica::all();
-        $datos ['data'] = $clinica;
+        //$clinica = Clinica::all();
+        //$datos ['data'] = $clinica;
         //echo $clinica;
-        return view("Admin.expediente",$datos);
+        //-------------Recuperando datos usuario
+        //$clinica = User::all();
+        //$datos ['data'] = $clinica;
+        //echo $clinica;
+
+        //-------------Recuperando datos usuario
+        /*$clinica = Alumno::all();
+        $datos ['data'] = $clinica;
+        echo $clinica;*/
+
+        return view("Admin.expediente");
 
         /*
             <!--foreach to read data from variable-->

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Clinica;
 
 class UsuariosController extends Controller
 {
@@ -16,7 +17,9 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view ('Admin.Altaperfil');
+        //Get clinicas from model and show in view
+        $datos['clinicas'] = Clinica::all();
+        return view ('Admin.Altaperfil',$datos);
     }
 
     /**
@@ -37,7 +40,16 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //get data from view and validate it
+        $this->validate($request, [
+            'nombre' => 'required',
+            'ID' => 'required',
+            'perfil' => 'required'
+        ]);
+        
+        $clinica = $request->input('clinica_selected');
+        
+        echo $clinica;
     }
 
     /**
@@ -48,7 +60,6 @@ class UsuariosController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**

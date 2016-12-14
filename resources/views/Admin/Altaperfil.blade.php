@@ -27,36 +27,42 @@
 				<section id="banner">
 					<section id="principal">
 					<h3>Alta de perfil</h3>
-				
 
-			<form method="" action="">
+                                        @if(count($errors))
+                                            <h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
+                                        @endif
+
+			<form method="post" action="{{URL::asset('/')}}Usuarios/Alta">
 			<table border="0"  class="form">
 				<tr>
-					<td>Usuario</td><td><input type="text" name="ID"></td>					
+					<td>* Usuario</td><td><input type="text" name="ID"></td>					
 				</tr>
 				<tr>
 						<td class="Separador" colspan="6"></td>
 				</tr>
 
 				<tr>
-					<td>Nombre</td><td><input type="text" name="nombre"></td>					
+					<td>* Nombre</td><td><input type="text" name="nombre"></td>					
 				</tr>
 				<tr>
 						<td class="Separador" colspan="6"></td>
 				</tr>
 				<tr>
-					<td>Perfil</td><td><input type="text" name="perfil"></td>					
+					<td>* Perfil</td><td><input type="text" name="perfil"></td>					
 				</tr>
 <tr>
 						<td class="Separador" colspan="6"></td>
 				</tr>
 				<tr>
-					<td>Clinica</td><td><select>
-										<option name="clinica x">Clinica x</option>
-										<option name="clinica y">Clinica y</option>	
-										</select>
-									</td>					
-				</tr>
+                                    <td>* Clinica</td>
+                                    <td>
+                                        <select name="clinica_selected">                                        
+                                            @foreach ($clinicas as $value)                                                                                                                     
+                                                <option value="{{ $value->nombre_clinica }}"> {{ $value->nombre_clinica }}</option> 
+                                            @endforeach
+                                        </select>
+                                    </td>					
+                                </tr>
 
 				<tr>
 						<td class="Separador" colspan="2"></td>

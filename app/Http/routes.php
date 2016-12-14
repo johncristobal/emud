@@ -59,5 +59,8 @@ Route::get('Transferir','ExpedienteController@transferir');
 //transferir_expeidnete
 Route::get('Buscar','ExpedienteController@buscar');
 
-//transferir_expeidnete
+//Ver usuarios
 Route::get('Usuarios','UsuariosController@index');
+
+//dar de alta usuarui
+Route::post('Usuarios/Alta','UsuariosController@store');

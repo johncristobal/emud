@@ -12,14 +12,14 @@ class Alumno extends Migration
      */
     public function up()
     {
-        Schema::create('Alumno', function(Blueprint $table){
+        Schema::create('alumnos', function(Blueprint $table){
             $table->increments('id');
             $table->string('matricula',50);
             $table->integer('id_usuario')->unsigned();
             $table->integer('clinica')->unsigned();
             $table->integer('status')->unsigned();
             $table->foreign('id_usuario')->references('id')->on('usuario')->onDelete('cascade'); 
-            $table->foreign('clinica')->references('id')->on('Clinica')->onDelete('cascade'); 
+            $table->foreign('clinica')->references('id')->on('clinicas')->onDelete('cascade'); 
             $table->foreign('status')->references('id')->on('EstatusAlumno')->onDelete('cascade'); 
         });
     }
@@ -31,6 +31,6 @@ class Alumno extends Migration
      */
     public function down()
     {
-        Schema::drop('Alumno');
+        Schema::drop('alumnos');
     }
 }

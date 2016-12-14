@@ -13,7 +13,7 @@ class Clinica extends Migration
     public function up()
     {
 
-        Schema::Create('Clinica', function (Blueprint $table){
+        Schema::Create('clinicas', function (Blueprint $table){
             $table->increments('id');
             $table->string('nombre_clinica',100);
             $table->string('matricula_clinica',50);
@@ -29,6 +29,6 @@ class Clinica extends Migration
      */
     public function down()
     {
-        Schema::drop('Clinica');
+        Schema::drop('clinicas');
     }
 }
