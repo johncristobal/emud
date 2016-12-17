@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Clinica;
+use App\User;
+use App\Alumno;
 
 class UsuariosController extends Controller
 {
@@ -47,9 +49,27 @@ class UsuariosController extends Controller
             'perfil' => 'required'
         ]);
         
-        $clinica = $request->input('clinica_selected');
+        //Save usuario firdt----thrn alumno        
+        $articulo = new User;
+	$articulo->name = $request->input('nombre');
+	$articulo->correo = "nothing yet";
+        $articulo->rol = "2";
+        $articulo->password = $request->input('nombre')."123";
+        $articulo->created_at = "0";
+        $articulo->updated_at = "0";                
+	$articulo->save();        
         
-        echo $clinica;
+        //Save now alumno
+        //we are goint ti get the clinica from the form
+        //status always 1 at beginnig
+        $alum = new Alumno;
+        $alum->matricula = "identificar";
+        $alum->id_usuario = $articulo->id;
+        $alum->clinica = 1;
+        $alum->status = 1;
+        $alum->save();
+        
+        return view('index');
     }
 
     /**
