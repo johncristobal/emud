@@ -1,132 +1,136 @@
 <!DOCTYPE HTML>
 <!--
-	Twenty by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+Twenty by HTML5 UP
+html5up.net | @n33co
+Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>EEMUD</title>
-		<meta charset="utf-8" />
-		<!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="../assets/css/main.css" /> 
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-	</head>
-	<body class="index">
-		<div id="page-wrapper">
+<head>
+<title>EEMUD</title>
+<meta charset="utf-8" />
+<!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+</head>
+<body class="index">
+<div id="page-wrapper">
 
-			<!-- Header -->
-                        <?php
-                            echo $head;
-                        ?>
+<!-- Header -->
+<?php
+    echo $head;
+    ?>
 
-			<!-- Banner -->
-				<section id="banner">
-					<section id="principal">
-					<h3>Dar de alta nuevo expediente</h3>
-								
-					<form method="" action="">
-						<table border="0" align="center" class="default">
-				
-				<tr>
-					<td><label>Clinica</label></td> <td ><input type="text" name="clinica" ></td> 
-					<td>No Expediente</td><td ><input type="text" name="NoExp"></td>
-					<td><label>Fecha Inicio</label></td><td><input type="date" name="fechaInicio"></td>
-				</tr>
-				<tr>
-						<td class="Separador" colspan="6"></td>
-				</tr>
-				
-				<tr>
-					<td>Nombre</td><td><input type="text" name="nombre"></td>
-					<td>G&eacute;nero</td><td><select width="100%";><option name="masculino">Masculino</option>
-												<option name="femenino">Femenino</option>	
-												</select></td>												
-				</tr>
-				<tr>
-						<td class="Separador" colspan="6"></td>
-				</tr>
-				
-				<tr>
-					<td>Fecha de nacimiento</td>
-					<td><input type="date" name="FechaNac"></td>
-				</tr>
+<!-- Banner -->
+<section id="banner">
+<section id="principal">
+<h3>Dar de alta nuevo expediente</h3>
 
-				<tr>
-						<td class="Separador" colspan="6"></td>
-				</tr>
-				
-				<tr>
-					<td>No de recibo de pago</td><td><input type="text" name="reciboPago"></td>
-					<td>No recibo de diagnostico</td><td><input type="text" name="reciboDiagn"></td>
-				</tr>
-				
-				<tr>
-						<td class="Separador" colspan="6"></td>
-				</tr>
-				
-				<tr>
-					<td colspan="6"><input type="submit" value="Actualizar" class="button"></td>
-				</tr>
+@if(count($errors))
+<h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
+@endif
 
-			</table>
+<form method="post" action="{{url::asset('/')}}index.php/Expediente/Alta">
+<table border="0" align="center" class="default">
 
-		</form>
-		</section>
-				</section>
+<tr>
+<td><label>*Clinica</label></td> <td ><input type="text" name="clinica" ></td>
+<td>*No Expediente</td><td ><input type="text" name="NoExp"></td>
+<td><label>*Fecha Inicio</label></td><td><input type="date" name="fechaInicio"></td>
+</tr>
+<tr>
+<td class="Separador" colspan="6"></td>
+</tr>
 
-			<!-- Main -->
-				<article id="main">
+<tr>
+<td>*Nombre</td><td><input type="text" name="nombre"></td>
+<td>*G&eacute;nero</td><td><select width="100%"; name="genero"><option value="masculino">Masculino</option>
+<option value="femenino">Femenino</option>
+</select></td>
+</tr>
+<tr>
+<td class="Separador" colspan="6"></td>
+</tr>
 
-					<header class="special container">
-						<span class="icon fa-bar-chart-o"></span>
-						<h2><strong>EEMUD</strong>  Es un sistema diseñado para 
-						<br />
-						para la gestión de un consultorio</h2>
-						
-					</header>
+<tr>
+<td>*Fecha de nacimiento</td>
+<td><input type="date" name="FechaNac"></td>
+</tr>
 
-					<!-- One -->
-						
-					<!-- Two -->
-						
+<tr>
+<td class="Separador" colspan="6"></td>
+</tr>
 
-					<!-- Three -->
-						
+<tr>
+<td>*No de recibo de pago</td><td><input type="text" name="reciboPago"></td>
+<td>*No recibo de diagnostico</td><td><input type="text" name="reciboDiagn"></td>
+</tr>
 
-				</article>
+<tr>
+<td class="Separador" colspan="6"></td>
+</tr>
 
-			<!-- CTA -->
-				
+<tr>
+<td colspan="6"><input type="submit" value="Actualizar" class="button"></td>
+</tr>
 
-			<!-- Footer -->
-				<footer id="footer">
+</table>
 
-					<ul class="icons">
-						<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
-					</ul>
+</form>
+</section>
+</section>
 
-					<ul class="copyright">
-						<li>&copy; Copyright 2015</li><li><strong>CAROLVE SYSTEMS S.A de C.V</strong></li>
-					</ul>
+<!-- Main -->
+<article id="main">
 
-				</footer>
+<header class="special container">
+<span class="icon fa-bar-chart-o"></span>
+<h2><strong>EEMUD</strong>  Es un sistema diseñado para
+<br />
+para la gestión de un consultorio</h2>
 
-		</div>
+</header>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollgress.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+<!-- One -->
 
-	</body>
+<!-- Two -->
+
+
+<!-- Three -->
+
+
+</article>
+
+<!-- CTA -->
+
+
+<!-- Footer -->
+<footer id="footer">
+
+<ul class="icons">
+<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
+</ul>
+
+<ul class="copyright">
+<li>&copy; Copyright 2015</li><li><strong>CAROLVE SYSTEMS S.A de C.V</strong></li>
+</ul>
+
+</footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/jquery.scrollgress.min.js"></script>
+<script src="assets/js/skel.min.js"></script>
+<script src="assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="assets/js/main.js"></script>
+
+</body>
 </html>

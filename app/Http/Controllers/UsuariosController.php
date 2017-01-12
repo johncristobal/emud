@@ -57,7 +57,7 @@ class UsuariosController extends Controller
         $articulo->password = $request->input('nombre')."123";
         $articulo->created_at = "0";
         $articulo->updated_at = "0";                
-	$articulo->save();        
+	$articulo->save();
         
         //Save now alumno
         //we are goint ti get the clinica from the form

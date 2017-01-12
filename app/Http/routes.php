@@ -49,7 +49,8 @@ Route::get('/', function () {
 //-----------------Rutas Emud--------------
 //Expediente
 Route::get('Expediente','ExpedienteController@index');
-        
+Route::post('Expediente/Alta', 'ExpedienteController@store');  
+
 //Asignar_Expediente
 Route::get('Asignar','ExpedienteController@asignar');
 
@@ -63,4 +64,7 @@ Route::get('Buscar','ExpedienteController@buscar');
 Route::get('Usuarios','UsuariosController@index');
 
 //dar de alta usuarui
-Route::post('Usuarios/Alta','UsuariosController@store');
+Route::post('/Usuarios/Alta','UsuariosController@store');
+
+//eliminar expeidnte
+Route::post('Expediente/remove/{id}','ExpedienteController@destroy');
