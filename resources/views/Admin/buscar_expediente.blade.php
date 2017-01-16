@@ -36,6 +36,29 @@
                         }
                     }
                     
+                    function buscar() {
+                        // Declare variables 
+                        var input, filter, table, tr, td, i,td2,flag;
+                        flag = 0;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("buscador");
+                        tr = table.getElementsByTagName("tr");
+
+                        // Loop through all table rows, and hide those who don't match the search query
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[0];   //get the first column
+                            td2 = tr[i].getElementsByTagName("td")[1];   //get the first column
+                            if (td){
+                                if ((td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td2.innerHTML.toUpperCase().indexOf(filter) > -1)) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }                            
+                        }
+                    }
+                    
                 </script>
 	</head>
 	<body class="index">
@@ -49,16 +72,18 @@
                 <!-- Banner -->
                 <section id="banner">
                 <section id="principal">
-                <h3>Busqueda de expediente</h3>
+                <h3>Búsqueda de expediente</h3>
+                <input type="text" id="myInput" onkeyup="buscar()" placeholder="Buscar folio expediente o paciente..." style="width:100%;">
 				
 		<form method="" action="">
-		<table class="table">
+                    <br>
+                    <table class="table" id="buscador">
                     <thead>
-                    <th><h3>Folio&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th><h3>Paciente&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th><h3>Fecha&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th></th>
-                    <th></th>
+                    <th width="20%"><h3>Folio&nbsp;&nbsp;&nbsp;</h3></th>
+                    <th width="50%"><h3>Paciente&nbsp;&nbsp;&nbsp;</h3></th>
+                    <th width="30%"><h3>Fecha&nbsp;&nbsp;&nbsp;</h3></th>
+                    <th width="5%"></th>
+                    <th width="5%"></th>
                     </thead>
                     <tbody>
                     @foreach ($data as $value) 
