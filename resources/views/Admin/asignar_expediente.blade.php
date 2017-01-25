@@ -29,26 +29,36 @@
 				
 
 			
-	<form method="" action="">
+	<form method="post" action="{{URL::asset('/')}}Expediente/Reasignar">
 		<table  border ="0" class="form">
 			<tr>
-				<td>Seleccionar alumno</td><td><select><option>xd</option>
-														<option>xd</option>	
-												</select></td>		
+                            <td>Seleccionar alumno</td>
+                            <td>
+                                <select name="estudiante">
+                                    @foreach($alumnos as $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endforeach
+                                </select>
+                            </td>		
 			</tr>
 
 			<tr>
-					<td class="Separador" colspan="6"></td>
+                            <td class="Separador" colspan="6"></td>
 			</tr>
 
 			<tr>
-				<td>Seleccionar expediente</td><td><select><option>xd</option>
-														<option>xd</option>	
-												</select></td>		
+                            <td>Seleccionar expediente</td>
+                            <td>
+                                <select name="exped">
+                                    @foreach($expedientes as $value)
+                                    <option value="{{$value->id}}">{{$value->folio_expediente}}</option>
+                                    @endforeach
+                                </select>
+                            </td>		
 			</tr>
 
 			<tr>
-						<td class="Separador" colspan="2"></td>
+                            <td class="Separador" colspan="2"></td>
 			</tr>
 
 			<tr>

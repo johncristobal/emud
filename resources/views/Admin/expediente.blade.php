@@ -32,49 +32,75 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 @endif
 
 <form method="post" action="{{url::asset('/')}}index.php/Expediente/Alta">
-<table border="0" align="center" class="default">
+    <table class="table" width="100%">
+    <tbody>
+<tr>
+    <td>*Nombre</td>
+    <td>
+        <input type="text" name="nombre" size="100">
+    </td>
+</tr>
+<tr>
+    <td class="Separador" colspan="6"></td>
+</tr>
 
 <tr>
-<td><label>*Clinica</label></td> <td ><input type="text" name="clinica" ></td>
-<td>*No Expediente</td><td ><input type="text" name="NoExp"></td>
-<td><label>*Fecha Inicio</label></td><td><input type="date" name="fechaInicio"></td>
+    <td>*No. Expediente</td>
+    <td>
+        <input type="text" name="NoExp">
+    </td>
 </tr>
+<tr>
+    <td class="Separador" colspan="6"></td>
+</tr>
+
+<tr>
+    <td><label>*Clinica</label></td> 
+    <td>                                       
+        <select name="clinica">                                        
+            @foreach ($data as $value)                                                                                                                     
+                <option value="{{ $value->id }}"> {{ $value->nombre_clinica }}</option> 
+            @endforeach
+        </select>
+    </td>
+    <td>*G&eacute;nero</td>
+    <td>
+        <select name="genero">
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class="Separador" colspan="6"></td>
+</tr>
+
+<tr>
+    <td>*Fecha de nacimiento</td>
+    <td><input type="date" name="FechaNac"></td>
+    <td><label>*Fecha Inicio</label></td>
+    <td><input type="date" name="fechaInicio"></td>
+</tr>
+
+<tr>
+    <td class="Separador" colspan="6"></td>
+</tr>
+
+<tr>
+    <td>*No de recibo de pago</td>
+    <td><input type="text" name="reciboPago"></td> &nbsp;
+    <td>*No recibo de diagnostico</td>
+    <td><input type="text" name="reciboDiagn"></td>
+</tr>
+
 <tr>
 <td class="Separador" colspan="6"></td>
 </tr>
 
 <tr>
-<td>*Nombre</td><td><input type="text" name="nombre"></td>
-<td>*G&eacute;nero</td><td><select width="100%"; name="genero"><option value="masculino">Masculino</option>
-<option value="femenino">Femenino</option>
-</select></td>
+<td colspan="6"><input type="submit" value="Guardar" class="button"></td>
 </tr>
-<tr>
-<td class="Separador" colspan="6"></td>
-</tr>
-
-<tr>
-<td>*Fecha de nacimiento</td>
-<td><input type="date" name="FechaNac"></td>
-</tr>
-
-<tr>
-<td class="Separador" colspan="6"></td>
-</tr>
-
-<tr>
-<td>*No de recibo de pago</td><td><input type="text" name="reciboPago"></td>
-<td>*No recibo de diagnostico</td><td><input type="text" name="reciboDiagn"></td>
-</tr>
-
-<tr>
-<td class="Separador" colspan="6"></td>
-</tr>
-
-<tr>
-<td colspan="6"><input type="submit" value="Actualizar" class="button"></td>
-</tr>
-
+</tbody>
 </table>
 
 </form>

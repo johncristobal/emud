@@ -52,7 +52,33 @@ class ExpedienteController extends Controller
     public function asignar()
     {
         //Load header.blade.php and send to index and every page from provider    
-        return view("Admin.asignar_expediente");
+        //Just with rol = 2
+        $alumno = User::where('rol','=',2)->get();
+        $expedientes = Expediente::all();
+        $datos['alumnos'] = $alumno;
+        $datos['expedientes'] = $expedientes;
+
+        return view("Admin.asignar_expediente",$datos);
+    }
+    
+    public function reasignar(Request $request){
+     
+        $idusuario = $request->input('estudiante');
+        $idexpeidnete = $request->input('exped');
+
+        //Apartir del idusuario recuperamos idalumno
+        $alumno = Alumno::where('id_usuario','=',$idusuario)->get();
+        $idal = $alumno[0]->id;
+
+        //Asigamos idalumno a expeidnte
+        $expe = Expediente::find($idexpeidnete);
+        $expe->id_alumno = $idal;
+        $expe->status = "2";
+        $expe->save();
+        
+        //regresamos
+        return view('index');
+        
     }
     
     public function transferir()
@@ -110,8 +136,9 @@ class ExpedienteController extends Controller
         $Exp->recibo_pago=$request->input('reciboPago');
         $Exp->recibo_diagnostico=$request->input('reciboDiagn');
         //$Exp->id_alumno="1";
-        //$Exp->status="02";
-        //$Exp->clinica=$request->input('clinica');
+        //Recuerda que estatus 1 es "no asignado" y uando se aseigna hay q actalziarlo
+        $Exp->status="1";
+        $Exp->clinica=$request->input('clinica');
         $Exp->save();
         return view('index');
 
