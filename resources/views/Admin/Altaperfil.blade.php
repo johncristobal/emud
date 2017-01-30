@@ -35,23 +35,35 @@
 			<form method="post" action="{{URL::asset('/')}}Usuarios/Alta">
 			<table border="0"  class="form">
 				<tr>
-					<td>* Usuario</td><td><input type="text" name="ID"></td>					
+                                    <td>* Nombre</td><td><input type="text" name="nombre"></td>					
 				</tr>
 				<tr>
-						<td class="Separador" colspan="6"></td>
+                                    <td class="Separador" colspan="6"></td>
+				</tr>
+                                <tr>
+                                    <td>* Correo</td><td><input type="text" name="correo"></td>					
+				</tr>
+				<tr>
+                                    <td class="Separador" colspan="6"></td>
+				</tr>
+                                <tr>
+                                    <td>Matricula</td><td><input type="text" name="matricula"></td>					
+				</tr>
+				<tr>
+                                    <td class="Separador" colspan="6"></td>
 				</tr>
 
 				<tr>
-					<td>* Nombre</td><td><input type="text" name="nombre"></td>					
+                                    <td>* Perfil</td>                                
+                                    <td>
+                                        <select name="perfil">                                        
+                                            <option value="1">Administrador</option> 
+                                            <option value="2">Alumno</option> 
+                                        </select>
+                                    </td>					
 				</tr>
-				<tr>
-						<td class="Separador" colspan="6"></td>
-				</tr>
-				<tr>
-					<td>* Perfil</td><td><input type="text" name="perfil"></td>					
-				</tr>
-<tr>
-						<td class="Separador" colspan="6"></td>
+                                <tr>
+                                    <td class="Separador" colspan="6"></td>
 				</tr>
 				<tr>
                                     <td>* Clinica</td>
@@ -65,11 +77,11 @@
                                 </tr>
 
 				<tr>
-						<td class="Separador" colspan="2"></td>
+                                    <td class="Separador" colspan="2"></td>
 				</tr>
 
 				<tr>
-					<td colspan="2" align="center"><input type="submit" value="Crear"></td>
+                                    <td colspan="2" align="center"><input type="submit" value="Crear"></td>
 				</tr>
 			</table>
 		</form>

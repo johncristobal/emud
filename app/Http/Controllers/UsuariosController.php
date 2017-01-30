@@ -45,16 +45,16 @@ class UsuariosController extends Controller
         //get data from view and validate it
         $this->validate($request, [
             'nombre' => 'required',
-            'ID' => 'required',
+            'correo' => 'required',
             'perfil' => 'required'
         ]);
         
         //Save usuario firdt----thrn alumno        
         $articulo = new User;
 	$articulo->name = $request->input('nombre');
-	$articulo->correo = "nothing yet";
-        $articulo->rol = "2";
-        $articulo->password = $request->input('nombre')."123";
+	$articulo->correo = $request->input('correo');
+        $articulo->rol = $request->input('perfil');
+        $articulo->password = $request->input('correo')."123";
         $articulo->created_at = "0";
         $articulo->updated_at = "0";                
 	$articulo->save();
@@ -62,14 +62,17 @@ class UsuariosController extends Controller
         //Save now alumno
         //we are goint ti get the clinica from the form
         //status always 1 at beginnig
-        $alum = new Alumno;
-        $alum->matricula = "identificar";
-        $alum->id_usuario = $articulo->id;
-        $alum->clinica = 1;
-        $alum->status = 1;
-        $alum->save();
+        if($request->input('perfil') == "2"){
+            $alum = new Alumno;
+            $alum->matricula = $request->input('matricula');
+            $alum->id_usuario = $articulo->id;
+            $alum->clinica = 1;
+            $alum->status = 1;
+            $alum->save();
+        }
         
-        return view('index');
+        $datos['usuarios'] = User::all();
+        return view('Admin.buscar_usuario',$datos);
     }
 
     /**
@@ -78,8 +81,12 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
+        //Get clinicas from model and show in view
+        $datos['usuarios'] = User::all();
+        return view ('Admin.buscar_usuario',$datos);
+
     }
 
     /**
@@ -113,6 +120,14 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //First get the name => just to return it
+        $name = User::find($id);
+        $affected = User::where('id',$id)->delete();
+        if($affected > 0)
+        {
+            return $name->name;
+        }else{
+            return 0;
+        }
     }
 }

@@ -64,6 +64,12 @@ Route::get('Buscar','ExpedienteController@buscar');
 //Ver usuarios
 Route::get('Usuarios','UsuariosController@index');
 
+//Ediyar usuarios
+Route::get('Editarusuario','UsuariosController@show');
+
+//eliminar expeidnte
+Route::post('Usuario/remove/{id}','UsuariosController@destroy');
+
 //dar de alta usuarui
 Route::post('/Usuarios/Alta','UsuariosController@store');
 
