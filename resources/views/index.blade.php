@@ -15,81 +15,101 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
 	<body class="index">
-		<div id="page-wrapper">
+            <div id="page-wrapper">
 
-			<!-- Header -->
-                        <?php
-                            echo $head;
-                        ?>
+                    <!-- Header -->
+                    <header id="header" class="alt">
+                            <h1 id="logo"><a href="{{URL::asset('/')}}">EEMUD <span>by CAROLVE SYSTEMS</span></a></h1>
+                            <nav id="nav">
+                                    <ul>
+                                            <li class="current"><a href="{{URL::asset('/')}}">Bienvenido</a></li>
+                                            <!--li class="submenu">
+                                                    <a href="#">Ayuda</a>
+                                                    <ul>
+                                                            <li><a href="left-sidebar.html">Preguntas Frecuentes</a></li>
+                                                            <li><a href="contact.html">Contacto</a></li>
+                                                            <li class="submenu">
+                                                    </ul-->
+                                            <li><a href="#" class="button special">FAQ's</a></li>
+                                            <li><a href="#" class="button special">Contacto</a></li>
+                                            <li><a href="{{URL::asset('/')}}login" class="button special">Ingresar</a></li>
+                                    </ul>
+                            </nav>
+                    </header>
+
+                    <!-- Banner -->
+                            <section id="banner">
+
+                                    <!--
+                                            ".inner" is set up as an inline-block so it automatically expands
+                                            in both directions to fit whatever's inside it. This means it won't
+                                            automatically wrap lines, so be sure to use line breaks where
+                                            appropriate (<br />).
+                                    -->
+                                    <div class="inner">
+
+                                            <header>
+                                                    <h2>Expediente Electrónico Multidisciplinario </h2>
+                                            </header>
+                                            <p><strong>EEMUD</strong> es un sistema diseñado para almacenar datos de pacientes
+                                            </p>
+
+                                    </div>
+
+                            </section>
+
+                    <!-- Main -->
+                            <article id="main">
+
+                                    <header class="special container">
+                                            <span class="icon fa-bar-chart-o"></span>
+                                            <h2><strong>EEMUD</strong>  Es un sistema diseñado para 
+                                            <br />
+                                            para la gestión de un consultorio</h2>
+                                            <p>Este sistema permite la gestión y administración de los pacientes y un mejor
+                                            <br />
+                                            control del seguimiento médico que tiene cada uno.
+                                    </header>
+
+                                    <!-- One -->
+
+                                    <!-- Two -->
 
 
-			<!-- Banner -->
-				<section id="banner">
-					
-					<div class="inner">
-						
-						<header>
-							<h2>Bienvenido al sistema</h2>
-						</header>
-						<p><strong>Administrador #NombreAdmin</strong> 
-						</p>
+                                    <!-- Three -->
 
-					</div>
-					<!--<iframe src="./html/bienvenida.html" name="contenido"></iframe>-->
-					
 
-				</section>
+                            </article>
 
-			<!-- Main -->
-				<article id="main">
+                    <!-- CTA -->
 
-					<header class="special container">
-						<span class="icon fa-bar-chart-o"></span>
-						<h2><strong>EEMUD</strong>  Es un sistema diseñado para 
-						<br />
-						para la gestión de un consultorio</h2>
-						
-					</header>
 
-					<!-- One -->
-						
-					<!-- Two -->
-						
+                    <!-- Footer -->
+                            <footer id="footer">
 
-					<!-- Three -->
-						
+                                    <ul class="icons">
+                                            <li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
+                                            <li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
+                                            <li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
+                                    </ul>
 
-				</article>
+                                    <ul class="copyright">
+                                            <li>&copy; Copyright 2015</li><li><strong>CAROLVE SYSTEMS S.A de C.V</strong></li>
+                                    </ul>
 
-			<!-- CTA -->
-				
+                            </footer>
 
-			<!-- Footer -->
-				<footer id="footer">
+            </div>
 
-					<ul class="icons">
-						<li><a href="#" class="icon circle fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon circle fa-facebook"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon circle fa-google-plus"><span class="label">Google+</span></a></li>
-					</ul>
-
-					<ul class="copyright">
-						<li>&copy; Copyright 2015</li><li><strong>CAROLVE SYSTEMS S.A de C.V</strong></li>
-					</ul>
-
-				</footer>
-
-		</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollgress.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+            <!-- Scripts -->
+                    <script src="assets/js/jquery.min.js"></script>
+                    <script src="assets/js/jquery.dropotron.min.js"></script>
+                    <script src="assets/js/jquery.scrolly.min.js"></script>
+                    <script src="assets/js/jquery.scrollgress.min.js"></script>
+                    <script src="assets/js/skel.min.js"></script>
+                    <script src="assets/js/util.js"></script>
+                    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+                    <script src="assets/js/main.js"></script>
 
 	</body>
 </html>

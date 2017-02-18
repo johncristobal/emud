@@ -31,13 +31,31 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 <h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
 @endif
 
-<form method="post" action="{{url::asset('/')}}index.php/Expediente/Alta">
+<form method="post" action="{{url::asset('/')}}Expediente/Alta">
     <table class="table" width="100%">
     <tbody>
 <tr>
     <td>*Nombre</td>
     <td>
         <input type="text" name="nombre" size="100">
+    </td>
+</tr>
+<tr>
+    <td class="Separador" colspan="6"></td>
+</tr>
+<tr>
+    <td>*Apellido paterno</td>
+    <td>
+        <input type="text" name="paterno" size="100">
+    </td>
+</tr>
+<tr>
+    <td class="Separador" colspan="6"></td>
+</tr>
+<tr>
+    <td>*Apellido materno</td>
+    <td>
+        <input type="text" name="materno" size="100">
     </td>
 </tr>
 <tr>

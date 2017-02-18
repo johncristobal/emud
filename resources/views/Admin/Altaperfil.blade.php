@@ -22,7 +22,6 @@
                             echo $head;
                         ?>
 
-
 			<!-- Banner -->
 				<section id="banner">
 					<section id="principal">
@@ -40,6 +39,21 @@
 				<tr>
                                     <td class="Separador" colspan="6"></td>
 				</tr>
+
+                                <tr>
+                                    
+                                    <td>* Apellido paterno</td><td><input type="text" name="paterno"></td>					
+				</tr>
+				<tr>
+                                    <td class="Separador" colspan="6"></td>
+				</tr>
+                                <tr>
+                                    <td>* Apellido materno</td><td><input type="text" name="materno"></td>					
+				</tr>
+				<tr>
+                                    <td class="Separador" colspan="6"></td>
+				</tr>
+
                                 <tr>
                                     <td>* Correo</td><td><input type="text" name="correo"></td>					
 				</tr>
@@ -53,7 +67,20 @@
                                     <td class="Separador" colspan="6"></td>
 				</tr>
 
+                                <tr>
+                                    <td>* Contraseña</td><td><input type="password" name="pass"></td>					
+				</tr>
 				<tr>
+                                    <td class="Separador" colspan="6"></td>
+				</tr>
+                                <tr>
+                                    <td>* Confirmar contraseña</td><td><input type="password" name="very"></td>					
+				</tr>
+				<tr>
+                                    <td class="Separador" colspan="6"></td>
+				</tr>
+
+                                <tr>
                                     <td>* Perfil</td>                                
                                     <td>
                                         <select name="perfil">                                        

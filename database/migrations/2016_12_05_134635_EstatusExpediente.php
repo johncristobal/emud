@@ -12,7 +12,7 @@ class EstatusExpediente extends Migration
      */
     public function up()
     {
-        Schema::create('EstatusExpediente',function(Blueprint $table){
+        Schema::create('estatusexpedientes',function(Blueprint $table){
             $table->increments('id');
             $table->string('valor',50);
             $table->string('descripcion',100);
@@ -27,6 +27,6 @@ class EstatusExpediente extends Migration
      */
     public function down()
     {
-        Schema::drop('EstatusExpediente');
+        Schema::drop('estatusexpedientes');
     }
 }

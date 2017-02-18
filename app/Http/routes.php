@@ -47,6 +47,12 @@ Route::get('/', function () {
 });
 
 //-----------------Rutas Emud--------------
+//login
+Route::get('/login','UsuariosController@login');
+
+//user loggued
+Route::post('/Usuarios/loginuser','UsuariosController@validatelogin');
+
 //Expediente
 Route::get('Expediente','ExpedienteController@index');
 
@@ -78,3 +84,58 @@ Route::post('Expediente/remove/{id}','ExpedienteController@destroy');
 
 //reasignar expediente
 Route::post('Expediente/Reasignar','ExpedienteController@reasignar');
+
+//rutas-----werever 16 feb 17
+Route::get('FichaExp', function() {
+    return view('Alumno.FichaIdentificacion');
+});
+
+Route::get('FamHeder', function() {
+    return view('Alumno.FamiliaresHederitarios');
+});
+
+Route::get('AntescPat', function() {
+    return view('Alumno.AntescedentesPatologicos');
+});
+
+Route::get('AntescNoPat', function() {
+    return view('Alumno.AntescedentesNoPatologicos');
+});
+
+Route::get('Aparatos', function() {
+    return view('Alumno.AparatosySistemas');
+});
+
+Route::get('Mujeres', function() {
+    return view('Alumno.Mujeres');
+});
+
+Route::get('ExplFisica', function() {
+    return view('Alumno.ExploracionFisica');
+});
+
+Route::get('HigOral', function() {
+    return view('Alumno.HigieneOral');
+});
+
+Route::get('Receta', function() {
+    return view('Alumno.Receta');
+});
+
+Route::get('Consentimiento', function() {
+    return view('Alumno.Consentimiento_Informado');
+});
+
+Route::get('Diagnostico', function() {
+    return view('Alumno.Diagnostico_General');
+});
+
+Route::get('Nota', function() {
+    return view('Alumno.Nota_Evolucion');
+});
+
+//nuEVAS RUTA..............
+Route::post('Expediente/verprincipal/{id}','ExpedienteController@guardarid');
+
+Route::get('Expediente/principal','ExpedienteController@verExpediente');
+

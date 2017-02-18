@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use App\estatusalumnos;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,8 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        // $this->call(UserTableSeeder::class);
-
+        $this->call(estatusalumnos::class);
+ 
         Model::reguard();
     }
 }

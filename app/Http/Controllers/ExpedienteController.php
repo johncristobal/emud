@@ -37,6 +37,9 @@ class ExpedienteController extends Controller
         echo $clinica;*/
         $clinica = Clinica::all();
         $datos ['data'] = $clinica;
+        
+        $folioexpediente = $this->crearfolio();
+        
         return view("Admin.expediente",$datos);
 
         /*
@@ -49,6 +52,27 @@ class ExpedienteController extends Controller
          */
     }
     
+    public function crearfolio(){
+        //get year and get the last tow digits
+        date_default_timezone_set('America/Mexico_City');        
+        $year = date('Y', time());
+        $mont = date('m', time());
+        //the actual month => two digits
+        echo $year."<br>";
+        echo $mont;
+        $cade = $year[2].$year[3].$mont;
+        echo "jaja: ".$cade."<br>";
+        //the importatn thing here...the consecutive....
+        //get the last folio created and extract the last three digits...and plus one to it...
+        //if doesn't exist...it's cero...
+        $lastfolio = "1702001";
+        $getlastthree = substr($lastfolio, 4, 3);
+        
+        echo "digist: ".$getlastthree;
+        return 1;
+    }
+
+
     public function asignar()
     {
         //Load header.blade.php and send to index and every page from provider    
@@ -73,11 +97,11 @@ class ExpedienteController extends Controller
         //Asigamos idalumno a expeidnte
         $expe = Expediente::find($idexpeidnete);
         $expe->id_alumno = $idal;
-        $expe->status = "2";
+        $expe->status = "1";
         $expe->save();
         
         //regresamos
-        return view('index');
+        return view('indexAdmin');
         
     }
     
@@ -120,6 +144,8 @@ class ExpedienteController extends Controller
             'NoExp' => 'required',
             'fechaInicio' => 'required',
             'nombre' => 'required',
+            'paterno' => 'required',
+            'materno' => 'required',
             'genero'=> 'required',
             'FechaNac' =>'required',
             'reciboPago' => 'required',
@@ -131,16 +157,18 @@ class ExpedienteController extends Controller
         $Exp->folio_expediente=$request->input('NoExp');
         $Exp->fecha_inicio=$request->input('fechaInicio');
         $Exp->nombre_paciente=$request->input('nombre');
+        $Exp->ap_paterno=$request->input('paterno');
+        $Exp->ap_materno=$request->input('materno');
         $Exp->genero=$request->input('genero');
         $Exp->fecha_nacimimiento=$request->input('FechaNac');
         $Exp->recibo_pago=$request->input('reciboPago');
         $Exp->recibo_diagnostico=$request->input('reciboDiagn');
-        //$Exp->id_alumno="1";
-        //Recuerda que estatus 1 es "no asignado" y uando se aseigna hay q actalziarlo
-        $Exp->status="1";
+        $Exp->id_alumno="1";
+        //Recuerda que estatus 2 es "no activo" y uando se aseigna hay q actalziarlo
+        $Exp->status="2";
         $Exp->clinica=$request->input('clinica');
         $Exp->save();
-        return view('index');
+        return view('indexAdmin');
 
     }
 
@@ -196,4 +224,26 @@ class ExpedienteController extends Controller
             return 0;
         }
     }
+    
+    /*
+     * Guardar id en sesion y redirgir a principal vuew
+     */
+    public function guardarid($id){
+        //Guardar en seions este id...
+        //regreso a principal
+        return 1;
+    }
+    
+    /*
+     * lANCA view con expeidnets y sus registrops
+     */
+    public function verExpediente(){
+        //Recupero id de la sesion...
+        //Busco datos en las tablas...
+        //Lanzo a cada view
+        //veo principal
+        
+        return view('Alumno.principal');
+    }
+    
 }

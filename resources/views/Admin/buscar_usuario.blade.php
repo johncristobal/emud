@@ -82,8 +82,8 @@
                     <th width="20%"><h3>Nombre&nbsp;&nbsp;&nbsp;</h3></th>
                     <th width="50%"><h3>Correo&nbsp;&nbsp;&nbsp;</h3></th>
                     <th width="30%"><h3>Rol&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th width="5%"></th>
-                    <th width="5%"></th>
+                    <!--th width="5%"></th-->
+                    <th width="10%"></th>
                     </thead>
                     <tbody>
                     @foreach ($usuarios as $value) 
@@ -91,7 +91,7 @@
                             <td>{{ $value->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->correo }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->rol }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
                             <td><img src="{{URL::asset('/')}}imagenes/ic_delete_white_24dp_2x.png" alt="Eliminar" onclick="eliminar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                     @endforeach

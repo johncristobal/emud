@@ -18,9 +18,9 @@ class Alumno extends Migration
             $table->integer('id_usuario')->unsigned();
             $table->integer('clinica')->unsigned();
             $table->integer('status')->unsigned();
-            $table->foreign('id_usuario')->references('id')->on('usuario')->onDelete('cascade'); 
-            $table->foreign('clinica')->references('id')->on('clinicas')->onDelete('cascade'); 
-            $table->foreign('status')->references('id')->on('EstatusAlumno')->onDelete('cascade'); 
+            $table->foreign('id_usuario')->references('id')->on('usuarios'); 
+            $table->foreign('clinica')->references('id')->on('clinicas'); 
+            $table->foreign('status')->references('id')->on('estatusalumnos'); 
         });
     }
 

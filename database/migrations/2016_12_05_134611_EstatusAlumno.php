@@ -12,7 +12,7 @@ class EstatusAlumno extends Migration
      */
     public function up()
     {
-        Schema::create('EstatusAlumno',function(Blueprint $table){
+        Schema::create('estatusalumnos',function(Blueprint $table){
                 $table->increments('id');
                 $table->string('valor',50);
                 $table->string('descripcion',100);
@@ -27,6 +27,6 @@ class EstatusAlumno extends Migration
      */
     public function down()
     {
-        Schema::drop('EstatusAlumno');
+        Schema::drop('estatusalumnos');
     }
 }
