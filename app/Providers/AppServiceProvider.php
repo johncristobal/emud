@@ -17,10 +17,13 @@ class AppServiceProvider extends ServiceProvider
         //share provide to all the views
         //share header to all views
         $view = view('header');
+        $pie = view('foot');
         //Change it to string
         $conten = (string)$view;
+        $picontent = (string)$pie;
         //load to variable in php
         View::share('head', $conten);
+        View::share('scrip',$picontent);
     }
 
     /**

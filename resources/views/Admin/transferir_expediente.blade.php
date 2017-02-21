@@ -45,9 +45,6 @@
 			<tr><td colspan="2">Seleccionar alumno a quien se tranfiere el expediente</td></tr>
 			<tr>
 				<td>Seleccionar alumno:</td><td><select><option>xs</option>
-														<option>xs</option>
-												</select></td>
-														
 			</tr>
 			<tr>
 				<td class="Separador" colspan="3"></td>
@@ -101,14 +98,10 @@
 		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollgress.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+            <?php
+                echo $scrip;
+            ?>
+
 
 	</body>
 </html>

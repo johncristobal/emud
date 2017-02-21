@@ -12,6 +12,7 @@ use App\Alumno;
 use App\Expediente;
 use \Illuminate\Support\MessageBag;
 use \Illuminate\Support\Facades\Redirect;
+use \Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
 {
@@ -43,17 +44,18 @@ class UsuariosController extends Controller
         $pass = $request->input('contrasena');
         
         //send this data to model and look what kind of user is...
-        $correcto = User::where('correo','=',$mail)->get(['password','rol']);
+        $correcto = User::where('correo','=',$mail)->get(['password','rol','id']);
         //echo "$correcto";
         if($correcto->isEmpty())
         {
             //corrreo no existe...mandamos alerta...
-            //echo "$correcto";
+            echo "$correcto";
             $errors = new MessageBag(['pass'=>['Usuario o contraseña incorrectos']]);
             return Redirect::back()->withErrors($errors);//->withInput(\Illuminate\Support\Facades\Input::except('pass'));
         }else{
             //Correo si existe...validamos pas
             if($correcto[0]->password != $pass){
+                echo $correcto."2";
                 $errors = new MessageBag(['pass'=>['Usuario o contraseña incorrectos']]);
                 return Redirect::back()->withErrors($errors);//->withInput(\Illuminate\Support\Facades\Input::except('pass'));                
             }else
@@ -65,8 +67,16 @@ class UsuariosController extends Controller
                 }else{
                     //Aqui buscar los expediente unicamente del doc...
                     //obtenesmo su id de la varible correcto
-                    $clinica = Expediente::all();
-                    $datos['data'] = $clinica;
+                    $iduser = $correcto[0]->id;
+                    
+                    $facturasCliente = DB::table('expediente')
+                        ->join('alumnos','alumnos.id','=','expediente.id_alumno')
+                	//->select(‘clientes.*’, ‘facturas.id as id_facturas’, ‘facturas.fecha’, ‘concepto’)
+                        ->where('alumnos.id_usuario', '=', $iduser)
+                        ->get();
+                    
+                    //$clinica = Expediente::where();
+                    $datos['data'] = $facturasCliente;
 
                     //Launch view with exoeduente....solo los asociados al alumnos...no todos...
                     return view('Alumno.preprincipal',$datos);

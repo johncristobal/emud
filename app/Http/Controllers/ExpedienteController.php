@@ -39,6 +39,7 @@ class ExpedienteController extends Controller
         $datos ['data'] = $clinica;
         
         $folioexpediente = $this->crearfolio();
+        $datos ['folio'] = $folioexpediente;
         
         return view("Admin.expediente",$datos);
 
@@ -58,20 +59,44 @@ class ExpedienteController extends Controller
         $year = date('Y', time());
         $mont = date('m', time());
         //the actual month => two digits
-        echo $year."<br>";
-        echo $mont;
+        //echo $year."<br>";
+        //echo $mont;
         $cade = $year[2].$year[3].$mont;
-        echo "jaja: ".$cade."<br>";
+        //echo "jaja: ".$cade."<br>";
         //the importatn thing here...the consecutive....
         //get the last folio created and extract the last three digits...and plus one to it...
         //if doesn't exist...it's cero...
-        $lastfolio = "1702001";
-        $getlastthree = substr($lastfolio, 4, 3);
+        $lastrow = Expediente::orderBy('id','desc')->take(1)->get(['folio_expediente']);
+        $lastfolio = "";
+        $nuevofolio = "";
+        if($lastrow->isEmpty()){
+            //echo $lastrow;
+            $lastfolio = "1212000";
+            $nuevofolio = substr($lastfolio, 4, 3);
+            //echo "vacio";
+        }else{
+            //echo $lastrow;
+            $lastfolio= $lastrow[0]->folio_expediente;
+            $getlastthree = substr($lastfolio, 4, 3);
+            $getlastthree += 1;
+            $tamanio = strlen($getlastthree);
+            //echo $tamanio;
+            if($tamanio == 1){
+                $nuevofolio = "00".$getlastthree;
+            }else if($tamanio == 2){
+                $nuevofolio = "0".$getlastthree;                
+            }else {
+                $nuevofolio = $getlastthree;                
+            }
+            //si el dato tiene solo un digito...concateno 00
+            //si tiene dos ...conateno 0
+            //si tiene tres...no concateno
+        }
+        //$lastfolio = "1702001";
         
-        echo "digist: ".$getlastthree;
-        return 1;
+        //echo "digist: ".$getlastthree;
+        return $cade.$nuevofolio;
     }
-
 
     public function asignar()
     {
