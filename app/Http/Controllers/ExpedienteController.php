@@ -253,21 +253,35 @@ class ExpedienteController extends Controller
     /*
      * Guardar id en sesion y redirgir a principal vuew
      */
-    public function guardarid($id){
+    public function guardarid(Request $request,$id){
         //Guardar en seions este id...
         //regreso a principal
-        return 1;
+        //Salvar en sesion nombre...
+        $folio = Expediente::where('id','=',$id)->get(['folio_expediente','nombre_paciente']);
+        
+        if ($request->session()->has('folioexpediente')) {
+            $request->session()->forget('folioexpediente');
+            $request->session()->flush();
+
+            $request->session()->put('folioexpediente', $folio[0]->folio_expediente);
+            $request->session()->put('paciente', $folio[0]->nombre_paciente);
+        }else{
+            $request->session()->put('folioexpediente', $folio[0]->folio_expediente);                    
+            $request->session()->put('paciente', $folio[0]->nombre_paciente);
+        }
+        return $id;
     }
     
     /*
      * lANCA view con expeidnets y sus registrops
      */
-    public function verExpediente(){
+    public function verExpediente(Request $request){
         //Recupero id de la sesion...
         //Busco datos en las tablas...
         //Lanzo a cada view
         //veo principal
-        
+        $valuefolio = $request->session()->get('folioexpediente', 'default');
+                
         return view('Alumno.principal');
     }
     

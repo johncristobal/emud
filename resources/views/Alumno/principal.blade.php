@@ -20,7 +20,11 @@
 
                     <!-- Header -->
                     <header id="header" class="alt">
-                            <h1 id="logo"><a href="index.html">Bienvenido <span>Nombre</span></a></h1>
+                            <h1 id="logo"><a href="index.html">Bienvenido <span>
+                                    @if(Session::has('paciente'))    
+                                      {{ Session::get('paciente')}} 
+                                    @endif
+                                    </span></a></h1>
                             <nav id="nav">
                                     <ul>
                                             <li class="submenu">

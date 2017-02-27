@@ -44,7 +44,7 @@ class UsuariosController extends Controller
         $pass = $request->input('contrasena');
         
         //send this data to model and look what kind of user is...
-        $correcto = User::where('correo','=',$mail)->get(['password','rol','id']);
+        $correcto = User::where('correo','=',$mail)->get(['password','rol','id','name','pat','mat']);
         //echo "$correcto";
         if($correcto->isEmpty())
         {
@@ -60,7 +60,15 @@ class UsuariosController extends Controller
                 return Redirect::back()->withErrors($errors);//->withInput(\Illuminate\Support\Facades\Input::except('pass'));                
             }else
             {
-                //$user = "1";
+                //Salvar en sesion nombre...
+                if ($request->session()->has('nombrecom')) {
+                    $request->session()->forget('nombrecom');
+                    $request->session()->flush();
+                    
+                    $request->session()->put('nombrecom', $correcto[0]->name.' '.$correcto[0]->pat.' '.$correcto[0]->mat);
+                }else{
+                    $request->session()->put('nombrecom', $correcto[0]->name.' '.$correcto[0]->pat.' '.$correcto[0]->mat);                    
+                }
                 if($correcto[0]->rol == "1"){
                     return view('indexAdmin');
                     //redirect();
@@ -71,7 +79,7 @@ class UsuariosController extends Controller
                     
                     $facturasCliente = DB::table('expediente')
                         ->join('alumnos','alumnos.id','=','expediente.id_alumno')
-                	//->select(‘clientes.*’, ‘facturas.id as id_facturas’, ‘facturas.fecha’, ‘concepto’)
+                	->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
                         ->where('alumnos.id_usuario', '=', $iduser)
                         ->get();
                     

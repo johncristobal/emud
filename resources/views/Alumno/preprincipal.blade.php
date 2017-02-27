@@ -39,7 +39,13 @@
 
                     <!-- Header -->
                     <header id="header" class="alt">
-                        <h1 id="logo"><a href="index.html">Bienvenido <span>Nombre</span></a></h1>
+                        <h1 id="logo"><a href="index.html">Bienvenido 
+                                <span>
+                                    @if(Session::has('nombrecom'))    
+                                      {{ Session::get('nombrecom')}} 
+                                    @endif
+                                </span>
+                        </a></h1>
                         <nav id="nav">
                                 <ul>
                                         <li class="submenu">
@@ -78,37 +84,34 @@
 
                                     <h2>Seleccione uno de sus expedientes</h2>
 
-                                    <form method="" action="">
-                    <br>
-                    <table class="table" id="buscador">
-                    <thead>
-                    <th width="20%"><h3>Folio&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th width="50%"><h3>Paciente&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th width="30%"><h3>Fecha&nbsp;&nbsp;&nbsp;</h3></th>
-                    <!--th width="5%"></th-->
-                    <th width="10%"></th>
-                   
-                    </thead>
-                    <tbody>
-                    @foreach ($data as $value) 
-                        <tr>  
-                            <td>{{ $value->folio_expediente }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>{{ $value->nombre_paciente }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>{{ $value->fecha_inicio }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
-                            <td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp/web/ic_settings_white_24dp_1x.png" alt="Editar" onclick="verexpediente({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        </tr>
-                    @endforeach
-                    <!--tr>
-                        <td colspan="3" align="center"><input type="submit" value="Buscar"></td>
-                    </tr-->
-                    </tbody>
-		</table>
-        	</form>
+                                                        <form method="" action="">
+                                        <br>
+                                        <table class="table" id="buscador" width="100%">
+                                        <thead>
+                                        <th width="20%"><h3>Folio</h3></th>
+                                        <th width="50%"><h3>Paciente</h3></th>
+                                        <th width="20%"><h3>Fecha</h3></th>
+                                        <!--th width="5%"></th-->
+                                        <th width="10%"></th>
+
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($data as $value) 
+                                            <tr>  
+                                                <td>{{ $value->folio_expediente }}</td>
+                                                <td>{{ $value->nombre_paciente }}</td>
+                                                <td>{{ $value->fecha_inicio }}</td>                                        
+                                                <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
+                                                <td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="verexpediente({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            </tr>
+                                        @endforeach
+                                        <!--tr>
+                                            <td colspan="3" align="center"><input type="submit" value="Buscar"></td>
+                                        </tr-->
+                                        </tbody>
+                                    </table>
+                                    </form>
                                     
-
-
-
                             </section> 
 
                     <!-- Main -->

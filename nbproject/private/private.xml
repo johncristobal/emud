@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Applications/XAMPP/htdocs/blog/resources/views/Alumno/principal.blade.php</file>
             <file>file:/Applications/XAMPP/htdocs/blog/app/Http/Controllers/UsuariosController.php</file>
             <file>file:/Applications/XAMPP/htdocs/blog/resources/views/Alumno/preprincipal.blade.php</file>
-            <file>file:/Applications/XAMPP/htdocs/blog/resources/views/Admin/expediente.blade.php</file>
-            <file>file:/Applications/XAMPP/htdocs/blog/resources/views/login.blade.php</file>
             <file>file:/Applications/XAMPP/htdocs/blog/app/Http/Controllers/ExpedienteController.php</file>
         </group>
     </open-files>

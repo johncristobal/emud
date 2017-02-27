@@ -134,6 +134,10 @@ Route::get('Nota', function() {
     return view('Alumno.Nota_Evolucion');
 });
 
+Route::get('/Alumno',function(){
+    return redirect('Expediente/principal');
+});
+
 //nuEVAS RUTA..............
 Route::post('Expediente/verprincipal/{id}','ExpedienteController@guardarid');
 

@@ -13,6 +13,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 </head>
 <body class="index">
     <div id="page-wrapper">
@@ -24,42 +25,48 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 
     <!-- Banner -->
     <section id="banner">
-        <section id="principal">
         <h3>Dar de alta nuevo expediente</h3>
 
+        <div class="container">
         @if(count($errors))
         <h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
         @endif
 
             <form method="post" action="{{url::asset('/')}}Expediente/Alta">
-                <table class="form">
+                <table class="table" align="center" width="100%">
+                    <thead>
+                    <th width="25%"></th>
+                    <th width="25%"></th>
+                    <th width="25%"></th>
+                    <th width="25%"></th>
+                    </thead>
                 <tbody>
             <tr>
                 <td>*Nombre</td>
                 <td>
-                    <input type="text" name="nombre" size="100">
+                    <input type="text" name="nombre" size="50"/>
                 </td>
             </tr>
             <tr>
-                <td class="Separador" colspan="6"></td>
+                <td class="Separador" colspan="3"></td>
             </tr>
             <tr>
                 <td>*Apellido paterno</td>
                 <td>
-                    <input type="text" name="paterno" size="100">
+                    <input type="text" name="paterno" size="50">
                 </td>
             </tr>
             <tr>
-                <td class="Separador" colspan="6"></td>
+                <td class="Separador" colspan="3"></td>
             </tr>
             <tr>
                 <td>*Apellido materno</td>
                 <td>
-                    <input type="text" name="materno" size="100">
+                    <input type="text" name="materno" size="50">
                 </td>
             </tr>
             <tr>
-                <td class="Separador" colspan="6"></td>
+                <td class="Separador" colspan="3"></td>
             </tr>
 
             <tr>
@@ -69,7 +76,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                 </td>
             </tr>
             <tr>
-                <td class="Separador" colspan="6"></td>
+                <td class="Separador" colspan="3"></td>
             </tr>
 
             <tr>
@@ -122,8 +129,8 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
             </table>
 
             </form>
+        </div>
         </section>
-    </section>
 
     <!-- Main -->
     <article id="main">
