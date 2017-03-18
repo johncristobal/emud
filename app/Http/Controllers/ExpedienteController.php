@@ -10,6 +10,9 @@ use App\Clinica;
 use App\User;
 use App\Alumno;
 use App\Expediente;
+use App\Direccion;
+use App\Responsable;
+use App\Datosconsulta;
 
 class ExpedienteController extends Controller
 {
@@ -163,8 +166,7 @@ class ExpedienteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    {        
         $this->validate($request,[
             'NoExp' => 'required',
             'fechaInicio' => 'required',
@@ -177,6 +179,7 @@ class ExpedienteController extends Controller
             'reciboDiagn' => 'required', 
             'clinica' => 'required',           
             ]);
+        
         //Creando un expediente y almacenando datos en el objeto
         $Exp= New Expediente;
         $Exp->folio_expediente=$request->input('NoExp');
@@ -193,8 +196,24 @@ class ExpedienteController extends Controller
         $Exp->status="2";
         $Exp->clinica=$request->input('clinica');
         $Exp->save();
+        
+        //We have to create and store all the other tables...
+        //With status x to set that they are not completed
+        $direccion = new Direccion;
+        $direccion->status = 1;
+        $direccion->folio_expediente = $Exp->id; 
+        $direccion->save();
+        $responsable = new Responsable;
+        $responsable->folio_expediente = $Exp->id;
+        $responsable->status = 1;        
+        $responsable->save();                
+        $datosconsulta = new Datosconsulta;
+        $datosconsulta->folio_expediente = $Exp->id;
+        $datosconsulta->status = 1;
+        $datosconsulta->save();
+        
+        //return view
         return view('indexAdmin');
-
     }
 
     /**
@@ -258,16 +277,26 @@ class ExpedienteController extends Controller
         //regreso a principal
         //Salvar en sesion nombre...
         $folio = Expediente::where('id','=',$id)->get(['folio_expediente','nombre_paciente']);
+        $completo = "";
+        if($request->session()->has(('nombrecom'))){
+            $completo = $request->session()->get('nombrecom');
+        }
         
         if ($request->session()->has('folioexpediente')) {
             $request->session()->forget('folioexpediente');
+            $request->session()->forget('paciente');
+            $request->session()->forget('idexpediente');
             $request->session()->flush();
 
             $request->session()->put('folioexpediente', $folio[0]->folio_expediente);
             $request->session()->put('paciente', $folio[0]->nombre_paciente);
+            $request->session()->put('idexpediente', $id);
+            $request->session()->put('nombrecom', $completo);
         }else{
             $request->session()->put('folioexpediente', $folio[0]->folio_expediente);                    
             $request->session()->put('paciente', $folio[0]->nombre_paciente);
+            $request->session()->put('idexpediente', $id);
+            $request->session()->put('nombrecom', $completo);
         }
         return $id;
     }
@@ -280,9 +309,141 @@ class ExpedienteController extends Controller
         //Busco datos en las tablas...
         //Lanzo a cada view
         //veo principal
-        $valuefolio = $request->session()->get('folioexpediente', 'default');
-                
+        //$valuefolio = $request->session()->get('folioexpediente', 'default');
+        
         return view('Alumno.principal');
     }
+
+/************************metodos de cada expediente********************/
+/************************store/load ficha********************/
+    public function FichaExp(Request $request){
+        //cargo autoload form
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+        
+        //echo $id;
+        if($id == '0'){
+            echo "sin sesion";
+        }else{
+            //si tiene id....recuoeramos datos para lanzarlos...
+            $expediente = Expediente::find($id);
+            $datos['expediente'] = $expediente;
+
+            //echo $id;
+            //get info from direction...
+            $direccion = Direccion::where('folio_expediente','=',$id)->get();
+            $datos['direccion'] = $direccion;
+            /*
+             * y AHORA  que pex...como diablos resuelvo esto
+             * Si esta vaciaa...el 0 truena... :)(
+             */
+            //GET data from responsable table
+            $responsable = Responsable::where('folio_expediente','=',$id)->get();
+            $datos['responsable'] = $responsable;
+
+            //GET data from responsable table
+            $datosconsulta = Datosconsulta::where('folio_expediente','=',$id)->get();
+            $datos['datosconsulta'] = $datosconsulta;
+                        
+            //validamos para enviar id religion
+            //$idreligion = $this->getReligion($expediente);
+            //$expediente->idreligion = $idreligion;
+            
+            $clinica = Clinica::find($expediente->clinica);
+            $datos['clinica'] = $clinica->nombre_clinica;
+            return view('Alumno.FichaIdentificacion',$datos);
+        }
+    }
     
+    public function storeFicha(Request $request){
+        //we have to get all the info from the view
+        //validate them
+        //and store in database...
+        //remember => we have already the folio expeidnete...
+        //so, lets make a kind of update
+        
+        //session variable to store data
+        $id = $request->session()->get('idexpediente','0');
+        
+        //get data from expediente
+        $curp = $request->input('curp');   //**** we have lo validat the curp
+        $foto = $request->input('fotografia');    //***** we have to load the picture to the server
+        $ocupacion = $request->input('Ocupacion'); 
+        $escolaridad = $request->input('escolaridad'); 
+        $edocivil = $request->input('edoCivil'); 
+        $religion = $request->input('Religion'); 
+        $lugarnacimiento = $request->input('lugarNac'); 
+        $expediente = Expediente::find($id);
+        //get all the data and save it...
+        $expediente->curp = $curp;
+        $expediente->ocupacion = $ocupacion;
+        $expediente->estadocivil = $edocivil;
+        $expediente->escolaridad = $escolaridad;
+        $expediente->religion = $religion;
+        $expediente->lugar_nacimiento = $lugarnacimiento;
+        $expediente->fotopath = $foto;  //hay que ver que onda con la foto....        
+        $expediente->save();
+        
+        //direccion
+        $calle = $request->input('CalleNum'); 
+        $numero = $request->input('numerohouse'); 
+        $codigopostal = $request->input('CodPostal'); 
+        $colonia = $request->input('Colonia'); 
+        $delegacion = $request->input('Municipio'); 
+        $entidad = $request->input('estado'); 
+        $telefono= $request->input('Telefono'); 
+        $idh= $request->input('institucion'); 
+        $direccion = Direccion::where('folio_expediente','=',$id)->update(array(
+        "calle" => $calle,
+        "numero" => $numero,
+        "codigopostal" => $codigopostal,
+        "colonia" => $colonia,
+        "delegacion" => $delegacion,
+        "entidad" => $entidad,
+        "telefono" => $telefono,
+        "idh" => $idh
+        ));
+        
+        //responsable
+        $responsable = Responsable::where('folio_expediente','=',$id)->update(array(
+        "paterno"=> $request->input('APat'),
+        "materno"=> $request->input('AMat'), 
+        "nombre"=> $request->input('Nombre'), 
+        "telefono"=> $request->input('TelAux') 
+        ));
+        
+        //datos sobre consutla
+        $datosconsulta = Datosconsulta::where('folio_expediente','=',$id)->update(array(
+            "motivo" => $request->input('MotivoCons'),
+            "nota_ingreso"=> $request->input('Notaingreso'), 
+            "alergia"=> $request->input('Alertaalergia'), 
+            "somatria"=> $request->input('signosvilates'), 
+            "estatura"=> $request->input('Estatura'),
+            "peso"=> $request->input('Peso'),
+            "pulso"=> $request->input('Pulso'), 
+            "frecuencia"=> $request->input('FrecResp'), 
+            "tension"=> $request->input('Tensionarterial'), 
+            "temperatura"=> $request->input('Temperatura'), 
+            "sanguineo"=> $request->input('Sanguineo')       
+        ));
+        
+        return redirect('/Expediente/principal');
+    }
+    //We need tue id or the religion...but we dont have a catalog....it's not necesary
+    //so, just get the id in this way...whit a method
+    /*public function getReligion($dato){
+        if($dato->religion == "Catolica"){
+            return 0;
+        }else if($dato->religion == "Cristiana"){
+            return 1;
+        }else if($dato->religion == "Mormona"){
+            return 2;
+        }else if($dato->religion == "Budista"){
+            return 3;
+        }else if($dato->religion == "Otro"){
+            return 4;
+        }else{
+            return 100;
+        }
+    }*/
 }

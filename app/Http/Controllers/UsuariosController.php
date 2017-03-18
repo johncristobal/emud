@@ -49,13 +49,13 @@ class UsuariosController extends Controller
         if($correcto->isEmpty())
         {
             //corrreo no existe...mandamos alerta...
-            echo "$correcto";
+            //echo "$correcto";
             $errors = new MessageBag(['pass'=>['Usuario o contraseña incorrectos']]);
             return Redirect::back()->withErrors($errors);//->withInput(\Illuminate\Support\Facades\Input::except('pass'));
         }else{
             //Correo si existe...validamos pas
             if($correcto[0]->password != $pass){
-                echo $correcto."2";
+                //echo $correcto."2";
                 $errors = new MessageBag(['pass'=>['Usuario o contraseña incorrectos']]);
                 return Redirect::back()->withErrors($errors);//->withInput(\Illuminate\Support\Facades\Input::except('pass'));                
             }else
@@ -77,6 +77,7 @@ class UsuariosController extends Controller
                     //obtenesmo su id de la varible correcto
                     $iduser = $correcto[0]->id;
                     
+                    //recuoero datos del expeidnet con base al ide lde usuario...
                     $facturasCliente = DB::table('expediente')
                         ->join('alumnos','alumnos.id','=','expediente.id_alumno')
                 	->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')

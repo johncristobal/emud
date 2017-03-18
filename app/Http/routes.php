@@ -86,9 +86,10 @@ Route::post('Expediente/remove/{id}','ExpedienteController@destroy');
 Route::post('Expediente/Reasignar','ExpedienteController@reasignar');
 
 //rutas-----werever 16 feb 17
-Route::get('FichaExp', function() {
+/*Route::get('Expediente/FichaExp', function() {
     return view('Alumno.FichaIdentificacion');
-});
+});*/
+Route::get('Expediente/FichaExp','ExpedienteController@FichaExp');
 
 Route::get('FamHeder', function() {
     return view('Alumno.FamiliaresHederitarios');
@@ -142,4 +143,7 @@ Route::get('/Alumno',function(){
 Route::post('Expediente/verprincipal/{id}','ExpedienteController@guardarid');
 
 Route::get('Expediente/principal','ExpedienteController@verExpediente');
+
+//Rutas del formulario
+Route::post('Expediente/Alta/Ficha','ExpedienteController@storeFicha');
 

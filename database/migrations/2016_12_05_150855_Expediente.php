@@ -18,6 +18,7 @@ class Expediente extends Migration
             $table->string('nombre_paciente');
             $table->string('ap_paterno');
             $table->string('ap_materno');
+            $table->integer('edad')->unsigned();
             $table->string('curp');
             $table->string('fotopath');
             $table->string('ocupacion');

@@ -21,8 +21,8 @@
                     <!-- Header -->
                     <header id="header" class="alt">
                             <h1 id="logo"><a href="index.html">Bienvenido <span>
-                                    @if(Session::has('paciente'))    
-                                      {{ Session::get('paciente')}} 
+                                    @if(Session::has('nombrecom'))    
+                                      {{ Session::get('nombrecom')}} 
                                     @endif
                                     </span></a></h1>
                             <nav id="nav">
@@ -65,7 +65,7 @@
  
 					<table border ="0" align="center" class="default">
 			<tr>
-				<td><a href="{{URL::asset('/')}}FichaExp"><img src="{{url::asset('/')}}imagenes/b7.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/FichaExp"><img src="{{url::asset('/')}}imagenes/b7.png" heigth="50" width="300"></a></td>
 				<td><a href="{{URL::asset('/')}}FamHeder"><img src="{{url::asset('/')}}imagenes/b8.png" heigth="50" width="300"></a></td>
 				<td><a href="{{URL::asset('/')}}AntescPat"><img src="{{url::asset('/')}}imagenes/b2.png" heigth="50" width="300"></a></td>
 			</tr>
