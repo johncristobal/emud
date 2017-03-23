@@ -36,7 +36,7 @@
 						<tr>
                                                     <td>Nombre de la instituci&oacute;n:</td> <td><input type="text" name="Institucion" value="{{ $clinica }}" hidden="true" readonly="true"></td>
                                                     <td>Numero de Expediente: </td> <td><input type="text" name="NumExpediente" value="{{ Session::get('folioexpediente') }}" readonly="true"></td>
-                                                    <td>Fecha de inicio: </td> <td><input type="datetime" name="FechaInicio" value="{{ $expediente->fecha_inicio }}"></td>			
+                                                    <td>Fecha de inicio: </td> <td><input type="date" name="FechaInicio" value="{{ $fecha1 }}"></td>			
 						</tr>
 
 						<tr>
@@ -155,13 +155,50 @@
 							</tr>	
 
 							<tr>
-                                                            <td>Fecha de Nacimiento:</td><td><input type="date" name="FechaNac"></td>	
-                                                            <td>Lugar de Nacimiento:</td><td><select name="lugarNac">
+                                                            <td>Fecha de Nacimiento:</td><td><input type="date" name="FechaNac" value="{{ $fecha2 }}"></td>	
+                                                            <td>Lugar de Nacimiento:</td>
+                                                            <td>
+                                                                {!! Form::select('lugarNac',[
+                                                                        'Aguascalientes' => 'Aguascalientes',
+                                                                        'Baja California' => 'Baja California',
+                                                                        'Baja California Sur' => 'Baja California Sur',
+                                                                        'Campeche' => 'Campeche',
+                                                                        'Colima' => 'Colima',
+                                                                        'Chiapas' => 'Chiapas',
+                                                                        'Coahuila' => 'Coahuila',
+                                                                        'Chiahuahua' => 'Chiahuahua',
+                                                                        'CDMX' => 'CDMX',
+                                                                        'Durango' => 'Durango',
+                                                                        'Guanajuato' => 'Guanajuato',
+                                                                        'Guerrero' => 'Guerrero',
+                                                                        'Hidalgo' => 'Hidalgo',
+                                                                        'Jalisco' => 'Jalisco',
+                                                                        'México' => 'México',
+                                                                        'Michoacán' => 'Michoacán',
+                                                                        'Morelos' => 'Morelos',
+                                                                        'Nayarit' => 'Nayarit',
+                                                                        'Nuevo León' => 'Nuevo León',
+                                                                        'Oaxaca' => 'Oaxaca',
+                                                                        'Puebla' => 'Puebla',
+                                                                        'Querétaro' => 'Querétaro',
+                                                                        'Quintana Roo' => 'Quintana Roo',
+                                                                        'San Luis Potosí' => 'San Luis Potosí',
+                                                                        'Sinaloa' => 'Sinaloa',
+                                                                        'Sonora' => 'Sonora',
+                                                                        'Tabasco' => 'Tabasco',
+                                                                        'Tamaulipas' => 'Tamaulipas',
+                                                                        'Tlaxcala' => 'Tlaxcala',
+                                                                        'Veracruz' => 'Veracruz',
+                                                                        'Yucatán' => 'Yucatán',
+                                                                        'Zacatecas' => 'Zacatecas'                                                                        
+                                                                    ],$expediente->lugar_nacimiento) !!}
+                                                                <!--select name="lugarNac">
                                                                 <option value="Aguascalientes">Aguascalientes</option>
                                                                 <option value="D.F.">Distrito Federal</option>
                                                                 <option value="Mexico">Estado de Mexico</option>
                                                                 <option value="Tlaxcala">Tlaxcala</option>
-                                                            </select></td>	
+                                                                </select-->
+                                                            </td>	
 							</tr>
 
 							<tr>
@@ -226,7 +263,7 @@
                                                                         'Veracruz' => 'Veracruz',
                                                                         'Yucatán' => 'Yucatán',
                                                                         'Zacatecas' => 'Zacatecas'                                                                        
-                                                                    ],$expediente->entidad) !!}
+                                                                    ],$direccion[0]->entidad) !!}
                                                                     <!--select name="estado">
                                                                     <option value="Aguascalientes">Aguascalientes</option>
                                                                     <option value="D.F.">Distrito Federal</option>
@@ -253,7 +290,7 @@
                                                                         'PEMEX' => 'PEMEX',
                                                                         'SEGURO POPULAR' => 'SEGURO POPULAR',
                                                                         'SSA' => 'SSA'
-                                                                    ],$expediente->idh)
+                                                                    ],$direccion[0]->idh)
                                                                     !!}
                                                                 <!--select name="institucion">
                                                                     <option>Selecciona</option>
@@ -309,7 +346,7 @@
 
 							<tr>
 								<td >Motivo de Consulta:</td>
-								<td colspan="2"><textarea class="tam" name="MotivoCons" rows="6" cols="2" value="{{ $datosconsulta[0]->motivo or ""}}"></textarea>									
+								<td colspan="2"><textarea class="tam" name="MotivoCons" rows="6" cols="2">{{ $datosconsulta[0]->motivo or ""}}</textarea>									
 							</tr>
 							<tr>
 								<td class="Separador" colspan="6"></td>
@@ -317,7 +354,7 @@
 
 							<tr>
 								<td >Nota de ingreso del paciente:</td>
-								<td colspan="2"><textarea class="tam" name="Notaingreso" rows="6" cols="2" value="{{ $datosconsulta[0]->nota_ingreso or ""}}"></textarea>									
+								<td colspan="2"><textarea class="tam" name="Notaingreso" rows="6" cols="2">{{ $datosconsulta[0]->nota_ingreso or ""}}</textarea>									
 							</tr>
 
 							<tr>
@@ -326,7 +363,7 @@
 
 							<tr>
 								<td ><label>Alerta sobre alguna alergia:</label></td>
-								<td colspan="2"><textarea class="tam" name="Alertaalergia" rows="6" cols="2" value="{{ $datosconsulta[0]->alergia or ""}}"></textarea>		
+								<td colspan="2"><textarea class="tam" name="Alertaalergia" rows="6" cols="2">{{ $datosconsulta[0]->alergia or ""}}</textarea>		
 							</tr>
 
 							<tr>

@@ -31,7 +31,7 @@
 						<!--Se edita desde esta zona-->
 					<h2>FAMILIARES HEREDITARIOS</h2>
 		
-		<form method="" action="">
+                <form method="post" action="{{url::asset('/')}}Expediente/Alta/Heredofam">
 			<table align ="center" border="0" class="default">
 			<tr>
 				<td>Padecimientos</td>				
@@ -41,153 +41,98 @@
 				<td>Abuela</td>
 				<td>Abuelo</td>
 				<td>Otros</td>
-				
 			</tr>
-			<tr>
-				<td>Diabetes</td>
-				<td><input type="checkbox" name="pasa"></td>
-				<td><input type="checkbox" name="pasa"></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-				
-			</tr>
-			<tr>
-				<td>Hipertension Arterial</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-			</tr>
-			<tr>
-				<td>Cardiopatias</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-			</tr>
-			<tr>
-				<td>Neoplasias</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-			</tr>
-			<tr>
-				<td>Epilepcias</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-			</tr>
-			<tr>
-				<td>Malformaciones</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-			</tr>
-			<tr>
-				<td>Sida</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-			</tr>
-			<tr>
-				<td>Enfermedades Renales</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				
-				
-			</tr>
-			<tr>
-				<td>hepatitis</td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" ></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				
-			</tr>
-			<tr>
-				<td>artritis</td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				
-				
-			</tr>
-			<tr>
-				<td>otra</td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				
-			</tr>
-			<tr>
-				<td>aparentemente sano</td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-				<td><input type="checkbox" name="pasa" value=""></td>
-								
-			</tr>
-			<tr>
-					<td class="Separador" colspan="7"></td>
-			</tr>
-			
-			<tr>
-				<td>Observaciones</td><td colspan ="6"><textarea class="tam" name="observaciones" rows="6" cols="2" ></textarea></td>
+                        
+                            <?php
+                                $i=0;
+
+                                $tipos = ["diabetes","arterial","cardiopatias","neoplasias","epilepsias","malformaciones","sida","renales","hepatitis","artritis","otra"];//,'padre','hermano','abuela','abuela','otro'];
+                                $names = ["madre","padre","hermano","abuela","abuelo","otro"];
+                                foreach ($variable as $key => $value) {?>
+                                    <tr>
+                                    <td><?=$key;?></td>
+                                    <?php
+                                    //foreach ($value as $llave => $clave){
+                                    foreach ($names as $clave){
+                                        ?>
+                                        <td>
+                                            <?php                                                               
+                                                if((isset($value[$clave])) && ($value[$clave] != "")){ ?>
+                                                <input type="checkbox" name="<?= $key."$i"; ?>" checked="true">
+                                            <?php }else{ ?>
+                                                <input type="checkbox" name="<?= $key."$i"; ?>">
+                                                <?php                                                 
+                                                    }
+                                                //}
+                                            ?>
+                                        </td>
+                            <?php
+                                    $i += 1;
+                                    }    
+                                    $i=0;
+                                    ?>
+                                    </tr>
+                            <?php
+                                }
+                            ?>
+                        <tr>
+				<td>Observaciones</td><td colspan ="6"><textarea class="tam" name="observaciones" rows="6" cols="2" >{{ $observaciones }}</textarea></td>
 			</tr>
 			<tr>
 				<td colspan ="7"> <input type="submit" value="Guardar datos"></td>
 			</tr>	
+
+                        <!--tr>
+				<td>Hipertension Arterial</td>
+                            <td>
+                                @if((isset($diabetes["madre"])) && ($diabetes["madre"] != ""))
+                                <input type="checkbox" name="diabetes0" checked="true">
+                                @else
+                                <input type="checkbox" name="diabetes0">
+                                @endif
+                            </td>
+
+                            <td>
+                                @if((isset($diabetes["padre"])) && ($diabetes["padre"] != ""))
+                                <input type="checkbox" name="diabetes1" checked="true">
+                                @else
+                                <input type="checkbox" name="diabetes1">
+                                @endif
+                            </td>
+                            <td>
+                                @if((isset($diabetes["hermano"])) && ($diabetes["hermano"] != ""))
+                                <input type="checkbox" name="diabetes2" checked="true">
+                                @else
+                                <input type="checkbox" name="diabetes2">
+                                @endif
+                            </td>
+                            <td>
+                                @if((isset($diabetes["abuela"])) && ($diabetes["abuela"] != ""))
+                                <input type="checkbox" name="diabetes3" checked="true">
+                                @else
+                                <input type="checkbox" name="diabetes3">
+                                @endif
+                            </td>
+                            <td>
+                                @if((isset($diabetes["abuelo"])) && ($diabetes["abuelo"] != ""))
+                                <input type="checkbox" name="diabetes4" checked="true">
+                                @else
+                                <input type="checkbox" name="diabetes4">
+                                @endif
+                            </td>
+                            <td>
+                                @if((isset($diabetes["otro"])) && ($diabetes["otro"] != ""))
+                                <input type="checkbox" name="diabetes5" checked="true">
+                                @else
+                                <input type="checkbox" name="diabetes5">
+                                @endif
+                            </td>
+			</tr>
+			</tr-->	
 		
 		</table>
-
 	</form>		
-				<!--Se ternina de editar aqui-->
-			</div> 
+            </div> 
 		</section> 
 
 			<!-- Main -->

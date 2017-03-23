@@ -66,7 +66,7 @@
 					<table border ="0" align="center" class="default">
 			<tr>
 				<td><a href="{{URL::asset('/')}}Expediente/FichaExp"><img src="{{url::asset('/')}}imagenes/b7.png" heigth="50" width="300"></a></td>
-				<td><a href="{{URL::asset('/')}}FamHeder"><img src="{{url::asset('/')}}imagenes/b8.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/FamHeder"><img src="{{url::asset('/')}}imagenes/b8.png" heigth="50" width="300"></a></td>
 				<td><a href="{{URL::asset('/')}}AntescPat"><img src="{{url::asset('/')}}imagenes/b2.png" heigth="50" width="300"></a></td>
 			</tr>
 			<tr>

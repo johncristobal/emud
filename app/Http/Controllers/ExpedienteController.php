@@ -13,6 +13,7 @@ use App\Expediente;
 use App\Direccion;
 use App\Responsable;
 use App\Datosconsulta;
+use App\Heredofamiliares;
 
 class ExpedienteController extends Controller
 {
@@ -205,13 +206,75 @@ class ExpedienteController extends Controller
         $direccion->save();
         $responsable = new Responsable;
         $responsable->folio_expediente = $Exp->id;
-        $responsable->status = 1;        
-        $responsable->save();                
+        $responsable->status = 1;
+        $responsable->save();
         $datosconsulta = new Datosconsulta;
         $datosconsulta->folio_expediente = $Exp->id;
         $datosconsulta->status = 1;
         $datosconsulta->save();
         
+        //heredofamiliares
+        $heredo = new Heredofamiliares;
+        $heredo->status = 1;
+        $heredo->folio_expediente = $Exp->id; 
+        $heredo->tipo = "diabetes";
+        $heredo->save();
+        $heredo2 = new Heredofamiliares;
+        $heredo2->status = 1;
+        $heredo2->folio_expediente = $Exp->id; 
+        $heredo2->tipo = "arterial";
+        $heredo2->save();
+        $heredo3 = new Heredofamiliares;
+        $heredo3->status = 1;
+        $heredo3->folio_expediente = $Exp->id; 
+        $heredo3->tipo = "cardiopatias";
+        $heredo3->save();
+        $heredo4 = new Heredofamiliares;
+        $heredo4->status = 1;
+        $heredo4->folio_expediente = $Exp->id; 
+        $heredo4->tipo = "neoplasias";
+        $heredo4->save();
+        $heredo5 = new Heredofamiliares;
+        $heredo5->status = 1;
+        $heredo5->folio_expediente = $Exp->id; 
+        $heredo5->tipo = "epilepsias";
+        $heredo5->save();
+        $heredo6 = new Heredofamiliares;
+        $heredo6->status = 1;
+        $heredo6->folio_expediente = $Exp->id; 
+        $heredo6->tipo = "malformaciones";
+        $heredo6->save();
+        $heredo7 = new Heredofamiliares;
+        $heredo7->status = 1;
+        $heredo7->folio_expediente = $Exp->id; 
+        $heredo7->tipo = "sida";
+        $heredo7->save();
+        $heredo8 = new Heredofamiliares;
+        $heredo8->status = 1;
+        $heredo8->folio_expediente = $Exp->id; 
+        $heredo8->tipo = "renales";
+        $heredo8->save();
+        $heredo9 = new Heredofamiliares;
+        $heredo9->status = 1;
+        $heredo9->folio_expediente = $Exp->id; 
+        $heredo9->tipo = "hepatitis";
+        $heredo9->save();
+        $heredo10 = new Heredofamiliares;
+        $heredo10->status = 1;
+        $heredo10->folio_expediente = $Exp->id; 
+        $heredo10->tipo = "artritis";
+        $heredo10->save();
+        $heredo11 = new Heredofamiliares;
+        $heredo11->status = 1;
+        $heredo11->folio_expediente = $Exp->id; 
+        $heredo11->tipo = "otra";
+        $heredo11->save();
+        $heredo12 = new Heredofamiliares;
+        $heredo12->status = 1;
+        $heredo12->folio_expediente = $Exp->id; 
+        $heredo12->tipo = "observaciones";
+        $heredo12->save();
+
         //return view
         return view('indexAdmin');
     }
@@ -328,6 +391,10 @@ class ExpedienteController extends Controller
             //si tiene id....recuoeramos datos para lanzarlos...
             $expediente = Expediente::find($id);
             $datos['expediente'] = $expediente;
+            $fecha1 = explode(" ", $expediente->fecha_inicio);
+            $datos['fecha1'] = $fecha1[0];
+            $fecha2 = explode(" ", $expediente->fecha_nacimimiento);
+            $datos['fecha2'] = $fecha2[0];
 
             //echo $id;
             //get info from direction...
@@ -373,6 +440,8 @@ class ExpedienteController extends Controller
         $edocivil = $request->input('edoCivil'); 
         $religion = $request->input('Religion'); 
         $lugarnacimiento = $request->input('lugarNac'); 
+        $fechanac = $request->input('FechaNac'); 
+        $eddda = $request->input('Edad'); 
         $expediente = Expediente::find($id);
         //get all the data and save it...
         $expediente->curp = $curp;
@@ -381,6 +450,8 @@ class ExpedienteController extends Controller
         $expediente->escolaridad = $escolaridad;
         $expediente->religion = $religion;
         $expediente->lugar_nacimiento = $lugarnacimiento;
+        $expediente->fecha_nacimimiento = $fechanac;
+        $expediente->edad = $eddda;
         $expediente->fotopath = $foto;  //hay que ver que onda con la foto....        
         $expediente->save();
         
@@ -429,21 +500,106 @@ class ExpedienteController extends Controller
         
         return redirect('/Expediente/principal');
     }
-    //We need tue id or the religion...but we dont have a catalog....it's not necesary
-    //so, just get the id in this way...whit a method
-    /*public function getReligion($dato){
-        if($dato->religion == "Catolica"){
-            return 0;
-        }else if($dato->religion == "Cristiana"){
-            return 1;
-        }else if($dato->religion == "Mormona"){
-            return 2;
-        }else if($dato->religion == "Budista"){
-            return 3;
-        }else if($dato->religion == "Otro"){
-            return 4;
+/************************metodos de cada expediente********************/
+/************************store/load ficha********************/
+    public function Heredofami(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');        
+        
+        if($id == '0'){
+            echo "sin sesion";
         }else{
-            return 100;
+            //get all data from heredofami
+            $heredo = Heredofamiliares::where('folio_expediente','=',$id)->get();
+
+            $arreglo = array();
+            for($i=0;$i<11;$i++){
+                $arrydiabetes = array();
+                $diabetes = explode(",", $heredo[$i]->dato);
+                if(count($diabetes) == 1){
+                    //echo "sin datos";
+                    $arrydiabetes["madre"]="";
+                    $arrydiabetes["padre"]="";
+                    $arrydiabetes["hermano"]="";
+                    $arrydiabetes["abuela"]="";
+                    $arrydiabetes["abuelo"]="";
+                    $arrydiabetes["otro"]="";
+
+                    $arreglo[$heredo[$i]->tipo] = $arrydiabetes;
+                    //array_push($arrydiabetes,$arreglo);
+
+                }else{
+                    //foreach de diabetes...
+                    //validamos los datos...>if diabtes[i]=="madre|padre|..etc"
+                    //guardamos ese valor...>$daibetesaray = array(); $diabetesarray["madre"] = "si"|"madre"| o algo asi...
+                    //else...>no tiene dato entonces $diabetesarray["mapdre"] = ""
+                    //validar en view si tiene dato, entonces set checked true
+
+                    foreach ($diabetes as $value) {
+                        $arrydiabetes[$value] = $value;
+                    }
+                    $arreglo[$heredo[$i]->tipo] = $arrydiabetes;
+                    //array_push($arrydiabetes,$arreglo);
+                }
+            }
+            
+            $datos['variable'] = $arreglo;
+
+            $observa = $heredo[11]->dato;
+            $datos['observaciones'] = $observa;
+            
+            return view('Alumno.FamiliaresHederitarios',$datos);
         }
-    }*/
+    }
+    
+    public function storeHeredofam(Request $request){
+     
+        //guardamos los tipos en una array y los resultado en otro array del miso tmaanio
+        //foreahcr del del tispo con foreach del 0 al 6
+        //get if(diabetesi is checked) => $datadiabetes = "arrayres[i]"+","
+        //before the foreach ends...save data diabetes,arterial,etc...
+
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');        
+
+        $variable = "";
+        $i =0;
+        $tipos = ["diabetes","arterial","cardiopatias","neoplasias","epilepsias","malformaciones","sida","renales","hepatitis","artritis","otra"];//,'padre','hermano','abuela','abuela','otro'];
+        $names = ["madre","padre","hermano","abuela","abuelo","otro"];
+        
+        foreach ($tipos as $value) {
+            foreach ($names as $clave){
+                $cto = $value."$i";
+                $dataaa = $request->input($cto); 
+                
+                //echo "diabetes0:".$dataaa."---";
+                if($dataaa == "on"){
+                    $variable .= $clave.",";
+                //    echo $cto."<br>";
+                }
+                $i += 1;
+            }
+            
+            $i = 0;
+            //save dato in the riegh place....;
+            $heredo = Heredofamiliares::where('folio_expediente','=',$id)
+                ->where('tipo','=',$value)
+                ->update(array(
+                    "dato" => $variable
+                ));
+                        
+            $variable = "";
+        }
+
+        //save dato in the riegh place....;
+        $heredo = Heredofamiliares::where('folio_expediente','=',$id)
+            ->where('tipo','=','observaciones')
+            ->update(array(
+                "dato" => $request->input('observaciones')
+            ));        
+
+        return redirect('/Expediente/principal');
+
+    }   
 }

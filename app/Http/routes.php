@@ -91,9 +91,7 @@ Route::post('Expediente/Reasignar','ExpedienteController@reasignar');
 });*/
 Route::get('Expediente/FichaExp','ExpedienteController@FichaExp');
 
-Route::get('FamHeder', function() {
-    return view('Alumno.FamiliaresHederitarios');
-});
+Route::get('Expediente/FamHeder', 'ExpedienteController@Heredofami');
 
 Route::get('AntescPat', function() {
     return view('Alumno.AntescedentesPatologicos');
@@ -147,3 +145,4 @@ Route::get('Expediente/principal','ExpedienteController@verExpediente');
 //Rutas del formulario
 Route::post('Expediente/Alta/Ficha','ExpedienteController@storeFicha');
 
+Route::post('Expediente/Alta/Heredofam','ExpedienteController@storeHeredofam');
