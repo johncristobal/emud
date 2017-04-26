@@ -9,6 +9,22 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		
+                <script type="text/javascript">
+                
+                function updateresultado(valor1,valor2,inputval){
+
+                    var a = document.getElementById(valor1); 
+                    var strUser = a.options[a.selectedIndex].value;
+                    //alert(strUser);
+                    var b = document.getElementById(valor2);                    
+                    var strUserb = b.options[b.selectedIndex].value;
+                    //alert(strUserb);
+                    var cad = (parseInt(strUser)+parseInt(strUserb))/2.0;
+                    //alert(cad);
+                    document.getElementById(inputval).value = cad;
+                }
+                    
+                </script>
 	</head>
 	<body class="index">
 		<div id="page-wrapper">
@@ -32,10 +48,10 @@
 					<h3>Datos bucales del paciente</h3>
 			</br>	
 			
-			<form method="" action=""> 
+			<form method="post" action="{{url::asset('/')}}Expediente/Alta/Bucal"> 
 				<table align="center" border="0" class="default">
 				<tr>
-					<td colspan="4">Fecha Inicial: <input type="date" class="form"></td>
+                                    <td colspan="4">Fecha Inicial: <input type="date" name="fechainicial" value="{{ $fecha1 }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="4"></td>
@@ -46,14 +62,124 @@
 					<td><legend>I.C.</legend>
 					<td><legend>Resultado</legend></td>
 				</tr>
-				<tr>
-					<td>Vestibular 11</td>
-					<td><select class="form">
-							<option>0</option>
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-						</select></td>
+                                    <?php
+                                        $arreglo = ['vestibular11','vestibular31','vestibular16','vestibular26','lingual36','lingual46'];
+                                        $arreglonames = ['Vestibular 11','Vestibular 31','Vestibular 16','Vestibular 26','Lingual 36','Lingual 46'];
+
+                                        $i = -1;
+                                        foreach ($arreglonames as $value) {
+                                            
+                                            $i += 1;
+                                    ?>
+        				<tr>
+                                            <td><?=$value;?></td>
+                                    <?php
+                                            if($valores[$arreglo[$i]."1"] == 0){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0" selected="true">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            } else if($valores[$arreglo[$i]."1"] == 1){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1" selected="true">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($valores[$arreglo[$i]."1"] == 2){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2" selected="true">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($valores[$arreglo[$i]."1"] == 3){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3" selected="true">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }
+                                            //chec the another 
+                                            if($valores[$arreglo[$i]."2"] == 0){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0" selected="true">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            } else if($valores[$arreglo[$i]."2"] == 1){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1" selected="true">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($valores[$arreglo[$i]."2"] == 2){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2" selected="true">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($valores[$arreglo[$i]."2"] == 3){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3" selected="true">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }
+                                    ?>
+                                                <td><label></label><input type="text" class="form" name="<?=$arreglo[$i]."3";?>" id="<?=$arreglo[$i]."3";?>" value="<?php echo (($valores[$arreglo[$i]."2"])+($valores[$arreglo[$i]."1"]))/2; ?>"></td>	
+                                            </tr>
+
+                                    <?php
+                                        }
+                                    ?>
+					<!--td>
+                                            <select class="form">
+                                                <option>0</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                        </td>
 					<td><select class="form">
 							<option>0</option>
 							<option>1</option>
@@ -152,18 +278,16 @@
 				</tr>
 				<tr>
 					<td colspan="4"><input type="submit" value="guardar datos"></td>
-				</tr>
+				</tr-->
 			</table>
-		</form>
 		</fieldset>
 	</br>
 		
 		<fieldset>
 			
-				<form method="" action="">
 				<table align="center" border="0" class="default">
 					<tr>
-						<td colspan="4">Fecha Final: <input type="date"></td>
+                                            <td colspan="4">Fecha Final: <input type="date" name="fechafin" value="{{ $fecha2 }}"></td>
 					</tr>	
 
 					<tr>
@@ -177,7 +301,117 @@
 						<td><legend>I.C.</legend>
 						<td><legend>Resultado</legend></td>
 					</tr>
-					<tr>
+                                        <?php
+                                        $arreglo = ['vestibularfin11','vestibularfin31','vestibularfin16','vestibularfin26','lingualfin36','lingualfin46'];
+                                        $arreglonames = ['Vestibular 11','Vestibular 31','Vestibular 16','Vestibular 26','Lingual 36','Lingual 46'];
+
+                                        $i = -1;
+                                        foreach ($arreglonames as $value) {
+                                            
+                                            $i += 1;
+                                    ?>
+        				<tr>
+                                            <td><?=$value;?></td>
+                                    <?php
+                                            if($finales[$arreglo[$i]."1"] == 0){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0" selected="true">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            } else if($finales[$arreglo[$i]."1"] == 1){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1" selected="true">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($finales[$arreglo[$i]."1"] == 2){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2" selected="true">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($finales[$arreglo[$i]."1"] == 3){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."1";?>" id="<?=$arreglo[$i]."1";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3" selected="true">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }
+                                            //chec the another 
+                                            if($finales[$arreglo[$i]."2"] == 0){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0" selected="true">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            } else if($finales[$arreglo[$i]."2"] == 1){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1" selected="true">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($finales[$arreglo[$i]."2"] == 2){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2" selected="true">2</option>
+                                                        <option value="3">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }else if($finales[$arreglo[$i]."2"] == 3){
+                                    ?>
+                                                <td>
+                                                    <select class="form" name="<?=$arreglo[$i]."2";?>" id="<?=$arreglo[$i]."2";?>" onchange="updateresultado(<?php echo "'".$arreglo[$i]."1"."'";?>,<?php echo "'".$arreglo[$i]."2"."'";?>,<?php echo "'".$arreglo[$i]."3"."'";?>);">
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3" selected="true">3</option>
+                                                </select>
+                                                </td>
+                                    <?php
+                                            }
+                                    ?>
+                                                <td><label></label><input type="text" class="form" name="<?=$arreglo[$i]."3";?>" id="<?=$arreglo[$i]."3";?>" value="<?php echo (($finales[$arreglo[$i]."2"])+($finales[$arreglo[$i]."1"]))/2; ?>"></td>	
+                                            </tr>
+
+                                    <?php
+                                        }
+                                    ?>
+					<!--tr>
 						<td>Vestibular 11</td>
 						<td><select class="form">
 								<option>0</option>
@@ -281,31 +515,62 @@
 
 					<tr>
 					<td class="Separador" colspan="4"></td>
-				</tr>
+				</tr-->
 
-					<tr>
-						<td colspan="4"><input type="submit" value="Guardar datos"</td>
-					</tr>
 				</table>
-			</form>
-			
 			</fieldset>
 		</br>
 
 		<fieldset>
 			<h3>INDICE CPOD</h3>
-			<form method="" action="">
 				<table align="center" border="0" class="default">
 				<tr>
 					<td>O.D</td>
 					<td>Inicial</td>
 					<td>Final</td>
-					<td>Observaciones</td>
+					<!--td>Observaciones</td-->
 				</tr>	
 				
 				<tr>
 					<td>Cariados</td>
-					<td></label><select name="num3">
+					<td>
+                                            {!! Form::select('cpod1',[
+                                                '0' => '0',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                                '6' => '6',
+                                                '7' => '7',
+                                                '8' => '8',
+                                                '9' => '9',
+                                                '10' => '10',
+                                                '11' => '11',
+                                                '12' => '12',
+                                                '13' => '13',
+                                                '14' => '14',
+                                                '15' => '15',
+                                                '16' => '16',
+                                                '17' => '17',
+                                                '18' => '18',
+                                                '19' => '19',
+                                                '20' => '20',
+                                                '21' => '21',
+                                                '22' => '22',
+                                                '23' => '23',
+                                                '24' => '24',
+                                                '25' => '25',
+                                                '26' => '26',
+                                                '27' => '27',
+                                                '28' => '28',
+                                                '29' => '29',
+                                                '30' => '30',
+                                                '31' => '31',
+                                                '32' => '32'
+                                            ],$cpod1)
+                                            !!}                                            
+                                            <!--select name="num3">
 									<option>0</option>
 									<option>1</option>
 									<option>2</option>
@@ -339,8 +604,46 @@
 									<option>30</option>
 									<option>31</option>
 									<option>32</option>
-								</select></td>
-					<td></label><select class="form">
+								</select-->
+                                        </td>
+					<td>
+                                            {!! Form::select('cpod2',[
+                                                '0' => '0',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                                '6' => '6',
+                                                '7' => '7',
+                                                '8' => '8',
+                                                '9' => '9',
+                                                '10' => '10',
+                                                '11' => '11',
+                                                '12' => '12',
+                                                '13' => '13',
+                                                '14' => '14',
+                                                '15' => '15',
+                                                '16' => '16',
+                                                '17' => '17',
+                                                '18' => '18',
+                                                '19' => '19',
+                                                '20' => '20',
+                                                '21' => '21',
+                                                '22' => '22',
+                                                '23' => '23',
+                                                '24' => '24',
+                                                '25' => '25',
+                                                '26' => '26',
+                                                '27' => '27',
+                                                '28' => '28',
+                                                '29' => '29',
+                                                '30' => '30',
+                                                '31' => '31',
+                                                '32' => '32'
+                                            ],$cpod2)
+                                            !!} 
+                                            <!--select class="form">
 									<option>0</option>
 									<option>1</option>
 									<option>2</option>
@@ -374,13 +677,51 @@
 									<option>30</option>
 									<option>31</option>
 									<option>32</option>
-								</select></td>			
+								</select-->
+                                        </td>			
 						<td></td>
 				</tr>
 
 				<tr>
 					<td>Perdidos</td>
-					<td></label><select class="form">
+					<td>
+                                            {!! Form::select('cpod3',[
+                                                '0' => '0',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                                '6' => '6',
+                                                '7' => '7',
+                                                '8' => '8',
+                                                '9' => '9',
+                                                '10' => '10',
+                                                '11' => '11',
+                                                '12' => '12',
+                                                '13' => '13',
+                                                '14' => '14',
+                                                '15' => '15',
+                                                '16' => '16',
+                                                '17' => '17',
+                                                '18' => '18',
+                                                '19' => '19',
+                                                '20' => '20',
+                                                '21' => '21',
+                                                '22' => '22',
+                                                '23' => '23',
+                                                '24' => '24',
+                                                '25' => '25',
+                                                '26' => '26',
+                                                '27' => '27',
+                                                '28' => '28',
+                                                '29' => '29',
+                                                '30' => '30',
+                                                '31' => '31',
+                                                '32' => '32'
+                                            ],$cpod3)
+                                            !!} 
+                                            <!--select class="form">
 									<option>0</option>
 									<option>1</option>
 									<option>2</option>
@@ -414,8 +755,46 @@
 									<option>30</option>
 									<option>31</option>
 									<option>32</option>
-								</select></td>
-					<td></label><select class="form">
+								</select-->
+                                        </td>
+					<td>
+                                            {!! Form::select('cpod4',[
+                                                '0' => '0',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                                '6' => '6',
+                                                '7' => '7',
+                                                '8' => '8',
+                                                '9' => '9',
+                                                '10' => '10',
+                                                '11' => '11',
+                                                '12' => '12',
+                                                '13' => '13',
+                                                '14' => '14',
+                                                '15' => '15',
+                                                '16' => '16',
+                                                '17' => '17',
+                                                '18' => '18',
+                                                '19' => '19',
+                                                '20' => '20',
+                                                '21' => '21',
+                                                '22' => '22',
+                                                '23' => '23',
+                                                '24' => '24',
+                                                '25' => '25',
+                                                '26' => '26',
+                                                '27' => '27',
+                                                '28' => '28',
+                                                '29' => '29',
+                                                '30' => '30',
+                                                '31' => '31',
+                                                '32' => '32'
+                                            ],$cpod4)
+                                            !!} 
+                                            <!--select class="form">
 									<option>0</option>
 									<option>1</option>
 									<option>2</option>
@@ -449,13 +828,51 @@
 									<option>30</option>
 									<option>31</option>
 									<option>32</option>
-								</select></td>			
+								</select-->
+                                        </td>			
 						<td></td>
 				</tr>
 
 				<tr>
 					<td>Obturados</td>
-					<td></label><select class="form">
+					<td>
+                                            {!! Form::select('cpod5',[
+                                                '0' => '0',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                                '6' => '6',
+                                                '7' => '7',
+                                                '8' => '8',
+                                                '9' => '9',
+                                                '10' => '10',
+                                                '11' => '11',
+                                                '12' => '12',
+                                                '13' => '13',
+                                                '14' => '14',
+                                                '15' => '15',
+                                                '16' => '16',
+                                                '17' => '17',
+                                                '18' => '18',
+                                                '19' => '19',
+                                                '20' => '20',
+                                                '21' => '21',
+                                                '22' => '22',
+                                                '23' => '23',
+                                                '24' => '24',
+                                                '25' => '25',
+                                                '26' => '26',
+                                                '27' => '27',
+                                                '28' => '28',
+                                                '29' => '29',
+                                                '30' => '30',
+                                                '31' => '31',
+                                                '32' => '32'
+                                            ],$cpod5)
+                                            !!} 
+                                            <!--select class="form">
 									<option>0</option>
 									<option>1</option>
 									<option>2</option>
@@ -489,8 +906,46 @@
 									<option>30</option>
 									<option>31</option>
 									<option>32</option>
-								</select></td>
-					<td></label><select class="form">
+								</select-->
+                                        </td>
+					<td>
+                                            {!! Form::select('cpod6',[
+                                                '0' => '0',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                                '6' => '6',
+                                                '7' => '7',
+                                                '8' => '8',
+                                                '9' => '9',
+                                                '10' => '10',
+                                                '11' => '11',
+                                                '12' => '12',
+                                                '13' => '13',
+                                                '14' => '14',
+                                                '15' => '15',
+                                                '16' => '16',
+                                                '17' => '17',
+                                                '18' => '18',
+                                                '19' => '19',
+                                                '20' => '20',
+                                                '21' => '21',
+                                                '22' => '22',
+                                                '23' => '23',
+                                                '24' => '24',
+                                                '25' => '25',
+                                                '26' => '26',
+                                                '27' => '27',
+                                                '28' => '28',
+                                                '29' => '29',
+                                                '30' => '30',
+                                                '31' => '31',
+                                                '32' => '32'
+                                            ],$cpod6)
+                                            !!} 
+                                            <!--select class="form">
 									<option>0</option>
 									<option>1</option>
 									<option>2</option>
@@ -524,7 +979,8 @@
 									<option>30</option>
 									<option>31</option>
 									<option>32</option>
-								</select></td>			
+								</select-->
+                                        </td>			
 						<td></td>
 				</tr>
 				<tr>
@@ -533,16 +989,27 @@
 
 				<tr>
 					<td>Total de dientes:</td>
-					<td colspan="2"><input type="text" name="Total dientes"></td>
+                                        <td colspan="2"><input type="text" name="dientes" value="{{ $total }}"></td>
 				</tr>	
 				<tr>
 					<td class="Separador" colspan="4"></td>
 				</tr>
-				<tr >
-					<td colspan="4"><input type="submit" value="Guardar datos"></td>
+                                
+                                <tr>
+                                    <td><label>Observaciones</label></td>
+                                    <td colspan="2"><textarea rows="3" cols="40" class="form" name="observaciones">{{ $observaciones }}</textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2"></br></td>
+				</tr>
+
+                                
+				<tr>
+                                    <td><label></label></td>
+					<td colspan="8"><input type="submit" value="Guardar datos"></td>
 				</tr>
 			</table>
-
+                </fieldset>
 			</form>
 			
 

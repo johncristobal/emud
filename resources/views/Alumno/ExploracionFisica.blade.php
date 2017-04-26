@@ -31,32 +31,32 @@
 						<!--Se edita desde esta zona-->
 					<h2>Exploracion Fisica</h2>
 			
-			<form method="" action="">
+			<form method="post" action="{{url::asset('/')}}Expediente/Alta/Fisica">
 				<table align="center" border="0" class="default">
 				<tr>
 					<td><label>Frenillo Labial</label></td>
-					<td><textarea rows="3" cols="40"class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40"class="form" name="frenillo">{{ $frenillo }}</textarea></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>Lengua</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+					<td><textarea rows="3" cols="40" class="form" name="lengua">{{ $lengua }}</textarea></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>Frenillo Lingual</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="lingual">{{ $lingual }}</textarea></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>Encias</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="encias">{{ $encias }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -65,7 +65,7 @@
 
 				<tr>
 					<td><label>Paladar Duro</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="paduro">{{ $paduro }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -74,7 +74,7 @@
 
 				<tr>
 					<td><label>Paladar Blando</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="pablando">{{ $pablando }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -83,7 +83,7 @@
 			
 				<tr>
 					<td><label>Procesos Alveorales</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="alveorales">{{ $alveorales }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -92,7 +92,7 @@
 
 				<tr>
 					<td><label>Orofaringe</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="faringe"> {{ $faringe }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -101,7 +101,7 @@
 
 				<tr>
 					<td><label>Piso de boca</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="boca"> {{ $boca }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -110,7 +110,7 @@
 
 				<tr>
 					<td><label>Glandulas Salivales</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="salival">{{ $salival }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -119,7 +119,7 @@
 				
 				<tr>
 					<td><label>Carrillos</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="carrillos"> {{ $carrillos }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -128,7 +128,7 @@
 
 				<tr>
 					<td><label>Region Yugal</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="yugal"> {{ $yugal }}</textarea></td>
 				</tr>
 				
 				<tr>
@@ -142,7 +142,7 @@
 
 				<tr>
 					<td><label>¿Cuales?</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="hallazgos"> {{ $hallazgos }}</textarea></td>
 					
 				</tr>
 				<tr>
@@ -151,7 +151,7 @@
 
 				<tr>
 					<td><label>Observaciones</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="observaciones"> {{ $observaciones }}</textarea></td>
 					
 				</tr>
 				<tr>

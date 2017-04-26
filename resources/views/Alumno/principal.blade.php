@@ -35,6 +35,7 @@
                                             </li>	
 
 
+                                            <li><a href="{{url::asset('/')}}Expediente/todos" class="button">Ver expedientes</a></li>
                                             <li><a href="{{url::asset('/')}}" class="button special">Cerrar Sesión</a></li>
                                     </ul>
                             </nav>
@@ -67,26 +68,26 @@
 			<tr>
 				<td><a href="{{URL::asset('/')}}Expediente/FichaExp"><img src="{{url::asset('/')}}imagenes/b7.png" heigth="50" width="300"></a></td>
 				<td><a href="{{URL::asset('/')}}Expediente/FamHeder"><img src="{{url::asset('/')}}imagenes/b8.png" heigth="50" width="300"></a></td>
-				<td><a href="{{URL::asset('/')}}AntescPat"><img src="{{url::asset('/')}}imagenes/b2.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/AntescPat"><img src="{{url::asset('/')}}imagenes/b2.png" heigth="50" width="300"></a></td>
 			</tr>
 			<tr>
-				<td><a href="{{URL::asset('/')}}AntescNoPat"><img src="{{url::asset('/')}}imagenes/b1.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/AntescNoPat"><img src="{{url::asset('/')}}imagenes/b1.png" heigth="50" width="300"></a></td>
 
-				<td><a href="{{URL::asset('/')}}Aparatos"><img src="{{url::asset('/')}}imagenes/b3.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/Aparatos"><img src="{{url::asset('/')}}imagenes/b3.png" heigth="50" width="300"></a></td>
 
-				<td><a href="{{URL::asset('/')}}Mujeres"><img src="{{url::asset('/')}}imagenes/b10.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/Mujeres"><img src="{{url::asset('/')}}imagenes/b10.png" heigth="50" width="300"></a></td>
 			</tr>
 				
 			<tr>		
-				<td><a href="{{URL::asset('/')}}ExplFisica"><img src="{{url::asset('/')}}imagenes/b6.png" heigth="50" width="300"></a></td>
-				<td><a href="{{URL::asset('/')}}HigOral"><img src="{{url::asset('/')}}imagenes/b9.png" heigth="50" width="300"></a></td>
-				<td><a href="{{URL::asset('/')}}Receta"><img src="{{url::asset('/')}}imagenes/b12.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/ExplFisica"><img src="{{url::asset('/')}}imagenes/b6.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/HigOral"><img src="{{url::asset('/')}}imagenes/b9.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/Receta"><img src="{{url::asset('/')}}imagenes/b12.png" heigth="50" width="300"></a></td>
 			</tr>
 
 			<tr>
 				<td><a href="{{URL::asset('/')}}Consentimiento"><img src="{{url::asset('/')}}imagenes/b4.png" heigth="50" width="300"></a></td>
-				<td><a href="{{URL::asset('/')}}Diagnostico"><img src="{{url::asset('/')}}imagenes/b13.png" heigth="50" width="300"></a></td>
-				<td><a href="{{URL::asset('/')}}Nota"><img src="{{url::asset('/')}}imagenes/b11.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/Diagnostico"><img src="{{url::asset('/')}}imagenes/b13.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/Nota"><img src="{{url::asset('/')}}imagenes/b11.png" heigth="50" width="300"></a></td>
 			</tr>
 		</table>
 
@@ -117,14 +118,9 @@
             </div>
 
             <!-- Scripts -->
-                    <script src="assets/js/jquery.min.js"></script>
-                    <script src="assets/js/jquery.dropotron.min.js"></script>
-                    <script src="assets/js/jquery.scrolly.min.js"></script>
-                    <script src="assets/js/jquery.scrollgress.min.js"></script>
-                    <script src="assets/js/skel.min.js"></script>
-                    <script src="assets/js/util.js"></script>
-                    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-                    <script src="assets/js/main.js"></script>
+            <?php
+                echo $scrip;
+            ?>
 
 	</body>
 </html>

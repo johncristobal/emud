@@ -58,6 +58,7 @@ Route::get('Expediente','ExpedienteController@index');
 
 Route::post('Expediente/Alta', 'ExpedienteController@store');  
 
+Route::get('Expediente/todos', 'ExpedienteController@verExpedientes');  
 //Asignar_Expediente
 Route::get('Asignar','ExpedienteController@asignar');
 
@@ -93,56 +94,65 @@ Route::get('Expediente/FichaExp','ExpedienteController@FichaExp');
 
 Route::get('Expediente/FamHeder', 'ExpedienteController@Heredofami');
 
-Route::get('AntescPat', function() {
-    return view('Alumno.AntescedentesPatologicos');
-});
+Route::get('Expediente/AntescPat', 'ExpedienteController@Patologicos');
 
-Route::get('AntescNoPat', function() {
-    return view('Alumno.AntescedentesNoPatologicos');
-});
+Route::get('Expediente/AntescNoPat', 'ExpedienteController@Nopatologicos');
 
-Route::get('Aparatos', function() {
-    return view('Alumno.AparatosySistemas');
-});
+Route::get('Expediente/Aparatos', 'ExpedienteController@Aparatos');
 
-Route::get('Mujeres', function() {
-    return view('Alumno.Mujeres');
-});
+Route::get('Expediente/Mujeres', 'ExpedienteController@Mujeres');
 
-Route::get('ExplFisica', function() {
-    return view('Alumno.ExploracionFisica');
-});
+Route::get('Expediente/ExplFisica', 'ExpedienteController@Fisica');
 
-Route::get('HigOral', function() {
-    return view('Alumno.HigieneOral');
-});
+Route::get('Expediente/HigOral', 'ExpedienteController@Bucal');
 
-Route::get('Receta', function() {
-    return view('Alumno.Receta');
-});
+Route::get('Expediente/Receta','PdfController@index');
+
+Route::get('Nota/notas', 'NotaController@Nota');
 
 Route::get('Consentimiento', function() {
     return view('Alumno.Consentimiento_Informado');
 });
 
-Route::get('Diagnostico', function() {
-    return view('Alumno.Diagnostico_General');
-});
-
-Route::get('Nota', function() {
-    return view('Alumno.Nota_Evolucion');
-});
+Route::get('Expediente/Diagnostico', 'ExpedienteController@Resumen');
 
 Route::get('/Alumno',function(){
     return redirect('Expediente/principal');
 });
 
 //nuEVAS RUTA..............
+Route::post('Notas/verprincipal/{id}','NotaController@guardarid');
+Route::get('Notas/principal','NotaController@vernota');
+
 Route::post('Expediente/verprincipal/{id}','ExpedienteController@guardarid');
 
 Route::get('Expediente/principal','ExpedienteController@verExpediente');
+
+//Rutas para imagnes y notas
+Route::get('Expediente/imagenes','ExpedienteController@Imagenes');
+Route::get('Expediente/Nota','ExpedienteController@Notas');
 
 //Rutas del formulario
 Route::post('Expediente/Alta/Ficha','ExpedienteController@storeFicha');
 
 Route::post('Expediente/Alta/Heredofam','ExpedienteController@storeHeredofam');
+
+Route::post('Expediente/Alta/Patologico','ExpedienteController@storePatologico');
+
+Route::post('Expediente/Alta/Nopatologico','ExpedienteController@storeNopatologico');
+
+Route::post('Expediente/Alta/Aparatos','ExpedienteController@storeAparatos');
+
+Route::post('Expediente/Alta/Bucal','ExpedienteController@storeBucal');
+
+Route::post('Expediente/Alta/Mujeres','ExpedienteController@storeMujeres');
+
+Route::post('Expediente/Alta/Fisica','ExpedienteController@storeFisica');
+
+Route::post('Expediente/Alta/Nota','ExpedienteController@storeNota');
+
+Route::post('Expediente/Alta/Resumen','ExpedienteController@storeResumen');
+//ruta para generar el pdf
+Route::post('pdf', 'PdfController@invoice');
+//Route :: get ('pdf/{id}', 'PdfController@show');
+

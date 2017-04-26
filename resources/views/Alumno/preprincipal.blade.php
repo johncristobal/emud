@@ -31,6 +31,34 @@
                         },10000);
                     }
                     
+                    function verimagenes(id){
+                        //alert(id);
+                        $.ajax({
+                            type:'POST',
+                            url:'{{URL::asset('/')}}Expediente/verprincipal/'+id,
+                            data:{'id':id},
+                            success:function(data){
+                                //alert(data);
+                                //alert('Expediente '+data+' eliminado del sistema.');
+                                window.location.href = '{{URL::asset('/')}}Expediente/imagenes';
+                            }
+                        },10000);
+                    }
+                    
+                    function vernotas(id){
+                        //alert(id);
+                        $.ajax({
+                            type:'POST',
+                            url:'{{URL::asset('/')}}Expediente/verprincipal/'+id,
+                            data:{'id':id},
+                            success:function(data){
+                                //alert(data);
+                                //alert('Expediente '+data+' eliminado del sistema.');
+                                window.location.href = '{{URL::asset('/')}}Nota/notas';
+                            }
+                        },10000);
+                    }
+                    
                 </script>
                     
 	</head>
@@ -89,10 +117,12 @@
                                         <table class="table" id="buscador" width="100%">
                                         <thead>
                                         <th width="20%"><h3>Folio</h3></th>
-                                        <th width="50%"><h3>Paciente</h3></th>
-                                        <th width="20%"><h3>Fecha</h3></th>
+                                        <th width="35%"><h3>Paciente</h3></th>
+                                        <th width="15%"><h3>Fecha</h3></th>
                                         <!--th width="5%"></th-->
-                                        <th width="10%"></th>
+                                        <th width="10%">Editar</th>
+                                        <th width="10%">Imágenes</th>
+                                        <th width="10%">Notas</th>
 
                                         </thead>
                                         <tbody>
@@ -103,6 +133,8 @@
                                                 <td>{{ $value->fecha_inicio }}</td>                                        
                                                 <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
                                                 <td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="verexpediente({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                <td><img src="{{URL::asset('/')}}imagenes/ic_image_white_24dp_2x.png" alt="Imagenes" onclick="verimagenes({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                <td><img src="{{URL::asset('/')}}imagenes/ic_note_add_white_24dp_2x.png" alt="Notas" onclick="vernotas({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             </tr>
                                         @endforeach
                                         <!--tr>

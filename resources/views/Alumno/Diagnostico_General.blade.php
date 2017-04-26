@@ -32,17 +32,17 @@
 				<h2>Diagnostico General</h2>
 			
 				
-				<form method="" action="">
+				<form method="post" action="{{url::asset('/')}}Expediente/Alta/Resumen">
 					<table border="0" align="center" class="default">
 						<tr>
 							<td><label>Diagnostico</label></td>
-							<td><textarea class="form" rows="3" cols="50"></textarea></td>
+                                                        <td><textarea class="form" rows="3" cols="50" name="diagnostico">{{ $diagnostico }}</textarea></td>
 						</tr>
 
-						<tr>
+						<!--tr>
 							<td><label>Observaciones</label></td>
 							<td><textarea class="form" rows="3" cols="50"></textarea></td>
-						</tr>
+						</tr-->
 						<tr>
 							<td class="Separador" colspan="2"></td>
 						</tr>

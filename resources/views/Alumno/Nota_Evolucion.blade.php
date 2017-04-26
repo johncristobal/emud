@@ -31,12 +31,12 @@
 						<!--Se edita desde esta zona-->
 				<h3>NOTA DE EVOLUCION</h3></legend>
 		
-			<form method="" action="">
+			<form method="post" action="{{url::asset('/')}}Expediente/Alta/Nota">
 				<table align="center" border="0" class="default">
 				
 				<tr>
 					<td><label>Nombre del Paciente</label></td>
-					<td><input type="text" class="form"></td>
+                                        <td><input type="text" class="form" name="nombre" value="{{ $nombre }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
@@ -44,35 +44,35 @@
 
 				<tr>	
 					<td><label>Edad</label></td>
-					<td><input type="text" class="form"></td>
+                                        <td><input type="text" class="form" name="edad" value="{{ $edad }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>G&eacute;nero</label></td>
-					<td><input type="text" class="form"></td>
+                                        <td><input type="text" class="form" name="genero" value="{{ $genero }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>Numero del Expediente</label></td>
-					<td><input type="text" class="form"></td>
+					<td><input type="text" class="form" value="{{ $num }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>Fecha</label></td>
-					<td><input type="date" class="form"></td>
+                                        <td><input type="date" class="form" name="fecha" value="{{ $fecha }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
 					<td><label>Referencia</label></td>
-					<td><input type="text" class="form"></td>
+                                        <td><input type="text" class="form" name="ref" value="{{ $referencia }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
@@ -80,7 +80,7 @@
 
 				<tr>
 					<td><label>Contrareferencia</label></td>
-					<td><input type="text" class="form"></td>
+                                        <td><input type="text" class="form" name="contra" value="{{ $contraref }}"></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
@@ -88,7 +88,7 @@
 
 				<tr>
 					<td><label>Nota de Evolucion</label></td>
-					<td><textarea class="form" rows="3" cols="40"></textarea></td>
+                                        <td><textarea class="form" rows="3" name="nota" cols="40">{{ $nota }}</textarea></td>
 				</tr>
 
 				<tr>

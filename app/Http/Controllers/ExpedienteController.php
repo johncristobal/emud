@@ -14,6 +14,18 @@ use App\Direccion;
 use App\Responsable;
 use App\Datosconsulta;
 use App\Heredofamiliares;
+use App\Patologicos;
+use App\Nopatologicos;
+use App\Aparatossistemas;
+use App\Bucalodinicio;
+use App\Bucalodfinal;
+use App\Bucalcpod;
+use App\Mujeres;
+use App\Exploracionfisica;
+use App\Resumen;
+use App\Notaevolucion;
+use \Illuminate\Support\Facades\DB;
+
 
 class ExpedienteController extends Controller
 {
@@ -136,10 +148,14 @@ class ExpedienteController extends Controller
     
     public function transferir()
     {
-        //Load header.blade.php and send to index and every page from provider    
-        return view("Admin.transferir_expediente");
-    }
+        $alumno = User::where('rol','=',2)->get();
+        $expedientes = Expediente::all();
+        $datos['alumnos'] = $alumno;
+        $datos['expedientes'] = $expedientes;
 
+        //Load header.blade.php and send to index and every page from provider    
+        return view("Admin.transferir_expediente",$datos);
+    }
     
     public function buscar()
     {
@@ -274,6 +290,63 @@ class ExpedienteController extends Controller
         $heredo12->folio_expediente = $Exp->id; 
         $heredo12->tipo = "observaciones";
         $heredo12->save();
+        
+        //agregar tmb en patologicos....
+        $patologico = new Patologicos;
+        $patologico->status = 1;
+        $patologico->folio_expediente = $Exp->id;
+        $patologico->save();
+        
+        //agregar nopatolgiic
+        $pnoatologico = new Nopatologicos;
+        $pnoatologico->status = 1;
+        $pnoatologico->folio_expediente = $Exp->id;
+        $pnoatologico->save();
+        
+        //cerate aparatos
+        $apartos = new Aparatossistemas;
+        $apartos->status = 1;
+        $apartos->folio_expediente = $Exp->id;
+        $apartos->save();
+        
+        //Emoezamos primeor por higiene bucal...
+        $bucalinicio = new Bucalodinicio;
+        $bucalinicio->status = 1;
+        $bucalinicio->folio_expediente = $Exp->id;
+        $bucalinicio->save();
+        $bucalfin = new Bucalodfinal;
+        $bucalfin->status = 1;
+        $bucalfin->folio_expediente = $Exp->id;
+        $bucalfin->save();
+        $bucalcpod = new Bucalcpod;
+        $bucalcpod->status = 1;
+        $bucalcpod->folio_expediente = $Exp->id;
+        $bucalcpod->save();
+                                
+        //mujeres
+        $mujer = new Mujeres;
+        $mujer->status = 1;
+        $mujer->folio_expediente = $Exp->id;
+        $mujer->save();
+        
+        //exploracion fiisca
+        $fisica = new Exploracionfisica;
+        $fisica->status = 1;
+        $fisica->folio_expediente = $Exp->id;
+        $fisica->save();
+
+        //nueva nota deevolucoi        
+        $nota = new Notaevolucion;
+        $nota->status = 1;
+        $nota->folio_expediente = $Exp->id;
+        $nota->save();
+
+        //nueva nota deevolucion
+        $resumen = new Resumen;
+        $resumen->status = 1;
+        $resumen->fecha = date('yyyy-mm-dd');
+        $resumen->folio_expediente = $Exp->id;
+        $resumen->save();
 
         //return view
         return view('indexAdmin');
@@ -341,8 +414,10 @@ class ExpedienteController extends Controller
         //Salvar en sesion nombre...
         $folio = Expediente::where('id','=',$id)->get(['folio_expediente','nombre_paciente']);
         $completo = "";
+        $idsss = ""; 
         if($request->session()->has(('nombrecom'))){
             $completo = $request->session()->get('nombrecom');
+            $idsss = $request->session()->get('iduser');
         }
         
         if ($request->session()->has('folioexpediente')) {
@@ -355,11 +430,13 @@ class ExpedienteController extends Controller
             $request->session()->put('paciente', $folio[0]->nombre_paciente);
             $request->session()->put('idexpediente', $id);
             $request->session()->put('nombrecom', $completo);
+            $request->session()->put('iduser', $idsss);
         }else{
             $request->session()->put('folioexpediente', $folio[0]->folio_expediente);                    
             $request->session()->put('paciente', $folio[0]->nombre_paciente);
             $request->session()->put('idexpediente', $id);
             $request->session()->put('nombrecom', $completo);
+            $request->session()->put('iduser', $idsss);
         }
         return $id;
     }
@@ -375,6 +452,24 @@ class ExpedienteController extends Controller
         //$valuefolio = $request->session()->get('folioexpediente', 'default');
         
         return view('Alumno.principal');
+    }
+    
+    public function verExpedientes(Request $request){
+        //$iduser = $correcto[0]->id;
+        $iduser = $request->session()->get('iduser','0');
+                    
+        //recuoero datos del expeidnet con base al ide lde usuario...
+        $facturasCliente = DB::table('expediente')
+            ->join('alumnos','alumnos.id','=','expediente.id_alumno')
+            ->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
+            ->where('alumnos.id_usuario', '=', $iduser)
+            ->get();
+
+        //$clinica = Expediente::where();
+        $datos['data'] = $facturasCliente;
+
+        //Launch view with exoeduente....solo los asociados al alumnos...no todos...
+        return view('Alumno.preprincipal',$datos);
     }
 
 /************************metodos de cada expediente********************/
@@ -600,6 +695,718 @@ class ExpedienteController extends Controller
             ));        
 
         return redirect('/Expediente/principal');
-
     }   
+    
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Patologicos(Request $request){
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');        
+        
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Patologicos::where('folio_expediente','=',$id)->get();
+        //echo $data;
+        $enfermedades = ["Varicela","Rubeola","Sarampion","Parotiditis","Tosferina","Escarlatina","Parasitosis","Hepatitis","Sida","Asma","DisfEndocrinas","Hipertensión","Cáncer","ETS","Epilepsias","AmigdalitisdeRepeticion","Tuberculosis","FiebreReumatica","Diabetes","Enfcardiovasculares","Artritis","Traumatismoc/sec","IntQuirurgicas","TransfSangu","Alergias"];
+
+        $arrelgo = array();
+        $diferntes = explode(",", $data[0]->enfermedad);
+        if(count($diferntes) == 1){
+            //no hay datos...va vacio
+            foreach ($enfermedades as $value){
+                $arrelgo[$value] = "";
+            }
+            //$arrelgo = "";
+        }else{
+            //get data from xplode
+            foreach ($diferntes as $value) {
+                $arrelgo[$value] = $value;
+            }
+            //$arrelgo = $data[0]->enfermedad;
+        }
+        
+        $datos["variable"] = $arrelgo;        
+        $datos["observaciones"] = $data[0]->observaciones;
+        
+        return view('Alumno.AntescedentesPatologicos',$datos);
+    }
+    
+    public function storePatologico(Request $request){
+        $enfermedades = ["Varicela","Rubeola","Sarampion","Parotiditis","Tosferina","Escarlatina","Parasitosis","Hepatitis","Sida","Asma","DisfEndocrinas","Hipertensión","Cáncer","ETS","Epilepsias","AmigdalitisdeRepeticion","Tuberculosis","FiebreReumatica","Diabetes","Enfcardiovasculares","Artritis","Traumatismoc/sec","IntQuirurgicas","TransfSangu","Alergias"];
+        $i =0;
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');        
+
+        $variable = "";
+
+        foreach ($enfermedades as $value) { 
+            $dataaa = $request->input($value); 
+
+            if($dataaa == "on"){                
+                $variable .= $value.",";                
+            }
+        }
+        
+        $heredo = Patologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "enfermedad" => $variable
+            ));
+
+        //save dato in the riegh place....;
+        $heredo = Patologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "observaciones" => $request->input('observaciones')
+            ));        
+
+        return redirect('/Expediente/principal');
+    }
+    
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Nopatologicos(Request $request){
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Nopatologicos::where('folio_expediente','=',$id)->get();
+        //echo $data;
+        $inmunizaciones = $data[0]->inmunizacion;
+        $enfermedades = ["Selecciona","Esquemacompleto","Enproceso","Esquemaincompleto","Ningunadosis","Loignora"];
+        $enfermedadesreales = ["Tuberculosis","Poliomielitis (Sabin)","Pentavalente (DPT+HB+HIB)","Difteria, tosferina y tétanos","Sarampión, rubeola y parotiditis","Hepatitis B","Otra"];
+
+        //arreglo[tuberculosis]=valor(enfermedades)
+        $arrelgo = array();
+        $indice = 0;
+        $arregloenfermedad = array();
+        $diferntes = explode(",", $inmunizaciones);
+        if(count($diferntes) == 1){
+            //no hay datos...va vacio
+            foreach ($enfermedadesreales as $value){
+                $arrelgo[$value] = "Selecciona";
+                $indice += 1;
+            }
+        }else{
+            //get data from xplode
+            foreach ($diferntes as $value) {
+                if($indice == count($enfermedadesreales))
+                    break;
+                $arrelgo[$enfermedadesreales[$indice]] = $value;
+                $indice += 1;
+            }
+        }
+        $datos["variable"] = $arrelgo;
+
+        /*
+         * Ahora la siguiente seccion...toxicominas
+         */
+        $toxiarreglo= ["toxico0","toxico1","toxico2","toxico3"];
+        $toxicomanias = $data[0]->toxicominas;
+        $arregloaddciones = array();
+        
+        $i = 0;
+        $diferntes2 = explode(",", $toxicomanias);
+        if(count($diferntes2) == 1){
+            foreach ($toxiarreglo as $value){
+                $i += 1;
+                $arregloaddciones[$value] = "";
+            }
+        }else{
+            foreach ($diferntes2 as $value) {
+                $arregloaddciones[$toxiarreglo[$i]] = $value;
+                if($i == count($toxiarreglo)-1)
+                    break;
+                $i += 1;
+            }
+        }
+        $datos["toxicos"] = $arregloaddciones;
+
+        /*
+         * Ahora la siguiente seccion...habutos
+         */
+        $habitisarreglo= ["habito0","habito1"];
+        $habitos = $data[0]->habitos;
+        $arregloahabitos = array();
+        
+        $i = 0;
+        $diferntes3 = explode(",", $habitos);
+        if(count($diferntes3) == 1){
+            foreach ($habitisarreglo as $value){
+                $i += 1;
+                $arregloahabitos[$value] = "";
+            }
+        }else{
+            foreach ($diferntes3 as $value) {
+                $arregloahabitos[$habitisarreglo[$i]] = $value;
+                if($i == count($habitisarreglo)-1)
+                    break;
+                $i += 1;
+            }
+        }
+        $datos["habitos"] = $arregloahabitos;
+        
+        /*
+         * The next one...vivienda
+         */
+        //echo $data;
+        $vivienda = $data[0]->vivienda;
+        $enfermedadesreales = ["Vivienda","No de habitaciones en la casa","Personas en la vivienda","Personas en la familia","Personas que trabajan","Personas menores de 15 años"];
+
+        $arrelgo = array();
+        $i = 0;
+        $arregloenfermedad = array();
+        
+        $diferntes = explode(",", $vivienda);
+        if(count($diferntes) == 1){
+            //no hay datos...va vacio
+            foreach ($enfermedadesreales as $value) {
+                $datos["vivienda".$i] = "";            
+                $i += 1;
+            }
+        }else{
+            //get data from xplode
+            foreach ($diferntes as $value) {
+                if($i == count($enfermedadesreales))
+                    break;
+                $datos["vivienda".$i] = $value;            
+                $i += 1;
+            }
+        }
+        //$datos["vivienda"] = $arrelgo;
+
+        /*
+         * Ahora la siguiente seccion...habutos
+         */
+        $servicios= ["servicio0","servicio1","servicio2","servicio3","servicio4"];
+        $habitos = $data[0]->servicios;
+        $arregloahabitos = array();
+        
+        $i = 0;
+        $diferntes3 = explode(",", $habitos);
+        if(count($diferntes3) == 1){
+            foreach ($servicios as $value){
+                $i += 1;
+                $arregloahabitos[$value] = "";
+            }
+        }else{
+            foreach ($diferntes3 as $value) {
+                $arregloahabitos[$servicios[$i]] = $value;
+                if($i == count($servicios)-1)
+                    break;
+                $i += 1;
+            }
+        }
+        $datos["servicios"] = $arregloahabitos;        
+        $datos["observacionesss"] = $data[0]->observaciones;;        
+        return view('Alumno.AntescedentesNoPatologicos',$datos);
+    }
+    
+    public function storeNopatologico(Request $request){
+        $enfermedades = ["Tuberculosis","Poliomielitis(Sabin)","Pentavalente(DPT+HB+HIB)","Difteria,tosferinaytétanos","Sarampión,rubeolayparotiditis","HepatitisB","Otra"];
+        $i =0;
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');        
+
+        $variable = "";
+
+        foreach ($enfermedades as $value) { 
+            $dataaa = $request->input($value); 
+
+            $variable .= $dataaa.",";                
+        }
+        
+        //save dato in the riegh place....;
+        $heredo = Nopatologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "inmunizacion" => $variable
+            ));        
+
+        /*
+        //ahora a rescatar los valores de toxicomias
+         */
+        $habitisarreglo= ["habito0","habito1"];
+        $var = "";
+        foreach ($habitisarreglo as $value) {
+            $dati = $request->input($value);
+            //if($dati == "on")
+            $var .= $dati.",";
+        }
+        //save dato in the riegh place....;
+        $habit = Nopatologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "habitos" => $var
+            ));     
+        
+        /*
+        //ahora a rescatar los valores de habitos
+         */
+        $toxiarreglo= ["toxico0","toxico1","toxico2","toxico3"];
+        $var = "";
+        foreach ($toxiarreglo as $value) {
+            $dati = $request->input($value);
+            //if($dati == "on")
+            $var .= $dati.",";
+        }
+        //save dato in the riegh place....;
+        $heredo = Nopatologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "toxicominas" => $var
+            )); 
+        
+        /*
+        //ahora a rescatar los valores de vivienda
+         */
+        $toxiarreglo= ["vivienda0","vivienda1","vivienda2","vivienda3","vivienda4","vivienda5"];
+        $var = "";
+        foreach ($toxiarreglo as $value) {
+            $dati = $request->input($value);
+            //if($dati == "on")
+            $var .= $dati.",";
+        }
+        //save dato in the riegh place....;
+        $heredo = Nopatologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "vivienda" => $var
+            ));         
+        
+        /*
+        //ahora a rescatar los valores de servicios
+         */
+        $toxiarreglo= ["servicio0","servicio1","servicio2","servicio3","servicio4"];
+        $var = "";
+        foreach ($toxiarreglo as $value) {
+            $dati = $request->input($value);
+            //if($dati == "on")
+            $var .= $dati.",";
+        }
+        //save dato in the riegh place....;
+        $heredo = Nopatologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "servicios" => $var
+            ));         
+        
+        //save dato in the riegh place....;
+        $heredo = Nopatologicos::where('folio_expediente','=',$id)
+            ->update(array(
+                "observaciones" => $request->input('observa')
+            ));         
+
+        return redirect('/Expediente/principal');
+    }    
+    
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Aparatos(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Aparatossistemas::where('folio_expediente','=',$id)->get();
+
+        $datos['digestivo'] = $data[0]->digestivo;
+        $datos['respiratorio'] = $data[0]->respiratorio;
+        $datos['cardiovascular'] = $data[0]->cardiovascular;
+        $datos['esqueletico'] = $data[0]->esqueletico;
+        $datos['urinario'] = $data[0]->urinario;
+        $datos['linfo'] = $data[0]->linfo;
+        $datos['endocrino'] = $data[0]->endocrino;
+        $datos['nervioso'] = $data[0]->nervioso;
+        $datos['tegumentario'] = $data[0]->tegumentario;
+        $datos['observaciones'] = $data[0]->observaciones;
+
+        return view ('Alumno.AparatosySistemas',$datos);        
+    }
+    
+    public function storeAparatos(Request $request){
+                //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //save dato in the riegh place....;
+        $heredo = Aparatossistemas::where('folio_expediente','=',$id)
+            ->update(array(
+                "digestivo" => $request->input('diges'),
+                "respiratorio" => $request->input('resp'),
+                "cardiovascular" => $request->input('cardio'),
+                "esqueletico" => $request->input('esqle'),
+                "urinario" => $request->input('uri'),
+                "linfo" => $request->input('linfo'),
+                "endocrino" => $request->input('endo'),
+                "nervioso" => $request->input('nervi'),
+                "tegumentario" => $request->input('tegu'),
+                "observaciones" => $request->input('observaciones')
+            ));         
+
+        return redirect('/Expediente/principal');        
+    }
+    
+/************************metodos de cada expediente********************/
+/************************store/load bucaless********************/
+    public function Bucal(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        $arreglo = ['vestibular11','vestibular31','vestibular16','vestibular26','lingual36','lingual46'];
+        $data = Bucalodinicio::where('folio_expediente','=',$id)->get();
+
+        $valores = array();
+        
+        //checa el primer valor, si esta vacio, entonces lo demas tambien
+        foreach ($arreglo as $value) {
+            if($data[0]->$value == ""){
+                
+                $tempi = $value;
+                
+                $valores[$tempi."1"] = 0;
+                $valores[$tempi."2"] = 0;
+            }else{
+                $tempi = $value;
+                $temp = explode(",",$data[0]->$value);
+                $valores[$tempi."1"] = $temp[0];
+                $valores[$tempi."2"] = $temp[1];
+            }
+        }
+    
+        $datos['valores'] = $valores;
+        $fechacorrecta = explode(" ",$data[0]->fecha);
+        $datos['fecha1'] = $fechacorrecta[0];
+        
+        //Cargamos datos de fn.........
+        $arreglo = ['vestibularfin11','vestibularfin31','vestibularfin16','vestibularfin26','lingualfin36','lingualfin46'];
+        $datafin = Bucalodfinal::where('folio_expediente','=',$id)->get();
+
+        $valores = array();
+        
+        //checa el primer valor, si esta vacio, entonces lo demas tambien
+        foreach ($arreglo as $value) {
+            if($datafin[0]->$value == ""){
+                
+                $tempi = $value;
+                
+                $valores[$tempi."1"] = 0;
+                $valores[$tempi."2"] = 0;
+            }else{
+                $tempi = $value;
+                $temp = explode(",",$datafin[0]->$value);
+                $valores[$tempi."1"] = $temp[0];
+                $valores[$tempi."2"] = $temp[1];
+            }
+        }
+    
+        $datos['finales'] = $valores;
+        $fechacorrecta = explode(" ",$datafin[0]->fechafin);
+        $datos['fecha2'] = $fechacorrecta[0];
+        
+        //Cargamos datos de cpod.........
+        $arreglo = ['cariados','perdidos','obturados'];
+        $datacpod = Bucalcpod::where('folio_expediente','=',$id)->get();
+
+        $valores = array();
+        
+        $i=1;
+        //checa el primer valor, si esta vacio, entonces lo demas tambien
+        foreach ($arreglo as $value) {
+            if($datacpod[0]->$value == ""){
+                
+                $tempi = $value;
+                
+                $datos['cpod'.$i] = 0;
+                $i += 1;
+                $datos['cpod'.$i] = 0;
+                $i += 1;
+            }else{
+                $tempi = $value;
+                $temp = explode(",",$datacpod[0]->$value);
+                $datos['cpod'.$i] = $temp[0];
+                $i += 1;
+                $datos['cpod'.$i] = $temp[1];
+                $i += 1;
+            }
+        }
+    
+        $datos['total'] = $datacpod[0]->total;
+        $datos['observaciones'] = $datacpod[0]->observaciones;
+        
+        return view ('Alumno.HigieneOral',$datos);
+    }
+    
+    public function storeBucal(Request $request){
+                
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        $arreglo = ['vestibular11','vestibular31','vestibular16','vestibular26','lingual36','lingual46'];
+        //save dato in the riegh place....---------------------        
+        $store = array();
+        foreach ($arreglo as $value) {
+            $dato1 = $request->input($value."1");
+            $dato2 = $request->input($value."2");
+            
+            $store[$value] = $dato1.",".$dato2;            
+        }        
+        $store['fecha'] = $request->input('fechainicial');
+        $heredo = Bucalodinicio::where('folio_expediente','=',$id)
+            ->update($store);
+
+        $arreglo = ['vestibularfin11','vestibularfin31','vestibularfin16','vestibularfin26','lingualfin36','lingualfin46'];
+
+        //save dato in the riegh place....---------------------        
+        $store = array();
+        foreach ($arreglo as $value) {
+            $dato1 = $request->input($value."1");
+            $dato2 = $request->input($value."2");
+            
+            $store[$value] = $dato1.",".$dato2;            
+        }
+        $store['fechafin'] = $request->input('fechafin');
+        $heredo = Bucalodfinal::where('folio_expediente','=',$id)
+            ->update($store);      
+        
+        $arreglo = ['cariados','perdidos','obturados'];
+        //save dato in the riegh place....---------------------        
+        $store = array();
+        $i=1;
+        foreach ($arreglo as $value) {
+            $dato1 = $request->input("cpod".$i);
+            $i += 1;
+            $dato2 = $request->input("cpod".$i);
+            $i += 1;
+            
+            $store[$value] = $dato1.",".$dato2;            
+        }
+            
+        $store['total'] = $request->input("dientes");           
+        $store['observaciones'] = $request->input("observaciones");           
+        
+        //save dato in the riegh place....;
+        $heredo = Bucalcpod::where('folio_expediente','=',$id)
+            ->update($store);   
+        
+        return redirect('/Expediente/principal');        
+    }
+    
+/************************metodos de cada expediente********************/
+/************************store/load bucaless********************/
+    public function Mujeres(Request $request){
+
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+        
+        $data = Mujeres::where('folio_expediente','=',$id)->get();
+        $habitisarreglo = ['menarca','partos','abortos','meno','embarazos','cesa'];
+        $sintomas = $data[0]->sintomas;
+        $arregloahabitos = array();
+        $comas = explode(",", $sintomas);
+        
+        $i = -1;
+        if(count($comas) == 1){
+            foreach ($habitisarreglo as $value){
+                $i += 1;
+                $datos[$value] = "";
+            }
+        }else{
+            foreach ($habitisarreglo as $value){
+                $i += 1;
+                if(count($habitisarreglo) == $i){break;}
+                $datos[$value] = $comas[$i];                
+            }
+        }
+        
+        $datos['fechapapa'] = $data[0]->fechapapa;
+        $datos['fechames'] = $data[0]->fechames;
+        $datos['observaciones'] = $data[0]->observaciones;
+        //$datos["sintomas"] = $arregloahabitos;  
+        return view ('Alumno.Mujeres',$datos);
+    }
+    
+    public function storeMujeres(Request $request){
+        $enfermedades = ['menarca','partos','abortos','meno','embarazos','cesa'];
+        $i =0;
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');        
+
+        $variable = "";
+
+        foreach ($enfermedades as $value) { 
+            $dataaa = $request->input($value); 
+
+            $variable .= $dataaa.",";                
+        }
+        
+        //save dato in the riegh place....;
+        $heredo = Mujeres::where('folio_expediente','=',$id)
+            ->update(array(
+                "sintomas" => $variable,
+                "fechapapa" => $request->input('fechapapa'),
+                "fechames" => $request->input('fechames'),
+                "observaciones" => $request->input('observaciones')
+            ));        
+
+        
+        
+        return redirect('/Expediente/principal');
+    }    
+
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Fisica(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Exploracionfisica::where('folio_expediente','=',$id)->get();
+
+        $datos['frenillo'] = $data[0]->frenillo;
+        $datos['lengua'] = $data[0]->lengua;
+        $datos['lingual'] = $data[0]->lingual;
+        $datos['encias'] = $data[0]->encias;
+        $datos['paduro'] = $data[0]->paduro;
+        $datos['pablando'] = $data[0]->pablando;
+        $datos['alveorales'] = $data[0]->alveorales;
+        $datos['faringe'] = $data[0]->faringe;
+        $datos['boca'] = $data[0]->boca;
+        $datos['salival'] = $data[0]->salival;
+        $datos['carrillos'] = $data[0]->carrillos;
+        $datos['yugal'] = $data[0]->yugal;
+        $datos['hallazgos'] = $data[0]->hallazgos;
+        $datos['observaciones'] = $data[0]->observaciones;
+
+        return view ('Alumno.ExploracionFisica',$datos);        
+    }
+    
+    public function storeFisica(Request $request){
+                //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //save dato in the riegh place....;
+        $heredo = Exploracionfisica::where('folio_expediente','=',$id)
+            ->update(array(
+                "frenillo" => $request->input('frenillo'),
+                "lengua" => $request->input('lengua'),
+                "lingual" => $request->input('lingual'),
+                "encias" => $request->input('encias'),
+                "paduro" => $request->input('paduro'),
+                "pablando" => $request->input('pablando'),
+                "alveorales" => $request->input('alveorales'),
+                "faringe" => $request->input('faringe'),
+                "boca" => $request->input('boca'),
+                "salival" => $request->input('salival'),
+                "carrillos" => $request->input('carrillos'),
+                "yugal" => $request->input('yugal'),
+                "hallazgos" => $request->input('hallazgos'),
+                "observaciones" => $request->input('observaciones')
+            ));         
+
+        return redirect('/Expediente/principal');        
+    }
+
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Notas(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Notaevolucion::where('folio_expediente','=',$id)->get();
+        $expediente = Expediente::find($id);
+
+        $datos['fecha'] = explode(" ",$data[0]->fecha)[0];
+        $datos['referencia'] = $data[0]->referencia;
+        $datos['contraref'] = $data[0]->contraref;
+        $datos['nota'] = $data[0]->nota;
+                
+        $datos['nombre'] = $expediente->nombre_paciente;        
+        $datos['edad'] = $expediente->edad;        
+        $datos['genero'] = $expediente->genero;        
+        $datos['num'] = $expediente->folio_expediente;        
+
+        return view ('Alumno.Nota_evolucion',$datos);        
+    }
+    
+    public function storeNota(Request $request){
+                //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //save dato in the riegh place....;
+        $heredo = Notaevolucion::where('folio_expediente','=',$id)
+            ->update(array(
+                "fecha" => $request->input('fecha'),
+                "referencia" => $request->input('ref'),
+                "contraref" => $request->input('contra'),
+                "nota" => $request->input('nota')
+            ));         
+
+        return redirect('/Expediente/principal');        
+    }
+    
+/************************metodos de cada expediente********************/
+/************************store/load lista con notas********************/
+    public function Imagenes(Request $request){
+        
+        //recuperra ide expedinte y el folio tambien 
+        //el folio debe ser el mismo nombe donde estan las 
+        //iagenes guardadas...
+        $id = $request->session()->get('idexpediente','0');
+
+        $folio = "...";
+        
+        //get all the images
+        //go to folder where the images area saved
+        //get the items and show a list in the view        
+    } 
+    
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Resumen(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Resumen::where('folio_expediente','=',$id)->get();
+        //$expediente = Expediente::find($id);
+
+        $datos['diagnostico'] = $data[0]->diagnostico;
+
+        return view ('Alumno.Diagnostico_General',$datos);        
+    }
+    
+    public function storeResumen(Request $request){
+                //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //save dato in the riegh place....;
+        $heredo = Resumen::where('folio_expediente','=',$id)
+            ->update(array(
+                "diagnostico" => $request->input('diagnostico'),
+            ));         
+
+        return redirect('/Expediente/principal');        
+    }
+    
 }

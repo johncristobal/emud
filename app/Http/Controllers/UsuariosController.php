@@ -66,8 +66,10 @@ class UsuariosController extends Controller
                     $request->session()->flush();
                     
                     $request->session()->put('nombrecom', $correcto[0]->name.' '.$correcto[0]->pat.' '.$correcto[0]->mat);
+                    $request->session()->put('iduser', $correcto[0]->id);
                 }else{
-                    $request->session()->put('nombrecom', $correcto[0]->name.' '.$correcto[0]->pat.' '.$correcto[0]->mat);                    
+                    $request->session()->put('nombrecom', $correcto[0]->name.' '.$correcto[0]->pat.' '.$correcto[0]->mat);
+                    $request->session()->put('iduser', $correcto[0]->id);                    
                 }
                 if($correcto[0]->rol == "1"){
                     return view('indexAdmin');

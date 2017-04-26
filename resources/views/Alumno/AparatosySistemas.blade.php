@@ -31,7 +31,7 @@
 						<!--Se edita desde esta zona-->
 					<h2>Aparatos y Sistemas</h2>	
 			
-			<form method="" action="">
+			<form method="post" action="{{url::asset('/')}}Expediente/Alta/Aparatos">
 				<table align="center" border="0">
 
 				<tr>
@@ -40,7 +40,7 @@
 					
 				<tr>
 					<td><label>Digestivo</label></td>
-					<td><textarea rows="3" cols="40"class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40"class="form" name="diges">{{ $digestivo }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -49,7 +49,7 @@
 
 				<tr>
 					<td><label>Respiratorio</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="resp">{{ $respiratorio }}</textarea></td>
 				</tr>
 
 				<tr>
@@ -58,7 +58,7 @@
 
 				<tr>
 					<td><label>Cardiovascular</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+					<td><textarea rows="3" cols="40" class="form" name="cardio">{{ $cardiovascular }}</textarea></td>
 				</tr>
 
 
@@ -68,7 +68,7 @@
 
 				<tr>
 					<td><label>Esqueletico</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+					<td><textarea rows="3" cols="40" class="form" name="esqle">{{ $esqueletico }}</textarea></td>
 				</tr>
 
 
@@ -78,7 +78,7 @@
 
 				<tr>
 					<td><label>Urinario</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+					<td><textarea rows="3" cols="40" class="form" name="uri">{{ $urinario }}</textarea></td>
 				</tr>
 
 
@@ -88,7 +88,7 @@
 
 				<tr>
 					<td><label>Linfohematico</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+					<td><textarea rows="3" cols="40" class="form" name="linfo">{{ $linfo }}</textarea></td>
 				</tr>
 
 
@@ -98,7 +98,7 @@
 
 				<tr>
 					<td><label>Endocrino</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="endo">{{ $endocrino }}</textarea></td>
 				</tr>
 
 
@@ -108,7 +108,7 @@
 
 				<tr>
 					<td><label>Nervioso</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="nervi">{{ $nervioso }}</textarea></td>
 				</tr>
 
 
@@ -118,7 +118,7 @@
 
 				<tr>
 					<td><label>Tegumentario</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                        <td><textarea rows="3" cols="40" class="form" name="tegu">{{ $tegumentario }}</textarea></td>
 				</tr>
 
 
@@ -127,8 +127,8 @@
 				</tr>
 
 				<tr>
-					<td><label>Observaciones</label></td>
-					<td><textarea rows="3" cols="40" class="form"></textarea></td>
+                                    <td><label>Observaciones</label></td>
+                                    <td><textarea rows="3" cols="40" class="form" name="observaciones">{{ $observaciones }}</textarea></td>
 				</tr>
 				<tr>
 					<td colspan="2"></br></td>
@@ -175,7 +175,4 @@
 
 	</body>
 </html>
-
-
-
 

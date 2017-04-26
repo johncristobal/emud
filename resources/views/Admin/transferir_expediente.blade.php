@@ -32,9 +32,15 @@
 		<table class="form" border="0">
 			<tr><td colspan="3">Seleccionar alumno que tiene el expediente</td></tr>
 			<tr>
-				<td>Seleccionar alumno:</td><td><select><option>xs</option>
-														<option>xs</option>
-												</select></td>
+				<td>Seleccionar alumno:</td>
+                                <td>
+                                <select name="estudianteA">
+                                    @foreach($alumnos as $value)
+                                    <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                </td>
 				<td></td>										
 			</tr>
 
@@ -42,7 +48,7 @@
 				<td class="Separador" colspan="3"></td>
 			</tr>
 			
-			<tr><td colspan="2">Seleccionar alumno a quien se tranfiere el expediente</td></tr>
+			<!--tr><td colspan="2">Seleccionar alumno a quien se tranfiere el expediente</td></tr>
 			<tr>
 				<td>Seleccionar alumno:</td><td><select><option>xs</option>
 			</tr>
@@ -50,11 +56,28 @@
 				<td class="Separador" colspan="3"></td>
 			</tr>
 
-			<tr><td colspan="3" align="center"><input type="submit" value="Reasignar"></td></tr>
+			<tr><td colspan="3" align="center"><input type="submit" value="Reasignar"></td></tr-->
 		</table>
-	</form>
+                    
+                <table width="100%">
+                    <thead>
+                    <th width="30%"><h3>Expediente</h3></th>
+                    <th width="35%"><h3>Alumno actual</h3></th>
+                    <th width="35%"><h3>Transferir a</h3></th>
+                    <!--th width="5%"></th-->
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                    
+                </form>
 		</section>
-				</section>
+                    </section>
 
 			<!-- Main -->
 				<article id="main">

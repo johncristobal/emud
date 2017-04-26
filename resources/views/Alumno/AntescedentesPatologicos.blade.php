@@ -29,13 +29,44 @@
 				<section id="banner">
 					<div class="inner">
 						<!--Se edita desde esta zona-->
-					<h2>Antescedentes Personales Patológicos</h2>
+					<h2>Antecedentes Personales Patológicos</h2>
 								
 					<h4>Enfermedades</h4>
 
-					<form method="" action="">
-						<table border="0" align="center" class="default" >
-						<tr>
+                                        <!--Ahora a guardar...****-->
+					<form method="post" action="{{URL::asset('/')}}Expediente/Alta/Patologico">
+						<table border="0" align="left" class="default" >
+						<?php 
+                                                    $enfermedades = ["Varicela","Rubeola","Sarampion","Parotiditis","Tosferina","Escarlatina","Parasitosis","Hepatitis","Sida","Asma","Disf Endocrinas","Hipertensión","Cáncer","ETS","Epilepsias","Amigdalitis de Repeticion","Tuberculosis","Fiebre Reumatica","Diabetes","Enf cardiovasculares","Artritis","Traumatismo c/sec","Int Quirurgicas","Transf Sangu","Alergias"];
+                                                    $i =0;
+                                                    foreach ($enfermedades as $value) { 
+                                                        if($i==0){ ?>
+                                                        <tr>
+                                                        <?php } ?>
+                                                            <td>
+                                                        <?php
+                                                            //get the union of words...
+                                                            $newstring = str_replace(" ", "", $value);
+                                                            if((isset($variable[$newstring])) && ($variable[$newstring] != "")){ ?>    
+                                                                <label class="alineacion align-left"><?= $value; ?></label><input type="checkbox" name="<?= $newstring; ?>" checked="true">
+                                                        <?php }else{ ?>
+                                                                <label class="alineacion align-left"><?= $value; ?></label><input type="checkbox" name="<?= $newstring; ?>">
+                                                        <?php                                                 
+                                                            }
+                                                            $i += 1;
+                                                            if($i==5){
+                                                                $i = 0;?>                                                        
+                                                            </tr>  
+                                                            <tr>
+                                                                <td class="Separador" colspan="5"></td>
+                                                            </tr>
+
+                                                <?php
+                                                        }
+                                                    }
+                                                ?>
+                                                                                                                    
+                                                <!--tr>
 							<td><label class="alineacion">Varicela</label><input type="checkbox" name="pasa" value="X"></td>
 							<td><label class="alineacion">Rubeola</label><input type="checkbox" name="pasa" value="X"></td>
 							<td>Sarampion<input type="checkbox" name="pasa" value="X"></td>
@@ -90,10 +121,10 @@
 						</tr>
 						<tr>
 							<td class="Separador" colspan="5"></td>
-						</tr>
+						</tr-->
 
 						<tr>
-							<td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2"></textarea></td>
+							<td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2" name="observaciones">{{ $observaciones }}</textarea></td>
 						</tr>
 						<tr>
 							<td class="Separador" colspan="5"></td>

@@ -29,11 +29,16 @@
 				<section id="banner">
 					<div class="inner">
 						<!--Se edita desde esta zona-->
-					<h3>RECETA</h3>
-			<form>
+					<h3>Receta</h3>
+
+					@if(count($errors))
+                        <h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
+                    @endif
+
+			<form method="post" action="{{url::asset('/')}}pdf">
 				<table border="0" align="center" class="default">
 				<tr>
-					<td><label>Identificador:</label></td>
+					<td><label>*Identificador:</label></td>
 					<td><input type="text" name="id"></td>
 				</tr>
 				<tr>
@@ -41,25 +46,25 @@
 				</tr>
 				
 				<tr>
-					<td><label>Area de Atenci&oacute;n:</label></td>
+					<td><label>*Area de Atenci&oacute;n:</label></td>
 					<td><input type="text" name="areaatencion"></td>
 				</tr>
 				<tr>
 					<td></br></td>	
 				</tr>
 				<tr>
-					<td><label>Preescripcion:</label></td>
-					<td><textarea class="form" rows="3" cols="30"></textarea></td>
+					<td><label>*Preescripción:</label></td>
+					<td><textarea class="form" rows="3" cols="30" name="preescripcion"></textarea></td>
 				</tr>
 
 				<tr>
-					<td><label>Indicaciones:</label></td>
-					<td><textarea class="form"rows="3" cols="30"></textarea></td>
+					<td><label>*Indicaciones:</label></td>
+					<td><textarea class="form"rows="3" cols="30" name="indicaciones"></textarea></td>
 				</tr>
 				
 				<tr>
-					<td><label>Observaciones:</label></td>
-					<td><textarea class="form" rows="3" cols="30"></textarea></td>
+					<td><label>*Observaciones:</label></td>
+					<td><textarea class="form" rows="3" cols="30" name="observaciones"></textarea></td>
 				</tr>
 				<tr>
 					<td class="Separador" colspan="2"></td>
