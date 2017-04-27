@@ -78,7 +78,8 @@ class UsuariosController extends Controller
                     //Aqui buscar los expediente unicamente del doc...
                     //obtenesmo su id de la varible correcto
                     $iduser = $correcto[0]->id;
-                    
+                    $request->session()->put('iduser',$iduser);
+
                     //recuoero datos del expeidnet con base al ide lde usuario...
                     $facturasCliente = DB::table('expediente')
                         ->join('alumnos','alumnos.id','=','expediente.id_alumno')

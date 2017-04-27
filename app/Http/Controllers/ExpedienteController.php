@@ -424,6 +424,7 @@ class ExpedienteController extends Controller
             $request->session()->forget('folioexpediente');
             $request->session()->forget('paciente');
             $request->session()->forget('idexpediente');
+            $request->session()->forget('iduser');
             $request->session()->flush();
 
             $request->session()->put('folioexpediente', $folio[0]->folio_expediente);
