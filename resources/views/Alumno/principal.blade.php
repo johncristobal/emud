@@ -30,7 +30,7 @@
                                             <li class="submenu">
                                                     <a href="#">Mi Perfil</a>
                                                     <ul>
-                                                            <li><a href="left-sidebar.html">Editar mi perfil</a></li>
+                                                            <li><a href="left-sidebar.html">Cambiar contraseña</a></li>
                                                     </ul>
                                             </li>	
 

@@ -79,9 +79,7 @@
                                         <li class="submenu">
                                                 <a href="#">Mi Perfil</a>
                                                 <ul>
-                                                        <li><a href="left-sidebar.html">Editar mi perfil</a></li>
                                                         <li><a href="contact.html">Cambiar mi imagen</a></li>
-                                                        <li><a href="contact.html">Cambiar contraseña</a></li>
                                         <li class="submenu">
                                                 </ul>
 
@@ -121,7 +119,7 @@
                                         <th width="15%"><h3>Fecha</h3></th>
                                         <!--th width="5%"></th-->
                                         <th width="10%">Editar</th>
-                                        <th width="10%">Imágenes</th>
+                                        <th width="10%">Archivos</th>
                                         <th width="10%">Notas</th>
 
                                         </thead>

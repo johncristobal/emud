@@ -145,6 +145,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        Anchu\Ftp\FtpServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
     ],

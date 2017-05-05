@@ -1364,13 +1364,54 @@ class ExpedienteController extends Controller
 /************************metodos de cada expediente********************/
 /************************store/load lista con notas********************/
     public function Imagenes(Request $request){
-        
-        //recuperra ide expedinte y el folio tambien 
-        //el folio debe ser el mismo nombe donde estan las 
-        //iagenes guardadas...
+                
         $id = $request->session()->get('idexpediente','0');
+        $expediente = Expediente::find($id);
 
-        $folio = "...";
+        //read folder and get items..        
+        $destinationPath = $expediente->folio_expediente;
+        //echo $destinationPath;
+        $files = \File::files($destinationPath);//('/uploads');
+        
+        /*$data = Notaevolucion::where('folio_expediente','=',$id)->get();
+        $expediente = Expediente::find($id);
+
+        $arrayt = array();
+        
+        foreach ($data as $value) {
+
+            $datos['fecha'] = explode(" ",$value->fecha)[0];
+            $datos['idnota'] = $value->id;
+            $datos['referencia'] = $value->referencia;
+            $datos['contraref'] = $value->contraref;
+            $datos['nota'] = $value->nota;            
+            
+            array_push($arrayt,$datos);            
+        }*/
+        
+        $arrayt = array();
+
+        foreach ($files as $filemini)
+        {
+            $datos['fecha'] = (string)$filemini;
+            $datos['idnota'] = (string)$filemini;
+            array_push($arrayt,$datos);            
+
+        }
+
+        $finalr['data'] = $arrayt;
+        /*echo count($arrayt);
+        foreach ($arrayt as $value) {
+            echo $value['fecha'];
+        }*/
+        
+        //echo $finalr;
+        /*$datos['nombre'] = $expediente->nombre_paciente;        
+        $datos['edad'] = $expediente->edad;        
+        $datos['genero'] = $expediente->genero;        
+        $datos['num'] = $expediente->folio_expediente; */       
+
+        return view ('Alumno.principalimagenes',$finalr);   
         
         //get all the images
         //go to folder where the images area saved

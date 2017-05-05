@@ -7,6 +7,9 @@
             <file>file:/Applications/XAMPP/htdocs/blog/resources/views/Alumno/preprincipal.blade.php</file>
             <file>file:/Applications/XAMPP/htdocs/blog/app/Http/Controllers/UsuariosController.php</file>
             <file>file:/Applications/XAMPP/htdocs/blog/app/Http/routes.php</file>
+            <file>file:/Applications/XAMPP/htdocs/blog/resources/views/uploadfile.php</file>
+            <file>file:/Applications/XAMPP/htdocs/blog/app/Http/Controllers/FtpController.php</file>
+            <file>file:/Applications/XAMPP/htdocs/blog/app/Http/Controllers/UploadFileController.php</file>
             <file>file:/Applications/XAMPP/htdocs/blog/app/Http/Controllers/ExpedienteController.php</file>
         </group>
     </open-files>

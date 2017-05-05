@@ -130,7 +130,7 @@ class NotaController extends Controller
         return view ('Alumno.principalnotas',$finalr);        
     }
     
-/*
+    /*
      * Guardar id en sesion y redirgir a principal vuew
      */
     public function guardarid(Request $request,$id){
@@ -141,6 +141,7 @@ class NotaController extends Controller
         $completo = "";
         $idsss = "";
         $idexped = "";
+        
         if($request->session()->has(('nombrecom'))){
             $completo = $request->session()->get('nombrecom');
             $idsss = $request->session()->get('iduser');
@@ -164,13 +165,24 @@ class NotaController extends Controller
             $request->session()->put('iduser', $idsss);
         }
         return $id;
-    }    
+    }
     
-/*********************/    
-/*********************/    
-    
-    public function vernota(Request $request){
+    public function loadimagen(Request $request){
+        //return $request->input('id');
+        $archivo = $request->input('id');
+        
+        $file = \File::get($archivo);
+        $response = \Response::make($file, 200);
+        // using this will allow you to do some checks on it (if pdf/docx/doc/xls/xlsx)
+        $response->header('Content-Type', 'application/png');
+        //$response->header('Content-Disposition', 'inline; filename="'.$file.'""');
 
+        return $response;
+    }
+    
+/*********************/
+/*********************/    
+    public function vernota(Request $request){
                 
         //recuperra ide expedinte
         $id = $request->session()->get('idexpediente','0');

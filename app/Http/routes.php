@@ -121,6 +121,8 @@ Route::get('/Alumno',function(){
 });
 
 //nuEVAS RUTA..............
+Route::post('Notas/verimagen','NotaController@loadimagen');
+
 Route::post('Notas/verprincipal/{id}','NotaController@guardarid');
 Route::get('Notas/principal','NotaController@vernota');
 
@@ -156,3 +158,9 @@ Route::post('Expediente/Alta/Resumen','ExpedienteController@storeResumen');
 Route::post('pdf', 'PdfController@invoice');
 //Route :: get ('pdf/{id}', 'PdfController@show');
 
+//ftp
+Route::get('/ftp', ['as ' => 'ftp', 'uses' => 'FtpController@index']);
+
+//uploadfile
+Route::get('/uploadfile','UploadFileController@index');
+Route::post('/uploadfile','UploadFileController@showUploadFile');
