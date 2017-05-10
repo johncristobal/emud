@@ -208,4 +208,83 @@ class UsuariosController extends Controller
             return 0;
         }
     }
+    
+    public function cerrar(Request $request){
+        
+        //here we have to delete all the session variables :)
+        if ($request->session()->has('folioexpediente')) {
+            $request->session()->forget('folioexpediente');
+            $request->session()->forget('paciente');
+            $request->session()->forget('idexpediente');
+            $request->session()->forget('iduser');
+            $request->session()->flush();
+        }
+        
+        return redirect('/');
+    }
+    
+    public function getAlumnosData(Request $request){
+        
+        $idalumno = $request->session()->get('idalumnotemp','0');
+                
+        //$alumnos = Alumno::all();
+        $alumno = DB::table('usuarios')
+            ->join('alumnos','alumnos.id_usuario','=','usuarios.id')
+            ->select('alumnos.id','usuarios.name')
+            ->where('usuarios.rol', '=', '2')
+            ->get();
+
+        //$expedientes = Expediente::all();
+        $datos['alumnos'] = $alumno;
+        //$datos['expedientes'] = $expedientes;
+
+        //return $alumnos;
+        $datos['alumno_elegido'] = $idalumno;
+                
+        //get expedientes with id alumno
+        $facturasCliente = DB::table('expediente')
+            //->join('alumnos','alumnos.id','=','expediente.id_alumno')
+            ->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
+            ->where('expediente.id_alumno', '=', $idalumno)
+            ->get();
+        
+        $datos['expedientes'] = $facturasCliente;
+        
+        return view('Admin.transferir_expediente_load',$datos);
+    }
+    
+//**************Update transferir data***************************
+    public function saveTransferir(Request $request){
+        
+        $estudiantA = $request->input('estudianteA');
+
+        //get expedientes with id alumno
+        $facturasCliente = DB::table('expediente')
+            //->join('alumnos','alumnos.id','=','expediente.id_alumno')
+            ->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
+            ->where('expediente.id_alumno', '=', $estudiantA)
+            ->get();
+        
+        //read all the values from post form
+        $i = 0;
+        foreach ($facturasCliente as $value) {
+            $idnuevo = $request->input('nuevo'.$i);
+            if($idnuevo == "ninguno"){
+                $i += 1;
+                continue;
+            }
+            //echo "Valoe: ".$idnuevo."<br>";
+            $folioexp = $value->folio_expediente;
+            
+            //update id_alumno in table expediente...
+            $heredo = Expediente::where('folio_expediente','=',$folioexp)
+                ->update(array(
+                    "id_alumno" => $idnuevo
+                ));
+            
+            $i += 1;
+        }
+
+        return redirect('/Buscar');
+    }
 }

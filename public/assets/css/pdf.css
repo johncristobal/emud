@@ -13,14 +13,27 @@
   
 }
 
+/*Pie de la receta*/
 #footer
 {
   width: 400px;
-  height: 150px;
-  
+  height: 150px;  
   position: relative;
   left: 350px;
   top: -10px;
+  
+}
+
+/*Es para distinguir el pie del pdf de consentimiento informado del de la receta*/
+.footerCons
+{
+  width: 700px;
+  height: 50px;
+  /*border: solid 1px;
+  border-color: #004000;*/
+  position: relative;
+  left: 0px;
+  top: -60px;
   
 }
 
@@ -62,6 +75,7 @@
   top: -240px;
 }
 
+/*Para separar los divs uno de otro*/
 .Separador
 {
   width: 150px;
@@ -70,6 +84,12 @@
 
 p{
   text-align: justify;
+}
+
+/*Se utiliza para poder distinguir los subtitulos de los titulos grandes*/
+.Subtitulo
+{
+  text-align: center;
 }
 
 /*

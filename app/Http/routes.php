@@ -53,12 +53,18 @@ Route::get('/login','UsuariosController@login');
 //user loggued
 Route::post('/Usuarios/loginuser','UsuariosController@validatelogin');
 
+Route::post('Usuarios/Transferir/Save','UsuariosController@saveTransferir');
+
 //Expediente
 Route::get('Expediente','ExpedienteController@index');
 
-Route::post('Expediente/Alta', 'ExpedienteController@store');  
+Route::post('Expediente/Alta','ExpedienteController@store');  
 
-Route::get('Expediente/todos', 'ExpedienteController@verExpedientes');  
+Route::post('Expediente/readAll','ExpedienteController@getData');  
+Route::post('Expediente/saveIdAlumno','ExpedienteController@saveAlumno');  
+Route::get('Usuarios/getAlumnos','UsuariosController@getAlumnosData');
+
+Route::get('Expediente/todos','ExpedienteController@verExpedientes');  
 //Asignar_Expediente
 Route::get('Asignar','ExpedienteController@asignar');
 
@@ -110,9 +116,7 @@ Route::get('Expediente/Receta','PdfController@index');
 
 Route::get('Nota/notas', 'NotaController@Nota');
 
-Route::get('Consentimiento', function() {
-    return view('Alumno.Consentimiento_Informado');
-});
+Route::get('Expediente/Consentimiento', 'ExpedienteController@Consentimiento');
 
 Route::get('Expediente/Diagnostico', 'ExpedienteController@Resumen');
 
@@ -164,3 +168,9 @@ Route::get('/ftp', ['as ' => 'ftp', 'uses' => 'FtpController@index']);
 //uploadfile
 Route::get('/uploadfile','UploadFileController@index');
 Route::post('/uploadfile','UploadFileController@showUploadFile');
+
+//ruta que genera el pdf del consentimiento informado
+Route::post('pdfConsent', 'ConsController@invoice');
+
+//Route to close session
+Route::get('Usuarios/cerrarsesion','UsuariosController@cerrar');

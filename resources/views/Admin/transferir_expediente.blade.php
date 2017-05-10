@@ -12,7 +12,62 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
                 <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->                
+    
+                <script type="text/javascript">
+                function verexpedientes(idd){
+                    
+                    //before this we have to get all the names of alumnos to know where asign...
+                    //create string with select option>names /select                  
+                    
+                    //use the cadenas before to select new user and save it
+                    //var idd = document.getElementById("estudianteA").value;
+                    //var table = document.getElementById("cuerpotabla");
+                    //var i = 0;
+                    //erase table...
+                    //table.innerHTML = '';
+                    //id => id from user table usuarios
+                    //get expedientes from usuario with id and show in table
+                    
+                    $.ajax({
+                        type:'post',
+                        url:'{{URL::asset('/')}}Expediente/saveIdAlumno/',
+                        data:{'id':idd},
+                        success:function(data){
+                            
+                            window.location.href = '{{URL::asset('/')}}Usuarios/getAlumnos';
+
+                            //alert(data);
+                            /*$.each(data, function(index) {
+                                var cadenas = "";
+
+                                $.ajax({
+                                    type:'post',
+                                    url:'{{URL::asset('/')}}Usuarios/getAlumnos/',
+                                    //data:{'id':idd},
+                                    success:function(dataAl){
+                                        //alert(data);
+                                        cadenas += "<select name='alumnonuevo"+i+"'>";
+                                        i += 1;
+                                        $.each(dataAl, function(index) {
+                                            //alert(data[index].folio_expediente);
+                                            //alert(data[index].matricula);
+                                            cadenas += "<option value='"+dataAl[index].id+"'>"+dataAl[index].name+"</option>";
+                                        });
+                                        cadenas += "</select>";
+                                        var row = table.insertRow(-1);
+                                        var cell1 = row.insertCell(0);
+                                        var cell2 = row.insertCell(1);
+                                        //var cell3 = row.insertCell(2);
+                                        cell1.innerHTML = data[index].folio_expediente;
+                                        cell2.innerHTML = cadenas;
+                                    }
+                                });                                
+                            });*/
+                        }
+                    });
+                }               
+                </script>    
 	</head>
 	<body class="index">
 		<div id="page-wrapper">
@@ -25,16 +80,17 @@
 			<!-- Banner -->
 				<section id="banner">
 					<section id="principal">
-					<h3>Tranferir expediente</h3>
+					<h3>Trans ferir expediente</h3>
 				
 
-		<form method="" action="">
+		<form method="post" action="{{URL::asset('/')}}Usuarios/Transferir/Save">
 		<table class="form" border="0">
 			<tr><td colspan="3">Seleccionar alumno que tiene el expediente</td></tr>
 			<tr>
 				<td>Seleccionar alumno:</td>
                                 <td>
-                                <select name="estudianteA">
+                                    <select id="estudianteA" name="estudianteA" onchange="verexpedientes(this.value);">
+                                        <option value="ninguno" selected="true">Seleccionar</option>
                                     @foreach($alumnos as $value)
                                     <option value="{{$value->id}}">{{$value->name}}</option>
                                     @endforeach
@@ -59,21 +115,30 @@
 			<tr><td colspan="3" align="center"><input type="submit" value="Reasignar"></td></tr-->
 		</table>
                     
-                <table width="100%">
+                <!--table width="100%" id="tabledata">
                     <thead>
-                    <th width="30%"><h3>Expediente</h3></th>
-                    <th width="35%"><h3>Alumno actual</h3></th>
-                    <th width="35%"><h3>Transferir a</h3></th>
-                    <!--th width="5%"></th-->
+                    <th width="50%"><h3>Expediente</h3></th>
+                    <th width="50%"><h3>Transferir a</h3></th>
                     </thead>
-                    <tbody>
+                    <tbody id="cuerpotabla">
                         <tr>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td>
+                                <select>
+                                    <option>A</option>
+                                    <option>A</option>
+                                    <option>A</option>
+                                </select>
+                            </td>
                         </tr>
                     </tbody>
-                </table>
+                </table-->
+                    
+                <!--table class="form" border="0">
+                    <tr><td colspan="3"><input type="submit" value="Guardar"></td></tr>
+                </table-->
+    
                     
                 </form>
 		</section>
@@ -124,7 +189,6 @@
             <?php
                 echo $scrip;
             ?>
-
-
+                         
 	</body>
 </html>

@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="../assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		
@@ -19,7 +19,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{URL::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{URL::asset('/')}}index.php/Alumno" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>
@@ -30,8 +30,14 @@
 					<div class="inner">
 						<!--Se edita desde esta zona-->
 				<h3>CONSENTIMIENTO INFORMADO</h3>
+
+				@if(count($errors))
+                        <h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
+                    @endif
 				
-				<form method="" action="">
+				<form method="POST" action="{{url::asset('/')}}pdfConsent">
+
+
 					<table align="center" class="default" border="0">
 						<tr>
 							<td colspan="4"> <p>A través del presente, declaro y manifiesto, en pleno uso de mis facultades mentales que sido informado/a y comprendo la necesidad y fines de ser atendido/a para restaurar total o parcialmente según las necesidades.
@@ -49,16 +55,16 @@
 				
 				
 					<tr>
-						<td><label>Paciente: </label></td>
+						<td><label>*Paciente: </label></td>
 						<td><input type="text" name="paciente"></td>
-						<td><label>Profesional de la Salud: </label></td>
+						<td><label>*Profesional de la Salud: </label></td>
 						<td><input type="text" name="doctor"></td>
 					</tr>
 
 					<tr>	
-						<td><label>Testigo: </label></td>
+						<td><label>*Testigo: </label></td>
 						<td><input type="text" name="testigo1"></td>
-						<td><label>Testigo: </label></td>
+						<td><label>*Testigo: </label></td>
 						<td><input type="text" name="testigo2"></td>
 					</tr>
 
@@ -106,9 +112,14 @@
 		</div>
 
 		<!-- Scripts -->
-            <?php
-                echo $scrip;
-            ?>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
 
 	</body>
 </html>

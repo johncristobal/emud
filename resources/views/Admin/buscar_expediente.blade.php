@@ -80,7 +80,8 @@
                     <table class="table" id="buscador">
                     <thead>
                     <th width="20%"><h3>Folio&nbsp;&nbsp;&nbsp;</h3></th>
-                    <th width="50%"><h3>Paciente&nbsp;&nbsp;&nbsp;</h3></th>
+                    <th width="25%"><h3>Médico&nbsp;&nbsp;&nbsp;</h3></th>
+                    <th width="25%"><h3>Paciente&nbsp;&nbsp;&nbsp;</h3></th>
                     <th width="30%"><h3>Fecha&nbsp;&nbsp;&nbsp;</h3></th>
                     <!--th width="5%"></th-->
                     <th width="10%"></th>
@@ -89,6 +90,7 @@
                     @foreach ($data as $value) 
                         <tr>  
                             <td>{{ $value->folio_expediente }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td>{{ $value->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->nombre_paciente }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->fecha_inicio }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->

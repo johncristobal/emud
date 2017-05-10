@@ -14,6 +14,19 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+                <script type="text/javascript">                
+                    window.addEventListener('popstate', function (event) {
+                        //Your code here
+                        alert('back');
+                    });
+
+                    window.onbeforeunload = function () {
+                        // Your code here
+                        alert('refresh');
+                    }
+                </script>
+
 	</head>
 	<body class="index">
                 <div id="page-wrapper">
@@ -28,7 +41,7 @@
                             <nav id="nav">
                                     <ul>
                                             <li class="submenu">
-                                                    <a href="#">Mi Perfil</a>
+                                                    <a href="#">Mi Perfilll</a>
                                                     <ul>
                                                             <li><a href="left-sidebar.html">Cambiar contraseña</a></li>
                                                     </ul>
@@ -36,7 +49,7 @@
 
 
                                             <li><a href="{{url::asset('/')}}Expediente/todos" class="button">Ver expedientes</a></li>
-                                            <li><a href="{{url::asset('/')}}" class="button special">Cerrar Sesión</a></li>
+                                            <li><a href="{{url::asset('/')}}Usuarios/cerrarsesion" class="button special">Cerrar Sesión</a></li>
                                     </ul>
                             </nav>
                     </header>
@@ -85,7 +98,7 @@
 			</tr>
 
 			<tr>
-				<td><a href="{{URL::asset('/')}}Consentimiento"><img src="{{url::asset('/')}}imagenes/b4.png" heigth="50" width="300"></a></td>
+				<td><a href="{{URL::asset('/')}}Expediente/Consentimiento"><img src="{{url::asset('/')}}imagenes/b4.png" heigth="50" width="300"></a></td>
 				<td><a href="{{URL::asset('/')}}Expediente/Diagnostico"><img src="{{url::asset('/')}}imagenes/b13.png" heigth="50" width="300"></a></td>
 				<td><a href="{{URL::asset('/')}}Expediente/Nota"><img src="{{url::asset('/')}}imagenes/b11.png" heigth="50" width="300"></a></td>
 			</tr>

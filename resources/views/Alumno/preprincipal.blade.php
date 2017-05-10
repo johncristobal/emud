@@ -85,7 +85,7 @@
 
             
 
-                                        <li><a href="{{URL::asset('/')}}" class="button special">Cerrar Sesión</a></li>
+                                        <li><a href="{{URL::asset('/')}}Usuarios/cerrarsesion" class="button special">Cerrar Sesión</a></li>
                                 </ul>
                         </nav>
                     </header>

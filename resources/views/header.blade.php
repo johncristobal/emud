@@ -7,7 +7,7 @@
                         <li><a href="{{URL::asset('/')}}Transferir" class="button special" target="_self">Transferir Expediente</a></li>					
                         <li><a href="{{URL::asset('/')}}Buscar" class="button special" target="_self">Consulta Expediente</a></li>
                         <!--li><a href="{{URL::asset('/')}}Usuarios" class="button special" target="_self">Usuarios</a></li-->
-                        <li><a href="{{url::asset('/')}}" class="button special">Cerrar Sesión</a></li>
+                        <li><a href="{{url::asset('/')}}Usuarios/cerrarsesion" class="button special">Cerrar Sesión</a></li>
                         <li class="submenu">
                             <a href="#">Usuarios</a>
                             <ul>

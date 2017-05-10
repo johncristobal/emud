@@ -26,7 +26,6 @@ use App\Resumen;
 use App\Notaevolucion;
 use \Illuminate\Support\Facades\DB;
 
-
 class ExpedienteController extends Controller
 {
     /**
@@ -148,7 +147,14 @@ class ExpedienteController extends Controller
     
     public function transferir()
     {
-        $alumno = User::where('rol','=',2)->get();
+        //$alumno = Alumno::where('status','=',1)->get();
+        //recuoero datos del expeidnet con base al ide lde usuario...
+        $alumno = DB::table('usuarios')
+            ->join('alumnos','alumnos.id_usuario','=','usuarios.id')
+            ->select('alumnos.id','usuarios.name')
+            ->where('usuarios.rol', '=', '2')
+            ->get();
+
         $expedientes = Expediente::all();
         $datos['alumnos'] = $alumno;
         $datos['expedientes'] = $expedientes;
@@ -160,9 +166,19 @@ class ExpedienteController extends Controller
     public function buscar()
     {
         //Load header.blade.php and send to index and every page from provider    
-        $clinica = Expediente::all();
-        $datos['data'] = $clinica;
+        //$clinica = Expediente::all();
+        //$datos['data'] = $clinica;
 
+        $facturasCliente = DB::table('expediente')
+            ->join('alumnos','alumnos.id','=','expediente.id_alumno')
+            ->join('usuarios','usuarios.id','=','alumnos.id_usuario')
+            ->select('usuarios.name','expediente.nombre_paciente','expediente.fecha_inicio','expediente.folio_expediente','expediente.id')
+            //->where('expediente.id_alumno', '=', $id)
+            ->get();
+        
+        $datos['data'] = $facturasCliente;
+
+        
         return view("Admin.buscar_expediente",$datos);
     }
 
@@ -452,9 +468,39 @@ class ExpedienteController extends Controller
         //veo principal
         //$valuefolio = $request->session()->get('folioexpediente', 'default');
         
-        return view('Alumno.principal');
+        if ($request->session()->has('folioexpediente')) {
+            return view('Alumno.principal');        
+        }else{
+            return redirect("/");
+        }
+    }
+
+//******************get id alumno and get expedientes....    
+    public function getData(Request $request){
+        $id = $request->input('id');
+        
+        //get expedientes with id usuario
+        $facturasCliente = DB::table('expediente')
+            //->join('alumnos','alumnos.id','=','expediente.id_alumno')
+            ->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
+            ->where('expediente.id_alumno', '=', $id)
+            ->get();
+        
+        //echo $facturasCliente[0]->folio_expediente."<br>";
+        
+        return $facturasCliente;
+    }
+
+//******************get id alumno and get expedientes....    
+    public function saveAlumno(Request $request){
+        $id = $request->input('id');
+
+        $request->session()->put('idalumnotemp',$id);
+
+        return "1";        
     }
     
+//******************************ver expeidjte    
     public function verExpedientes(Request $request){
         //$iduser = $correcto[0]->id;
         $iduser = $request->session()->get('iduser','0');
@@ -1417,6 +1463,26 @@ class ExpedienteController extends Controller
         //go to folder where the images area saved
         //get the items and show a list in the view        
     } 
+
+/************************metodos de cada expediente********************/
+/************************store/load ficha patologicos********************/
+    public function Consentimiento(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        //$data = Resumen::where('folio_expediente','=',$id)->get();
+        //$expediente = Expediente::find($id);
+
+        //$datos['diagnostico'] = $data[0]->diagnostico;
+
+        return view('Alumno.Consentimiento_Informado');       
+    }
     
 /************************metodos de cada expediente********************/
 /************************store/load ficha patologicos********************/
