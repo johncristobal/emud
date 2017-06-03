@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-                <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+                <link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->                
     
@@ -31,11 +31,11 @@
                     
                     $.ajax({
                         type:'post',
-                        url:'{{URL::asset('/')}}Expediente/saveIdAlumno/',
+                        url:'{{url::asset('/')}}Expediente/saveIdAlumno/',
                         data:{'id':idd},
                         success:function(data){
                             
-                            window.location.href = '{{URL::asset('/')}}Usuarios/getAlumnos';
+                            window.location.href = '{{url::asset('/')}}Usuarios/getAlumnos';
 
                             //alert(data);
                             /*$.each(data, function(index) {
@@ -43,7 +43,7 @@
 
                                 $.ajax({
                                     type:'post',
-                                    url:'{{URL::asset('/')}}Usuarios/getAlumnos/',
+                                    url:'{{url::asset('/')}}Usuarios/getAlumnos/',
                                     //data:{'id':idd},
                                     success:function(dataAl){
                                         //alert(data);
@@ -83,7 +83,7 @@
 					<h3>Trans ferir expediente</h3>
 				
 
-		<form method="post" action="{{URL::asset('/')}}Usuarios/Transferir/Save">
+		<form method="post" action="{{url::asset('/')}}Usuarios/Transferir/Save">
 		<table class="form" border="0">
 			<tr><td colspan="3">Seleccionar alumno que tiene el expediente</td></tr>
 			<tr>

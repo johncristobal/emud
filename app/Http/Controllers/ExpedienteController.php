@@ -68,6 +68,14 @@ class ExpedienteController extends Controller
          */
     }
     
+    public function getStatus(Request $request){
+        $iduser = $request->session()->get('idexpediente','0');
+
+        //get status to check if it's validated or not...
+        
+        return $iduser;
+    }
+    
     public function crearfolio(){
         //get year and get the last tow digits
         date_default_timezone_set('America/Mexico_City');        
@@ -306,6 +314,11 @@ class ExpedienteController extends Controller
         $heredo12->folio_expediente = $Exp->id; 
         $heredo12->tipo = "observaciones";
         $heredo12->save();
+        $heredo13 = new Heredofamiliares;
+        $heredo13->status = 1;
+        $heredo13->folio_expediente = $Exp->id; 
+        $heredo13->tipo = "observa_profe";
+        $heredo13->save();
         
         //agregar tmb en patologicos....
         $patologico = new Patologicos;
@@ -343,6 +356,7 @@ class ExpedienteController extends Controller
         $mujer = new Mujeres;
         $mujer->status = 1;
         $mujer->folio_expediente = $Exp->id;
+        $mujer->observa_profe = "";
         $mujer->save();
         
         //exploracion fiisca
@@ -461,6 +475,7 @@ class ExpedienteController extends Controller
     /*
      * lANCA view con expeidnets y sus registrops
      */
+    
     public function verExpediente(Request $request){
         //Recupero id de la sesion...
         //Busco datos en las tablas...
@@ -469,11 +484,35 @@ class ExpedienteController extends Controller
         //$valuefolio = $request->session()->get('folioexpediente', 'default');
         
         if ($request->session()->has('folioexpediente')) {
-            return view('Alumno.principal');        
+                   
+            $id = $request->session()->get('idexpediente','0');
+
+            $ficha = Direccion::where('folio_expediente','=',$id)->get();
+            $heredo = Heredofamiliares::where('folio_expediente','=',$id)->get();
+            $antece = Patologicos::where('folio_expediente','=',$id)->get();
+            $napato = Nopatologicos::where('folio_expediente','=',$id)->get();
+            $aparatos = Aparatossistemas::where('folio_expediente','=',$id)->get();
+            $mujeres = Mujeres::where('folio_expediente','=',$id)->get();
+            $explo = Exploracionfisica::where('folio_expediente','=',$id)->get();
+            $higie = Bucalcpod::where('folio_expediente','=',$id)->get();
+            $resumen = Resumen::where('folio_expediente','=',$id)->get();
+
+            //recuperamos status de las diferetes tablas para validar celdas... 
+            $datos['ficha'] = $ficha[0]->status;
+            $datos['heredo'] = $heredo[0]->status;
+            $datos['patologico'] = $antece[0]->status;
+            $datos['nopatologico'] = $napato[0]->status;
+            $datos['aparatos'] = $aparatos[0]->status;
+            $datos['mujeres'] = $mujeres[0]->status;                        
+            $datos['explo'] = $explo[0]->status;
+            $datos['bucal'] = $higie[0]->status;
+            $datos['resumen'] = $resumen[0]->status;
+            
+            return view('Alumno.principal',$datos);        
         }else{
             return redirect("/");
         }
-    }
+    }    
 
 //******************get id alumno and get expedientes....    
     public function getData(Request $request){
@@ -508,7 +547,7 @@ class ExpedienteController extends Controller
         //recuoero datos del expeidnet con base al ide lde usuario...
         $facturasCliente = DB::table('expediente')
             ->join('alumnos','alumnos.id','=','expediente.id_alumno')
-            ->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
+            ->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.ap_paterno','expediente.fecha_inicio','expediente.id','expediente.status')
             ->where('alumnos.id_usuario', '=', $iduser)
             ->get();
 
@@ -594,6 +633,7 @@ class ExpedienteController extends Controller
         $expediente->lugar_nacimiento = $lugarnacimiento;
         $expediente->fecha_nacimimiento = $fechanac;
         $expediente->edad = $eddda;
+        $expediente->status = 1;
         $expediente->fotopath = $foto;  //hay que ver que onda con la foto....        
         $expediente->save();
         
@@ -614,7 +654,8 @@ class ExpedienteController extends Controller
         "delegacion" => $delegacion,
         "entidad" => $entidad,
         "telefono" => $telefono,
-        "idh" => $idh
+        "idh" => $idh,
+        "status" => 4
         ));
         
         //responsable
@@ -640,6 +681,7 @@ class ExpedienteController extends Controller
             "sanguineo"=> $request->input('Sanguineo')       
         ));
         
+        $this->actualizaExpedienteStatus($id);
         return redirect('/Expediente/principal');
     }
 /************************metodos de cada expediente********************/
@@ -690,6 +732,8 @@ class ExpedienteController extends Controller
 
             $observa = $heredo[11]->dato;
             $datos['observaciones'] = $observa;
+            $observaprofe = $heredo[12]->dato;
+            $datos['observacionesprofe'] = $observaprofe;
             
             return view('Alumno.FamiliaresHederitarios',$datos);
         }
@@ -728,7 +772,8 @@ class ExpedienteController extends Controller
             $heredo = Heredofamiliares::where('folio_expediente','=',$id)
                 ->where('tipo','=',$value)
                 ->update(array(
-                    "dato" => $variable
+                    "dato" => $variable,
+                    "status" => 1
                 ));
                         
             $variable = "";
@@ -738,8 +783,15 @@ class ExpedienteController extends Controller
         $heredo = Heredofamiliares::where('folio_expediente','=',$id)
             ->where('tipo','=','observaciones')
             ->update(array(
-                "dato" => $request->input('observaciones')
+                "dato" => $request->input('observaciones'),
+                "status" => 1
             ));        
+        $heredo = Heredofamiliares::where('folio_expediente','=',$id)
+            ->where('tipo','=','observa_profe')
+            ->update(array(
+                "status" => 1
+            ));        
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');
     }   
@@ -777,7 +829,8 @@ class ExpedienteController extends Controller
         
         $datos["variable"] = $arrelgo;        
         $datos["observaciones"] = $data[0]->observaciones;
-        
+        $datos["observacionesprofe"] = $data[0]->observa_profe;
+
         return view('Alumno.AntescedentesPatologicos',$datos);
     }
     
@@ -805,8 +858,10 @@ class ExpedienteController extends Controller
         //save dato in the riegh place....;
         $heredo = Patologicos::where('folio_expediente','=',$id)
             ->update(array(
-                "observaciones" => $request->input('observaciones')
+                "observaciones" => $request->input('observaciones'),
+                "status" => 1
             ));        
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');
     }
@@ -950,7 +1005,8 @@ class ExpedienteController extends Controller
             }
         }
         $datos["servicios"] = $arregloahabitos;        
-        $datos["observacionesss"] = $data[0]->observaciones;;        
+        $datos["observacionesss"] = $data[0]->observaciones;        
+        $datos["observacionesprofe"] = $data[0]->observa_profe;        
         return view('Alumno.AntescedentesNoPatologicos',$datos);
     }
     
@@ -1041,8 +1097,11 @@ class ExpedienteController extends Controller
         //save dato in the riegh place....;
         $heredo = Nopatologicos::where('folio_expediente','=',$id)
             ->update(array(
-                "observaciones" => $request->input('observa')
+                "observaciones" => $request->input('observa'),
+                "status" => 1
             ));         
+
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');
     }    
@@ -1071,6 +1130,7 @@ class ExpedienteController extends Controller
         $datos['nervioso'] = $data[0]->nervioso;
         $datos['tegumentario'] = $data[0]->tegumentario;
         $datos['observaciones'] = $data[0]->observaciones;
+        $datos['observaprofe'] = $data[0]->observa_profe;
 
         return view ('Alumno.AparatosySistemas',$datos);        
     }
@@ -1091,8 +1151,10 @@ class ExpedienteController extends Controller
                 "endocrino" => $request->input('endo'),
                 "nervioso" => $request->input('nervi'),
                 "tegumentario" => $request->input('tegu'),
-                "observaciones" => $request->input('observaciones')
+                "observaciones" => $request->input('observaciones'),
+                "status" => 1
             ));         
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');        
     }
@@ -1184,6 +1246,7 @@ class ExpedienteController extends Controller
     
         $datos['total'] = $datacpod[0]->total;
         $datos['observaciones'] = $datacpod[0]->observaciones;
+        $datos['observaprofe'] = $datacpod[0]->observa_profe;
         
         return view ('Alumno.HigieneOral',$datos);
     }
@@ -1235,10 +1298,12 @@ class ExpedienteController extends Controller
             
         $store['total'] = $request->input("dientes");           
         $store['observaciones'] = $request->input("observaciones");           
+        $store['status'] = 1;           
         
         //save dato in the riegh place....;
         $heredo = Bucalcpod::where('folio_expediente','=',$id)
             ->update($store);   
+        $this->actualizaExpedienteStatus($id);
         
         return redirect('/Expediente/principal');        
     }
@@ -1273,6 +1338,7 @@ class ExpedienteController extends Controller
         $datos['fechapapa'] = $data[0]->fechapapa;
         $datos['fechames'] = $data[0]->fechames;
         $datos['observaciones'] = $data[0]->observaciones;
+        $datos['observaprofe'] = $data[0]->observa_profe;
         //$datos["sintomas"] = $arregloahabitos;  
         return view ('Alumno.Mujeres',$datos);
     }
@@ -1295,12 +1361,13 @@ class ExpedienteController extends Controller
         $heredo = Mujeres::where('folio_expediente','=',$id)
             ->update(array(
                 "sintomas" => $variable,
+                "status" => 1,
                 "fechapapa" => $request->input('fechapapa'),
                 "fechames" => $request->input('fechames'),
                 "observaciones" => $request->input('observaciones')
             ));        
 
-        
+        $this->actualizaExpedienteStatus($id);        
         
         return redirect('/Expediente/principal');
     }    
@@ -1333,6 +1400,7 @@ class ExpedienteController extends Controller
         $datos['yugal'] = $data[0]->yugal;
         $datos['hallazgos'] = $data[0]->hallazgos;
         $datos['observaciones'] = $data[0]->observaciones;
+        $datos['observaprofe'] = $data[0]->observa_profe;
 
         return view ('Alumno.ExploracionFisica',$datos);        
     }
@@ -1357,8 +1425,11 @@ class ExpedienteController extends Controller
                 "carrillos" => $request->input('carrillos'),
                 "yugal" => $request->input('yugal'),
                 "hallazgos" => $request->input('hallazgos'),
+                "status" => 1,
                 "observaciones" => $request->input('observaciones')
             ));         
+
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');        
     }
@@ -1403,6 +1474,7 @@ class ExpedienteController extends Controller
                 "contraref" => $request->input('contra'),
                 "nota" => $request->input('nota')
             ));         
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');        
     }
@@ -1500,21 +1572,69 @@ class ExpedienteController extends Controller
         //$expediente = Expediente::find($id);
 
         $datos['diagnostico'] = $data[0]->diagnostico;
+        $datos['observaprofe'] = $data[0]->observa_profe;
 
         return view ('Alumno.Diagnostico_General',$datos);        
     }
     
     public function storeResumen(Request $request){
-                //recuperra ide expedinte
+        //recuperra ide expedinte
         $id = $request->session()->get('idexpediente','0');
 
         //save dato in the riegh place....;
         $heredo = Resumen::where('folio_expediente','=',$id)
             ->update(array(
+                "status" => 1,
                 "diagnostico" => $request->input('diagnostico'),
             ));         
+        $this->actualizaExpedienteStatus($id);
 
         return redirect('/Expediente/principal');        
     }
-    
+
+    public function getLast(Request $request){
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+        $tipo = $request->input('tipo');
+
+        //return $tipo;
+        if($tipo == "fichadireccion"){
+            $data = Direccion::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "familiares"){
+            $data = Heredofamiliares::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "patologicos"){
+            $data = Patologicos::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "nopato"){
+            $data = Nopatologicos::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "aparatos"){
+            $data = Aparatossistemas::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "mujeres"){
+            $data = Mujeres::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "fisica"){
+            $data = Exploracionfisica::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "bucal"){
+            $data = Bucalcpod::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }else if($tipo == "resumen"){
+            $data = Resumen::where('folio_expediente','=',$id)->get();
+            return $data[0]->status;
+        }
+    }
+
+/************************Actualzia expediente a 4********************/
+/************************store/load ficha patologicos********************/
+    public function actualizaExpedienteStatus($id){
+        //session variable to store data
+        //$id = $request->session()->get('idexpediente','0');
+        $nada = Expediente::where('id','=',$id)->update(array(
+            "status" => 1,
+        ));
+    }    
 }

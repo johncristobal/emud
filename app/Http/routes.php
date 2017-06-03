@@ -93,9 +93,6 @@ Route::post('Expediente/remove/{id}','ExpedienteController@destroy');
 Route::post('Expediente/Reasignar','ExpedienteController@reasignar');
 
 //rutas-----werever 16 feb 17
-/*Route::get('Expediente/FichaExp', function() {
-    return view('Alumno.FichaIdentificacion');
-});*/
 Route::get('Expediente/FichaExp','ExpedienteController@FichaExp');
 
 Route::get('Expediente/FamHeder', 'ExpedienteController@Heredofami');
@@ -122,6 +119,9 @@ Route::get('Expediente/Diagnostico', 'ExpedienteController@Resumen');
 
 Route::get('/Alumno',function(){
     return redirect('Expediente/principal');
+});
+Route::get('/Profesor',function(){
+    return redirect('Profesor/Expediente/principal');
 });
 
 //nuEVAS RUTA..............
@@ -174,3 +174,60 @@ Route::post('pdfConsent', 'ConsController@invoice');
 
 //Route to close session
 Route::get('Usuarios/cerrarsesion','UsuariosController@cerrar');
+
+//Rutas profesro
+Route::get('Profesor/Expediente/principal','ExpedienteProfesorController@verExpedienteProf');
+Route::get('Expediente/todosProfesor','ExpedienteProfesorController@verExpedientesProf');  
+
+//para guardar observaciones profesor...
+Route::get('Profesor/Expediente/FichaExp','ExpedienteProfesorController@FichaExp');
+Route::post('Profesor/Expediente/Alta/Ficha','ExpedienteProfesorController@storeFicha');
+
+Route::get('Profesor/Expediente/FamHeder', 'ExpedienteProfesorController@Heredofami');
+Route::post('Profesor/Expediente/Alta/Heredofam','ExpedienteProfesorController@storeHeredofam');
+
+Route::get('Profesor/Expediente/AntescPat', 'ExpedienteProfesorController@Patologicos');
+Route::post('Profesor/Expediente/Alta/Patologico','ExpedienteProfesorController@storePatologico');
+
+Route::get('Profesor/Expediente/AntescNoPat', 'ExpedienteProfesorController@Nopatologicos');
+Route::post('Profesor/Expediente/Alta/NoPatologico','ExpedienteProfesorController@storeNopatologico');
+
+Route::get('Profesor/Expediente/Aparatos', 'ExpedienteProfesorController@Aparatos');
+Route::post('Profesor/Expediente/Alta/Aparatos','ExpedienteProfesorController@storeAparatos');
+
+Route::get('Profesor/Expediente/Mujeres', 'ExpedienteProfesorController@Mujeres');
+Route::post('Profesor/Expediente/Alta/Mujeres','ExpedienteProfesorController@storeMujeres');
+
+Route::get('Profesor/Expediente/ExplFisica', 'ExpedienteProfesorController@Fisica');
+Route::post('Profesor/Expediente/Alta/ExplFisica','ExpedienteProfesorController@storeFisica');
+
+Route::get('Profesor/Expediente/HigOral', 'ExpedienteProfesorController@Bucal');
+Route::post('Profesor/Expediente/Alta/HigOral','ExpedienteProfesorController@storeBucal');
+
+Route::get('Profesor/Expediente/Diagnostico', 'ExpedienteProfesorController@Resumen');
+Route::post('Profesor/Expediente/Alta/Resumen','ExpedienteProfesorController@storeResumen');
+//==================
+Route::post('Expediente/validarStatus','ExpedienteController@getStatus');
+
+Route::post('Profesor/Expediente/validar','ExpedienteProfesorController@validarSeccion');
+
+Route::post('Expediente/validarStatus','ExpedienteController@getLast');
+
+//validar expeidete
+Route::post('Profesor/Expediente/validarexp', 'ExpedienteProfesorController@validarExpediente');
+
+//validar expeidete
+Route::get('Profesor/Expediente/firmar', 'ExpedienteProfesorController@firmar');
+
+Route::post('Profesor/Expediente/savesign','ExpedienteProfesorController@firmarguardar');
+
+//Notas profesor
+Route::get('Profesor/Nota/notas', 'NotaController@Notaprofesor');
+Route::get('Profesor/Notas/principal','NotaController@vernotaprofesor');
+
+Route::post('Profesor/Nota/salvarobservaciones','NotaController@salvarobservaciones');
+Route::get('Profesor/Nota/validarnota','NotaController@validarNotaF');
+
+Route::post('Profesor/Nota/savesignnota','NotaController@firmarguardar');
+
+Route::post('Profesor/Nota/validarStatus','NotaController@fchecar');

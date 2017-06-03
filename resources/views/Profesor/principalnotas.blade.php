@@ -26,7 +26,7 @@
                             success:function(data){
                                 //alert(data);
                                 //alert('Expediente '+data+' eliminado del sistema.');
-                                window.location.href = '{{url::asset('/')}}Notas/principal';
+                                window.location.href = '{{url::asset('/')}}Profesor/Notas/principal';
                             }
                         },10000);
                     }
@@ -54,8 +54,8 @@
                                             </li>	
 
 
-                                            <li><a href="{{url::asset('/')}}Expediente/todos" class="button">Ver expedientes</a></li>
-                                            <li><a href="{{url::asset('/')}}" class="button special">Cerrar Sesión</a></li>
+                                            <li><a href="{{url::asset('/')}}Expediente/todosProfesor" class="button">Ver expedientes</a></li>
+                                            <li><a href="{{url::asset('/')}}Usuarios/cerrarsesion" class="button special">Cerrar Sesión</a></li>
                                     </ul>
                             </nav>
                     </header>
@@ -95,9 +95,10 @@
                             @foreach ($data as $value) 
                                 <tr>
                                     <td>{{ $value['fecha'] }}</td>
+
                                     <td><?php if($value['status'] == 1){echo "Por revisar";} if($value['status'] == 2){echo "Inactivos";} if($value['status'] == 4){echo "Revisado";} if($value['status'] == 5){echo "Validado";}?></td>
+
                                     <td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="vernota({{ $value['idnota'] }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <!--td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Eliminar" onclick="eliminarnota({{ $value['idnota'] }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
                                 </tr>
                             @endforeach
                             <!--tr>
@@ -136,7 +137,7 @@
             <?php
                 echo $scrip;
             ?>
-            
+
 
 	</body>
 </html>

@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-                <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+                <link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
@@ -31,7 +31,7 @@
                                             <h5 style="color: #FAF834;">Favor de llenar los campos marcados con *</h5>
                                         @endif
 
-			<form method="post" action="{{URL::asset('/')}}Usuarios/Alta">
+			<form method="post" action="{{url::asset('/')}}Usuarios/Alta">
 			<table border="0"  class="form">
 				<tr>
                                     <td>* Nombre</td><td><input type="text" name="nombre"></td>					

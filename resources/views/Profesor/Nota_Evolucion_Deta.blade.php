@@ -7,26 +7,28 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-    		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
                 <script type="text/javascript">
-                    function inputs(){
-                    
-                        //get status from expediente...if equals to terminated, then block all the inputs
-                        $.ajax({
-                            type:'POST',
-                            url:'{{url::asset('/')}}Profesor/Nota/validarStatus',
-                            data:{'tipo':'nota'},
-                            success:function(data){
-                                if(data == 5){
-                                    $('#form1 *').attr('readonly','readonly');
-                                    $('#form1 *').attr('disabled','disabled');                                    
-                                }
-                            }
-                        },10000);
+                    function validar(){
+                        var a = confirm('¿Desea validar la '+arguments[0]+'?');
+                        var saved = arguments[0];
+                        var observa = document.getElementById("observaprofe").value;
+                        if(a){
+                            //get id expediente y set status from direccion in 5
+                            $.ajax({
+                                type:'POST',
+                                url:'{{url::asset('/')}}Profesor/Notas/validar/',
+                                data:{'tipo':arguments[1],'obs':observa},
+                                success:function(data){
+                                    alert(saved+' validada');
+                                    window.location.href = '{{url::asset('/')}}Profesor/Nota/notas';
+                               }
+                            },10000);
+                        }
                     }
-                </script>		
+                    </script>
 	</head>
-	<body class="index" onload="inputs();">
+	<body class="index">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -35,7 +37,8 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{url::asset('/')}}Nota/notas" class="button special">Regresar</a></li>
+							<!--li><a class="button">Validar nota</a></li-->
+							<li><a href="{{url::asset('/')}}Profesor/Nota/notas" class="button special">Regresar</a></li>
 							
 						</ul>
 					</nav>
@@ -45,9 +48,9 @@
 				<section id="banner">
 					<div class="inner">
 						<!--Se edita desde esta zona-->
-				<h3>NOTA DE EVOLUCIÓN</h3></legend>
+				<h3>NOTA DE EVOLUCION</h3></legend>
 		
-                                        <form method="" action="" id="form1">
+			<form method="post" action="{{url::asset('/')}}Profesor/Nota/salvarobservaciones">
 				<table align="center" border="0" class="default">
 				
 				<tr>
@@ -87,29 +90,38 @@
 					<td class="Separador" colspan="2"></td>
 				</tr>
 				<tr>
-					<td><label>Referencia</label></td>
-                                        <td><input type="text" class="form" name="ref" value="{{ $referencia }}"></td>
+                                    <td><label>Referencia</label></td>
+                                    <td><input type="text" class="form" name="ref" value="{{ $referencia }}"></td>
 				</tr>
+				<tr>
+                                    <td class="Separador" colspan="2"></td>
+				</tr>
+
+				<tr>
+                                    <td><label>Contrareferencia</label></td>
+                                    <td><input type="text" class="form" name="contra" value="{{ $contraref }}"></td>
+				</tr>
+				<tr>
+                                    <td class="Separador" colspan="2"></td>
+				</tr>
+
+				<tr>
+                                    <td><label>Nota de Evolucion</label></td>
+                                    <td><textarea class="form" rows="3" name="nota" cols="40">{{ $nota }}</textarea></td>
+				</tr>
+
+				<tr>
+					<td class="Separador" colspan="2"></td>
+				</tr>
+				<tr>
+                                    <td><label>Observaciones profesor: &nbsp;</label></td>
+                                    <td><textarea class="form" rows="3" name="observaprofe" cols="40">{{ $observacionesprofe }}</textarea></td>
+				</tr>
+
 				<tr>
 					<td class="Separador" colspan="2"></td>
 				</tr>
 
-				<tr>
-					<td><label>Contrareferencia</label></td>
-                                        <td><input type="text" class="form" name="contra" value="{{ $contraref }}"></td>
-				</tr>
-				<tr>
-					<td class="Separador" colspan="2"></td>
-				</tr>
-
-				<tr>
-					<td><label>Nota de Evolucion</label></td>
-                                        <td><textarea class="form" rows="3" name="nota" cols="40">{{ $nota }}</textarea></td>
-				</tr>
-
-				<tr>
-					<td class="Separador" colspan="2"></td>
-				</tr>
                                 <tr <?php if(($observacionesprofe == NULL) || ($observacionesprofe == '')){echo "style='display: none;'";}else{echo "style='display: table-row;'";}?>>
                                     <td>Observaciones <br/>profesor:</td>
                                     <td colspan ="2"><textarea class="tam" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)" disabled="true">{{ $observacionesprofe }}</textarea></td>
@@ -117,20 +129,22 @@
                                 <tr>
                                         <td class="Separador" colspan="6"></td>
                                 </tr>
-
-                                                <!--tr>
-					<td colspan="2"><input type="submit" value="Guardar Nota"></td>
-				</tr-->
+                                
                                 <tr>
+                                    <td colspan="2">
+                                        <input type="submit" value="Guardar observaciones">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="button" value="Validar nota" align="center" onclick="window.location.href = '{{url::asset('/')}}Profesor/Nota/validarnota';">
+                                    </td>
+				</tr>
+                                <!--tr>
                                     <td colspan="2"><a href="{{url::asset('/')}}Nota/notas" class="button special">Regresar</a></td>
-                                </tr>
+                                </tr-->
 			</table>
 			</form>
 
 			
 					
-			</fieldset>
-			
 				<!--Se ternina de editar aqui-->
 			</div> 
 		</section> 

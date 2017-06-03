@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		
@@ -19,7 +19,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{URL::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>

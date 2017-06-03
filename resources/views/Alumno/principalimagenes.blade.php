@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-                <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+                <link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -21,16 +21,16 @@
                         
                         //alert(id);
                         
-                        window.open('{{URL::asset('/')}}'+id);
+                        window.open('{{url::asset('/')}}'+id);
                         
                         /*$.ajax({
                             type:'POST',
-                            url:'{{URL::asset('/')}}Notas/verimagen',
+                            url:'{{url::asset('/')}}Notas/verimagen',
                             data:{'id':id},
                             success:function(data){
                                 alert(data);
                                 //alert('Expediente '+data+' eliminado del sistema.');
-                                //window.location.href = '{{URL::asset('/')}}Notas/principal';
+                                //window.location.href = '{{url::asset('/')}}Notas/principal';
                             }
                         },10000);*/
                     }
@@ -132,7 +132,7 @@
                                                 <td width="70%"></td>
                                                 <td width="30%">
                                                     <!-- Trigger/Open The Modal -->
-                                                    Subir archivo &nbsp;&nbsp;&nbsp;<img src="{{URL::asset('/')}}imagenes/ic_file_upload_white_24dp/web/ic_file_upload_white_24dp_2x.png" id="myBtn"></img>
+                                                    Subir archivo &nbsp;&nbsp;&nbsp;<img src="{{url::asset('/')}}imagenes/ic_file_upload_white_24dp/web/ic_file_upload_white_24dp_2x.png" id="myBtn"></img>
                                                     <!--input type="file" name="image" value="Subir archivo" title="" style="width: 400px;">
                                                     <input type="submit" name="Subir" value="Subir" style="width: 50px;"-->
                                                 </td>
@@ -153,8 +153,8 @@
                             @foreach ($data as $value) 
                                 <tr>
                                     <td>{{ $value['fecha'] }}</td>
-                                    <td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="vernota('{{ $value['idnota'] }}');"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Eliminar" onclick="eliminarnota({{ $value['idnota'] }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="vernota('{{ $value['idnota'] }}');"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Eliminar" onclick="eliminarnota({{ $value['idnota'] }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                 </tr>
                             @endforeach
                             <!--tr>
@@ -204,14 +204,10 @@
             </div>
 
             <!-- Scripts -->
-                    <script src="{{URL::asset('/')}}assets/js/jquery.min.js"></script>
-                    <script src="{{URL::asset('/')}}assets/js/jquery.dropotron.min.js"></script>
-                    <script src="{{URL::asset('/')}}assets/js/jquery.scrolly.min.js"></script>
-                    <script src="{{URL::asset('/')}}assets/js/jquery.scrollgress.min.js"></script>
-                    <script src="{{URL::asset('/')}}assets/js/skel.min.js"></script>
-                    <script src="{{URL::asset('/')}}assets/js/util.js"></script>
-                    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-                    <script src="{{URL::asset('/')}}assets/js/main.js"></script>
+            <!-- Scripts -->
+            <?php
+                echo $scrip;
+            ?>
 
                     <script>
                     // Get the modal

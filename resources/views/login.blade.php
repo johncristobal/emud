@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-                <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+                <link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
@@ -19,7 +19,7 @@
 
             <!-- Header -->
                     <header id="header" class="alt">
-                        <h1 id="logo"><a href="{{URL::asset('/')}}">EEMUD <span>by CAROLVE SYSTEMS</span></a></h1>
+                        <h1 id="logo"><a href="{{url::asset('/')}}">EEMUD <span>by CAROLVE SYSTEMS</span></a></h1>
                         <nav id="nav">
                             <ul>
                                 <!--li class="current"><a href="{{URL::asset('/')}}">Bienvenido</a></li-->
@@ -32,7 +32,7 @@
                                         </ul-->
                                 <li><a href="#" class="button special">FAQ's</a></li>
                                 <li><a href="#" class="button special">Contacto</a></li>
-                                <li><a href="{{URL::asset('/')}}" class="button special">Inicio</a></li>
+                                <li><a href="{{url::asset('/')}}" class="button special">Inicio</a></li>
                             </ul>
                         </nav>
                     </header>
@@ -53,7 +53,7 @@
                                             @if($error = $errors->first('pass'))
                                                 <h5 style="color: #FAF834;">{{$error}}</h5>
                                             @endif
-                                            <form method="post" action="{{URL::asset('/')}}Usuarios/loginuser">
+                                            <form method="post" action="{{url::asset('/')}}Usuarios/loginuser">
                                             <table border="0" class="default" align="center">
                                             <tr>
                                                 <td><input type="email" name="correo" placeholder=" Ingresa correo"></td>

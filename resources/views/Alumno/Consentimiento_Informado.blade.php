@@ -19,7 +19,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{URL::asset('/')}}index.php/Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}index.php/Alumno" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>

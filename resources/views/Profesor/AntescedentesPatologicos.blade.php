@@ -6,11 +6,31 @@
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/inputsStyle.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+                
                 <script type="text/javascript">
-                    function inputs(){
                     
+                    function validar(){
+                        var a = confirm('¿Desea validar '+arguments[0]+'?');
+                        var saved = arguments[0];
+                        var observa = document.getElementById("observaprofesor").value;
+                        if(a){
+                            //get id expediente y set status from direccion in 5
+                            $.ajax({
+                                type:'POST',
+                                url:'{{url::asset('/')}}Profesor/Expediente/validar/',
+                                data:{'tipo':arguments[1],'obs':observa},
+                                success:function(data){
+                                    alert(saved+' validado');
+                                    window.location.href = '{{url::asset('/')}}Profesor/Expediente/principal';
+                               }
+                            },10000);
+                        }
+                    }
+                    
+                    function inputs(){                    
                         //get status from expediente...if equals to terminated, then block all the inputs
                         $.ajax({
                             type:'POST',
@@ -18,15 +38,16 @@
                             data:{'tipo':'patologicos'},
                             success:function(data){
                                 if(data == 5){
+                                    //alert(data);
                                     $('#form1 *').attr('readonly','readonly');
                                     $('#form1 *').attr('disabled','disabled');                                    
                                 }
                             }
                         },10000);
                     }
-                </script>		
+                </script>                
 	</head>
-        <body class="index" onload="inputs();">
+	<body class="index" onload="inputs();">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -35,7 +56,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}Profesor" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>
@@ -50,12 +71,12 @@
 					<h4>Enfermedades</h4>
 
                                         <!--Ahora a guardar...****-->
-                                        <form method="post" action="{{url::asset('/')}}Expediente/Alta/Patologico" id="form1">
+					<form method="post" action="{{url::asset('/')}}Profesor/Expediente/Alta/Patologico" id="form1">
 						<table border="0" align="left" class="default" >
 						<?php 
                                                     $enfermedades = ["Varicela","Rubeola","Sarampion","Parotiditis","Tosferina","Escarlatina","Parasitosis","Hepatitis","Sida","Asma","Disf Endocrinas","Hipertensión","Cáncer","ETS","Epilepsias","Amigdalitis de Repeticion","Tuberculosis","Fiebre Reumatica","Diabetes","Enf cardiovasculares","Artritis","Traumatismo c/sec","Int Quirurgicas","Transf Sangu","Alergias"];
                                                     $i =0;
-                                                    foreach ($enfermedades as $value) { 
+                                                    foreach ($enfermedades as $value) {
                                                         if($i==0){ ?>
                                                         <tr>
                                                         <?php } ?>
@@ -64,7 +85,7 @@
                                                             //get the union of words...
                                                             $newstring = str_replace(" ", "", $value);
                                                             if((isset($variable[$newstring])) && ($variable[$newstring] != "")){ ?>    
-                                                                <label class="alineacion align-left"><?= $value; ?></label><input type="checkbox" name="<?= $newstring; ?>" checked="true">
+                                                                <label class="alineacion align-left"><?= $value; ?></label><input type="checkbox" name="<?= $newstring; ?>" checked="true" disabled="true">
                                                         <?php }else{ ?>
                                                                 <label class="alineacion align-left"><?= $value; ?></label><input type="checkbox" name="<?= $newstring; ?>">
                                                         <?php                                                 
@@ -140,7 +161,7 @@
 						</tr-->
 
 						<tr>
-							<td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2" name="observaciones">{{ $observaciones }}</textarea></td>
+                                                    <td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2" name="observaciones" readonly="true">{{ $observaciones }}</textarea></td>
 						</tr>
 						<tr>
 							<td class="Separador" colspan="5"></td>
@@ -148,15 +169,18 @@
                                                 <tr>
                                                     <td class="Separador" colspan="3"></td>
                                                 </tr>
-                                                <tr <?php if(($observacionesprofe == NULL) || ($observacionesprofe == '')){echo "style='display: none;'";}else{echo "style='display: table-row;'";}?>>
+                                                <tr>
                                                     <td>Observaciones <br/>profesor:</td>
-                                                    <td colspan ="2"><textarea class="tam" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)" disabled="true">{{ $observacionesprofe }}</textarea></td>
+                                                    <td colspan ="2"><textarea class="tam" id="observaprofesor" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)">{{ $observacionesprofe }}</textarea></td>
                                                 </tr>
                                                 <tr>
                                                         <td class="Separador" colspan="6"></td>
-                                                </tr>
-                                                <tr>
-							<td colspan="5"><input type="submit" value="Guardar datos"></td>
+                                                </tr>						<tr>
+							<td colspan="5">
+                                                            <input type="submit" value="Guardar observaciones">
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <input type="button" value="Validar sección" align="center" onclick="validar('Antecedentes patológicos','patologicos');">
+                                                        </td>
 						</tr>
 						<tr>
 							<td class="Separador" colspan="5"></td>

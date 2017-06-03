@@ -5,12 +5,28 @@
 		<meta charset="utf-8" />
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		
+<script type="text/javascript">
+                    function inputs(){
+                    
+                        //get status from expediente...if equals to terminated, then block all the inputs
+                        $.ajax({
+                            type:'POST',
+                            url:'{{url::asset('/')}}Expediente/validarStatus',
+                            data:{'tipo':'resumen'},
+                            success:function(data){
+                                if(data == 5){
+                                    $('#form1 *').attr('readonly','readonly');
+                                    $('#form1 *').attr('disabled','disabled');                                    
+                                }
+                            }
+                        },10000);
+                    }
+                </script>		
 	</head>
-	<body class="index">
+        <body class="index" onload="inputs();">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -19,7 +35,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{URL::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>
@@ -32,17 +48,23 @@
 				<h2>Diagnostico General</h2>
 			
 				
-				<form method="post" action="{{url::asset('/')}}Expediente/Alta/Resumen">
+                                <form method="post" action="{{url::asset('/')}}Expediente/Alta/Resumen" id="form1">
 					<table border="0" align="center" class="default">
 						<tr>
 							<td><label>Diagnostico</label></td>
                                                         <td><textarea class="form" rows="3" cols="50" name="diagnostico">{{ $diagnostico }}</textarea></td>
 						</tr>
+						<tr>
+							<td class="Separador" colspan="2"></td>
+						</tr>
 
-						<!--tr>
-							<td><label>Observaciones</label></td>
-							<td><textarea class="form" rows="3" cols="50"></textarea></td>
-						</tr-->
+                                                <tr <?php if($observaprofe == NULL){echo "style='display: none;'";}else{echo "style='display: table-row;'";}?>>
+                                                            <td><label>Observaciones profesor:</label></td>
+                                                            <td><textarea class="tam" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)" disabled="true">{{$observaprofe}}</textarea>
+							</tr>
+							<tr>
+                                                            <td class="Separador" colspan="6"></td>
+							</tr>
 						<tr>
 							<td class="Separador" colspan="2"></td>
 						</tr>

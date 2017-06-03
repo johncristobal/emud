@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-                <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+                <link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
                 
@@ -26,7 +26,7 @@
                         if(c){
                             $.ajax({
                                 type:'POST',
-                                url:'{{URL::asset('/')}}Expediente/remove/'+id,
+                                url:'{{url::asset('/')}}Expediente/remove/'+id,
                                 data:{'id':id},
                                 success:function(data){
                                     alert('Expediente '+data+' eliminado del sistema.');
@@ -93,8 +93,8 @@
                             <td>{{ $value->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->nombre_paciente }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->fecha_inicio }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
-                            <td><img src="{{URL::asset('/')}}imagenes/ic_delete_white_24dp_2x.png" alt="Eliminar" onclick="eliminar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <!--td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
+                            <td><img src="{{url::asset('/')}}imagenes/ic_delete_white_24dp_2x.png" alt="Eliminar" onclick="eliminar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
                     @endforeach
                     <!--tr>

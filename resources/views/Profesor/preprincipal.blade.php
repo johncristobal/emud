@@ -21,12 +21,13 @@
                         //alert(id);
                         $.ajax({
                             type:'POST',
+                            //save id expedinete to load info from DB
                             url:'{{url::asset('/')}}Expediente/verprincipal/'+id,
                             data:{'id':id},
                             success:function(data){
                                 //alert(data);
                                 //alert('Expediente '+data+' eliminado del sistema.');
-                                window.location.href = '{{url::asset('/')}}Expediente/principal';
+                                window.location.href = '{{url::asset('/')}}Profesor/Expediente/principal';
                             }
                         },10000);
                     }
@@ -54,11 +55,34 @@
                             success:function(data){
                                 //alert(data);
                                 //alert('Expediente '+data+' eliminado del sistema.');
-                                window.location.href = '{{url::asset('/')}}Nota/notas';
+                                window.location.href = '{{url::asset('/')}}Profesor/Nota/notas';
                             }
                         },10000);
                     }
-                    
+
+                    function buscar() {
+                        // Declare variables 
+                        var input, filter, table, tr, td, i,td2,flag;
+                        flag = 0;
+                        input = document.getElementById("myInput");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("buscador");
+                        tr = table.getElementsByTagName("tr");
+
+                        // Loop through all table rows, and hide those who don't match the search query
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[0];   //get the first column
+                            td2 = tr[i].getElementsByTagName("td")[1];   //get the first column
+                            if (td){
+                                if ((td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td2.innerHTML.toUpperCase().indexOf(filter) > -1)) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }                            
+                        }
+                    }
+
                 </script>
                     
 	</head>
@@ -110,30 +134,44 @@
 
                                     <h2>Seleccione uno de sus expedientes</h2>
 
-                                                        <form method="" action="">
+                                    <h3>Búsqueda de expediente</h3>
+                                        <table class="table" width="100%">
+                                            <tr>
+                                                <td width="20%"></td>
+                                                <td width="60%">
+                                                    
+                                                <input type="text" id="myInput" onkeyup="buscar();" placeholder="Buscar folio expediente o alumno..." style="width:100%;">
+                                                </td>
+                                                <td width="20%"></td>
+                                            </tr>
+                                        </table>
+                
+                                    <form method="" action="">
                                         <br>
                                         <table class="table" id="buscador" width="100%">
                                         <thead>
                                         <th width="10%"><h3>Folio</h3></th>
-                                        <th width="25%"><h3>Paciente</h3></th>
+                                        <th width="15%"><h3>Alumno</h3></th>
+                                        <th width="15%"><h3>Paciente</h3></th>
                                         <th width="15%"><h3>Fecha</h3></th>
-                                        <th width="20%"><h3>Status</h3></th>
+                                        <th width="10%"><h3>Estatus</h3></th>
                                         <!--th width="5%"></th-->
                                         <th width="10%">Editar</th>
-                                        <th width="10%">Archivos</th>
+                                        <!--th width="10%">Archivos</th-->
                                         <th width="10%">Notas</th>
 
                                         </thead>
                                         <tbody>
                                         @foreach ($data as $value) 
-                                            <tr>  
+                                        <tr>  
                                                 <td>{{ $value->folio_expediente }}</td>
+                                                <td>{{ $value->name }} &nbsp; {{ $value->pat}}</td>
                                                 <td>{{ $value->nombre_paciente }} &nbsp; {{ $value->ap_paterno }}</td>
-                                                <td>{{ $value->fecha_inicio }}</td>                     
+                                                <td>{{ $value->fecha_inicio }}</td>                                        
                                                 <td><?php if($value->status == 1){echo "Por validar";} else if($value->status == 2){echo "Inactivos";} else if($value->status == 4){echo "Revisado";} else if($value->status == 5){echo "Validado";}?></td>                     
-                                                <!--td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
+                                                                                                <!--td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
                                                 <td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="verexpediente({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                                <td><img src="{{url::asset('/')}}imagenes/ic_image_white_24dp_2x.png" alt="Imagenes" onclick="verimagenes({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                <!--td><img src="{{URL::asset('/')}}imagenes/ic_image_white_24dp_2x.png" alt="Imagenes" onclick="verimagenes({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
                                                 <td><img src="{{url::asset('/')}}imagenes/ic_note_add_white_24dp_2x.png" alt="Notas" onclick="vernotas({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                             </tr>
                                         @endforeach
@@ -169,14 +207,9 @@
             </div>
 
             <!-- Scripts -->
-                    <script src="{{url::asset('/')}}assets/js/jquery.min.js"></script>
-                    <script src="{{url::asset('/')}}assets/js/jquery.dropotron.min.js"></script>
-                    <script src="{{url::asset('/')}}assets/js/jquery.scrolly.min.js"></script>
-                    <script src="{{url::asset('/')}}assets/js/jquery.scrollgress.min.js"></script>
-                    <script src="{{url::asset('/')}}assets/js/skel.min.js"></script>
-                    <script src="{{url::asset('/')}}assets/js/util.js"></script>
-                    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-                    <script src="{{url::asset('/')}}assets/js/main.js"></script>
+            <?php
+                echo $scrip;
+            ?>
 
 	</body>
 </html>

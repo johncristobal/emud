@@ -1,0 +1,43 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21-may-2017, 9:25:17
+    Author     : john.cristobal
+*/
+
+#banner select{
+    background-color: #aaa; 
+    border-color: #7d7a7a;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#banner input[type="date"]{
+    background-color: #aaa; 
+    border-color: #7d7a7a;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#banner input[type="text"]{
+    background-color: #aaa; 
+    border-color: #7d7a7a;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#banner checkbox{
+    background-color: #aaa; 
+    border-color: #7d7a7a;
+    border-radius: 5px;
+    color: #ffffff;
+}
+#banner textarea{
+    background-color: #aaa; 
+    border-color: #7d7a7a;
+    border-radius: 5px;
+    color: #ffffff;
+}

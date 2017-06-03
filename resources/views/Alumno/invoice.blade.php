@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-   <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/pdf.css">
+   <link rel="stylesheet" href="{{url::asset('/')}}assets/css/pdf.css">
   
     
     <title>Receta</title>
@@ -13,7 +13,7 @@
   <body>   
       <div id="cabecera_receta">
         <div id="logo">
-          <img src="{{URL::asset('/')}}imagenes/logo.jpg" width="100" height="100" >
+          <img src="{{url::asset('/')}}imagenes/logo.jpg" width="100" height="100" >
         </div>
 
         <div id="informacion">

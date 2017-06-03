@@ -10,7 +10,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-                <link rel="stylesheet" href="{{URL::asset('/')}}assets/css/main.css" /> 
+                <link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 	</head>
@@ -29,7 +29,7 @@
 				
 
 			
-	<form method="post" action="{{URL::asset('/')}}Expediente/Reasignar">
+	<form method="post" action="{{url::asset('/')}}Expediente/Reasignar">
 		<table  border ="0" class="form">
 			<tr>
                             <td>Seleccionar alumno</td>

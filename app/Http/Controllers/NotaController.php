@@ -111,6 +111,8 @@ class NotaController extends Controller
             $datos['referencia'] = $value->referencia;
             $datos['contraref'] = $value->contraref;
             $datos['nota'] = $value->nota;            
+            $datos['status'] = $value->status;            
+            $datos['observacionesprofe'] = $value->observa_profe;            
             
             array_push($arrayt,$datos);            
         }
@@ -129,6 +131,42 @@ class NotaController extends Controller
 
         return view ('Alumno.principalnotas',$finalr);        
     }
+
+/************************metodos de cada expediente profesor********************/
+/************************store/load lista con notas********************/
+    public function Notaprofesor(Request $request){
+        
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+
+        //get all the notas 
+        //show list con notass
+        //en cada una tendra su clic para ver detalles (usando la functino de Nota)
+        //Agregar boton para agregar nota jaja
+
+        $data = Notaevolucion::where('folio_expediente','=',$id)->get();
+        $expediente = Expediente::find($id);
+
+        $arrayt = array();
+        
+        foreach ($data as $value) {
+
+            $datos['fecha'] = explode(" ",$value->fecha)[0];
+            $datos['idnota'] = $value->id;
+            $datos['referencia'] = $value->referencia;
+            $datos['contraref'] = $value->contraref;
+            $datos['nota'] = $value->nota;            
+            $datos['status'] = $value->status;            
+            $datos['observacionesprofe'] = $value->observa_profe;            
+            
+            array_push($arrayt,$datos);            
+        }
+
+        $finalr['data'] = $arrayt;
+
+        return view ('Profesor.principalnotas',$finalr);        
+    }
+    
     
     /*
      * Guardar id en sesion y redirgir a principal vuew
@@ -200,6 +238,8 @@ class NotaController extends Controller
         $datos['referencia'] = $data->referencia;
         $datos['contraref'] = $data->contraref;
         $datos['nota'] = $data->nota;
+        $datos['status'] = $data->status;            
+        $datos['observacionesprofe'] = $data->observa_profe;            
                 
         $datos['nombre'] = $expediente->nombre_paciente;        
         $datos['edad'] = $expediente->edad;        
@@ -209,4 +249,112 @@ class NotaController extends Controller
         return view ('Alumno.Nota_evolucion_Deta',$datos);        
 
     }
+    
+/*********************/
+/*********************/    
+    public function vernotaprofesor(Request $request){
+                
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+        $idnota = $request->session()->get('idnota','0');
+
+        //get dat afrom table patologico...
+        //it's a valur with comas...
+        //lets make split and get data
+        //all in an array,,,like the one before
+        
+        $data = Notaevolucion::find($idnota);
+        $expediente = Expediente::find($id);
+
+        $datos['fecha'] = explode(" ",$data->fecha)[0];
+        $datos['referencia'] = $data->referencia;
+        $datos['contraref'] = $data->contraref;
+        $datos['nota'] = $data->nota;
+        $datos['status'] = $data->status;            
+        $datos['observacionesprofe'] = $data->observa_profe;
+                
+        $datos['nombre'] = $expediente->nombre_paciente;        
+        $datos['edad'] = $expediente->edad;        
+        $datos['genero'] = $expediente->genero;        
+        $datos['num'] = $expediente->folio_expediente; 
+        
+        return view ('Profesor.Nota_evolucion_Deta',$datos);        
+    }
+
+//guardo observaciones profe,...    
+    public function salvarobservaciones(Request $request){
+        
+        $observa = $request->input('observaprofe');
+        $idnota = $request->session()->get('idnota');
+                
+        $data = Notaevolucion::where('id','=',$idnota)->update(array(
+            "observa_profe" => $observa,
+            "status" => 4
+        ));
+
+        $id = $request->session()->get('idexpediente','0');
+
+        //get all the notas 
+        //show list con notass
+        //en cada una tendra su clic para ver detalles (usando la functino de Nota)
+        //Agregar boton para agregar nota jaja
+
+        $data = Notaevolucion::where('folio_expediente','=',$id)->get();
+        $expediente = Expediente::find($id);
+
+        $arrayt = array();
+        
+        foreach ($data as $value) {
+
+            $datos['fecha'] = explode(" ",$value->fecha)[0];
+            $datos['idnota'] = $value->id;
+            $datos['referencia'] = $value->referencia;
+            $datos['contraref'] = $value->contraref;
+            $datos['nota'] = $value->nota;            
+            $datos['status'] = $value->status;            
+            $datos['observacionesprofe'] = $value->observa_profe;
+            
+            array_push($arrayt,$datos);            
+        }
+
+        $finalr['data'] = $arrayt;
+        
+        return view ('Profesor.principalnotas',$finalr);                
+    }
+    
+    public function validarNotaF(){
+        
+        return view ('Profesor.firmarnota');                
+
+    }
+    
+    public function firmarguardar(Request $request){
+                
+        //recuperra ide expedinte
+        //$id = $request->session()->get('idexpediente','0');
+        $idnota = $request->session()->get('idnota');
+
+        $firma = $request->input('firma');
+        
+        $dats = Notaevolucion::where('id','=',$idnota)->update(array(
+            'status' => 5,
+            'firma_profe' => $firma
+        ));
+        
+        return 1;
+    }    
+    
+    public function fchecar(Request $request){
+        //recuperra ide expedinte
+        $id = $request->session()->get('idexpediente','0');
+        $tipo = $request->input('tipo');
+        $idnota = $request->session()->get('idnota');
+
+        //return $tipo;
+        if($tipo == "nota"){
+            $data = Notaevolucion::where('id','=',$idnota)->get();
+            return $data[0]->status;
+        }
+    }    
+    
 }

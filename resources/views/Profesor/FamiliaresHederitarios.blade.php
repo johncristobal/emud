@@ -6,11 +6,29 @@
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/inputsStyle.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		                <script type="text/javascript">
-                    function inputs(){
+                <script type="text/javascript">                    
+                    function validar(){
+                        var a = confirm('¿Desea validar '+arguments[0]+'?');
+                        var saved = arguments[0];
+                        var observa = document.getElementById("observaprofesor").value;
+                        if(a){
+                            //get id expediente y set status from direccion in 5
+                            $.ajax({
+                                type:'POST',
+                                url:'{{url::asset('/')}}Profesor/Expediente/validar/',
+                                data:{'tipo':arguments[1],'obs':observa},
+                                success:function(data){
+                                    alert(saved+' validado');
+                                    window.location.href = '{{url::asset('/')}}Profesor/Expediente/principal';
+                               }
+                            },10000);
+                        }
+                    }
                     
+                    function inputs(){                    
                         //get status from expediente...if equals to terminated, then block all the inputs
                         $.ajax({
                             type:'POST',
@@ -18,6 +36,7 @@
                             data:{'tipo':'familiares'},
                             success:function(data){
                                 if(data == 5){
+                                    //alert(data);
                                     $('#form1 *').attr('readonly','readonly');
                                     $('#form1 *').attr('disabled','disabled');                                    
                                 }
@@ -26,7 +45,7 @@
                     }
                 </script>
 	</head>
-        <body class="index" onload="inputs();">
+	<body class="index" onload="inputs();">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -35,7 +54,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}Profesor" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>
@@ -47,7 +66,7 @@
 						<!--Se edita desde esta zona-->
 					<h2>FAMILIARES HEREDITARIOS</h2>
 		
-                                        <form method="post" action="{{url::asset('/')}}Expediente/Alta/Heredofam" id="form1">
+                                        <form method="post" action="{{url::asset('/')}}Profesor/Expediente/Alta/Heredofam" id="form1">
 			<table align ="center" border="0" class="default">
 			<tr>
 				<td>Padecimientos</td>				
@@ -74,9 +93,9 @@
                                         <td>
                                             <?php                                                               
                                                 if((isset($value[$clave])) && ($value[$clave] != "")){ ?>
-                                                <input type="checkbox" name="<?= $key."$i"; ?>" checked="true">
+                                            <input type="checkbox" name="<?= $key."$i"; ?>" checked="true" disabled="true">
                                             <?php }else{ ?>
-                                                <input type="checkbox" name="<?= $key."$i"; ?>">
+                                            <input type="checkbox" name="<?= $key."$i"; ?>" disabled="true">
                                                 <?php                                                 
                                                     }
                                                 //}
@@ -92,22 +111,29 @@
                                 }
                             ?>
                         <tr>
-                                <td class="Separador" colspan="6"></td>
+                            <td class="Separador" colspan="3"></td>
                         </tr>
                         <tr>
-				<td>Observaciones</td><td colspan ="6"><textarea class="tam" name="observaciones" rows="6" cols="2" >{{ $observaciones }}</textarea></td>
-			</tr>
-                        <tr>
-                                <td class="Separador" colspan="6"></td>
-                        </tr>
-                        <tr <?php if(($observacionesprofe == NULL) || ($observacionesprofe == '')){echo "style='display: none;'";}else{echo "style='display: table-row;'";}?>>
-                                <td>Observaciones <br/>profesor:</td><td colspan ="6"><textarea class="tam" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)" disabled="true">{{ $observacionesprofe }}</textarea></td>
+                            <td>Observaciones</td><td colspan ="6"><textarea class="tam" name="observaciones" rows="6" cols="2" readonly="true">{{ $observaciones }}</textarea></td>
 			</tr>
                         <tr>
                                 <td class="Separador" colspan="6"></td>
                         </tr>
                         <tr>
-				<td colspan ="7"> <input type="submit" value="Guardar datos"></td>
+                            <td class="Separador" colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <td>Observaciones <br/>profesor:</td><td colspan ="6"><textarea class="tam" name="observaprofesor" id="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)">{{ $observacionesprofe }}</textarea></td>
+			</tr>
+                        <tr>
+                                <td class="Separador" colspan="6"></td>
+                        </tr>
+			<tr>
+				<td colspan ="7"> 
+                                    <input type="submit" value="Guardar observaciones">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="button" value="Validar sección" align="center" onclick="validar('Familiares hereditarios','familiares');">
+                                </td>
 			</tr>	
 
                         <!--tr>

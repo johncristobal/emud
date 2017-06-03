@@ -14,25 +14,47 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-                
-                <script type="text/javascript">
-                
-                    function vernota(id){
-                        
+
+                <script type="text/javascript">                
+                    
+                    function validarExp(){
+                        //alert('Validando');
                         $.ajax({
                             type:'POST',
-                            url:'{{url::asset('/')}}Notas/verprincipal/'+id,
-                            data:{'id':id},
+                            url:'{{url::asset('/')}}Profesor/Expediente/validar',
                             success:function(data){
-                                //alert(data);
-                                //alert('Expediente '+data+' eliminado del sistema.');
-                                window.location.href = '{{url::asset('/')}}Notas/principal';
+                                if(data != "si"){
+                                    alert("Aún no puede validar. "+data+" no validado");
+                                }else{
+                                    window.location.href = '{{url::asset('/')}}Profesor/Expediente/firmar';
+                                }
                             }
                         },10000);
                     }
-                
+                    
+                    function saveFirma(){
+                        
+                        var firma = document.getElementById("firma").value;
+                        
+                        if(firma == ""){
+                            alert('Coloque una firma para continuar');
+                        }else{
+                            var a = confirm('Desea validar el expediente');
+                            if (a){
+                                $.ajax({
+                                    type:'POST',
+                                    url:'{{url::asset('/')}}Profesor/Expediente/savesign',
+                                    data:{'firma':firma},
+                                    success: function(data){
+                                        alert('Reporte validado satisfactoriamente');
+                                        window.location.href = '{{url::asset('/')}}Profesor/Expediente/principal';
+                                    }
+                                },100000);
+                            }
+                        }
+                    }
                 </script>
-                
+
 	</head>
 	<body class="index">
                 <div id="page-wrapper">
@@ -49,13 +71,13 @@
                                             <li class="submenu">
                                                     <a href="#">Mi Perfil</a>
                                                     <ul>
-                                                            <li><a href="left-sidebar.html">Editar mi perfil</a></li>
+                                                            <li><a href="left-sidebar.html">Cambiar contraseña</a></li>
                                                     </ul>
                                             </li>	
 
 
-                                            <li><a href="{{url::asset('/')}}Expediente/todos" class="button">Ver expedientes</a></li>
-                                            <li><a href="{{url::asset('/')}}" class="button special">Cerrar Sesión</a></li>
+                                            <li><a href="{{url::asset('/')}}Expediente/todosProfesor" class="button">Ver expedientes</a></li>
+                                            <li><a href="{{url::asset('/')}}Usuarios/cerrarsesion" class="button special">Cerrar Sesión</a></li>
                                     </ul>
                             </nav>
                     </header>
@@ -78,34 +100,37 @@
 
                                     </div> -->
 
-                                    <h2>Notas de evolución </h2>
+                                    <h2>Validar expediente</h2>
 
                                     <div class="container">
+                                        <!--form method="post" action="{{url::asset('/')}}Profesor/Expediente/Alta/Mujeres"--> 
                                         
- 
-			<table class="table" id="buscador" width="100%">
-                            <thead>
-                            <th width="60%"><h3>Fecha</h3></th>
-                            <!--th width="5%"></th-->
-                            <th width="20%">Estatus</th>
-                            <th width="20%">Ver</th>
-
-                            </thead>
-                            <tbody>
-                            @foreach ($data as $value) 
+                                <table border="0" align="center" class="default" width="100%">
                                 <tr>
-                                    <td>{{ $value['fecha'] }}</td>
-                                    <td><?php if($value['status'] == 1){echo "Por revisar";} if($value['status'] == 2){echo "Inactivos";} if($value['status'] == 4){echo "Revisado";} if($value['status'] == 5){echo "Validado";}?></td>
-                                    <td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="vernota({{ $value['idnota'] }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                    <!--td><img src="{{url::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Eliminar" onclick="eliminarnota({{ $value['idnota'] }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
+                                    <td></br></td>
                                 </tr>
-                            @endforeach
-                            <!--tr>
-                                <td colspan="3" align="center"><input type="submit" value="Buscar"></td>
-                            </tr-->
-                            </tbody>
-                                    </table>
+                                <tr>
+                                    <td width="20%"></td>
+                                    <td width="60%">
+                                        Firma para validar expediente: &nbsp;&nbsp;&nbsp;
+                                        <!--a href="{{url::asset('/')}}Profesor/Expediente/FichaExp">
+                                            <img src="{{url::asset('/')}}imagenes/b7.png" heigth="50" width="300">
+                                        </a-->
+                                        <input type="text" name="firma" id="firma" placeholder="Firma">
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <button class="button" onclick="saveFirma();" value="Aceptar" name="Aceptar">Aceptar</button>
 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"></td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                </table>
+                    <!--/form-->
                         </div>
 
                             </section> 
@@ -136,7 +161,6 @@
             <?php
                 echo $scrip;
             ?>
-            
 
 	</body>
 </html>

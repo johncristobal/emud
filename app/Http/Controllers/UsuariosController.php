@@ -74,6 +74,29 @@ class UsuariosController extends Controller
                 if($correcto[0]->rol == "1"){
                     return view('indexAdmin');
                     //redirect();
+                }else if($correcto[0]->rol == "3"){
+
+                    //Aqui buscar todos los expedientes...
+                    //siendo el profeesor, tiene la posibilis de revisar todo
+                    //obtenesmo su id de la varible correcto
+                    $iduser = $correcto[0]->id;
+                    $request->session()->put('iduser',$iduser);
+                    $request->session()->put('profesor',"1");
+
+                    //recuoero datos del expeidnet con base al ide lde usuario...
+                    $facturasCliente = DB::table('expediente')
+                        ->join('alumnos','alumnos.id','=','expediente.id_alumno')
+                        ->join('usuarios','usuarios.id','=','alumnos.id_usuario')
+                	->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.ap_paterno','expediente.fecha_inicio','expediente.id','usuarios.name','usuarios.pat','expediente.status')
+                        //->where('alumnos.id_usuario', '=', $iduser)
+                        ->get();
+                    
+                    //$clinica = Expediente::where();
+                    $datos['data'] = $facturasCliente;
+
+                    //Launch view with exoeduente....solo los asociados al alumnos...no todos...
+                    return view('Profesor.preprincipal',$datos);
+                    //redirect();
                 }else{
                     //Aqui buscar los expediente unicamente del doc...
                     //obtenesmo su id de la varible correcto
@@ -83,7 +106,7 @@ class UsuariosController extends Controller
                     //recuoero datos del expeidnet con base al ide lde usuario...
                     $facturasCliente = DB::table('expediente')
                         ->join('alumnos','alumnos.id','=','expediente.id_alumno')
-                	->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.fecha_inicio','expediente.id')
+                	->select('expediente.folio_expediente','expediente.nombre_paciente','expediente.ap_paterno','expediente.fecha_inicio','expediente.id','expediente.status')
                         ->where('alumnos.id_usuario', '=', $iduser)
                         ->get();
                     

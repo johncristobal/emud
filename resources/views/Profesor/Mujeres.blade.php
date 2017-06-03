@@ -6,11 +6,30 @@
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/inputsStyle.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-                <script type="text/javascript">
-                    function inputs(){
+<script type="text/javascript">
                     
+                    function validar(){
+                        var a = confirm('¿Desea validar '+arguments[0]+'?');
+                        var saved = arguments[0];
+                        var observa = document.getElementById("observaprofesor").value;
+                        if(a){
+                            //get id expediente y set status from direccion in 5
+                            $.ajax({
+                                type:'POST',
+                                url:'{{url::asset('/')}}Profesor/Expediente/validar/',
+                                data:{'tipo':arguments[1],'obs':observa},
+                                success:function(data){
+                                    alert(saved+' validado');
+                                    window.location.href = '{{url::asset('/')}}Profesor/Expediente/principal';
+                               }
+                            },10000);
+                        }
+                    }
+                    
+                    function inputs(){                    
                         //get status from expediente...if equals to terminated, then block all the inputs
                         $.ajax({
                             type:'POST',
@@ -18,6 +37,7 @@
                             data:{'tipo':'mujeres'},
                             success:function(data){
                                 if(data == 5){
+                                    //alert(data);
                                     $('#form1 *').attr('readonly','readonly');
                                     $('#form1 *').attr('disabled','disabled');                                    
                                 }
@@ -26,7 +46,7 @@
                     }
                 </script>		
 	</head>
-        <body class="index" onload="inputs();">
+	<body class="index" onload="inputs();">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -35,7 +55,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}Profesor" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>
@@ -47,7 +67,7 @@
 						<!--Se edita desde esta zona-->
 					<h2>Informaci&oacute;n Mujeres</h2>
 				
-                                        <form method="post" action="{{url::asset('/')}}Expediente/Alta/Mujeres" id="form1">
+				<form method="post" action="{{url::asset('/')}}Profesor/Expediente/Alta/Mujeres" id="form1">
 					<table border="0" align="center" class="default">
 						<tr>
 							<td><label>Menarca</label></td>
@@ -59,7 +79,8 @@
                                                                 'menosde9'=>'Menos de 9',
                                                                 'entre9y15'=>'Entre 9 y 15 a&ntilde;os',
                                                                 'masde15'=>'Más de 15 a&ntilde;os'
-                                                                ],$menarca)
+                                                                ],$menarca,
+                                                                ['disabled' => 'true'])
                                                             !!}
                                                             
                                                             <!--select>
@@ -80,7 +101,8 @@
                                                                 'de0a3'=>'De 0 a 3',
                                                                 'de4a7'=>'De 4 a 7',
                                                                 'masde7'=>'Más de 7'
-                                                                ],$partos)
+                                                                ],$partos,
+                                                                ['disabled' => 'true'])
                                                             !!}
 
                                                             <!--select class="form">
@@ -101,7 +123,8 @@
                                                                 'menosde9'=>'Menos de 9',
                                                                 'entre9y15'=>'Entre 9 y 15 a&ntilde;os',
                                                                 'masde15'=>'Más de 15 a&ntilde;os'
-                                                                ],$abortos)
+                                                                ],$abortos,
+                                                                ['disabled' => 'true'])
                                                             !!}
 
                                                             <!--select class="form">
@@ -127,7 +150,8 @@
                                                                 'entre45y50'=>'Entre 45 y 50 a&ntilde;os',
                                                                 'entre50y55'=>'Entre 50 y 55 a&ntilde;os',
                                                                 'masde55'=>'Más de 55 a&ntilde;os'
-                                                                ],$meno)
+                                                                ],$meno,
+                                                                ['disabled' => 'true'])
                                                             !!}
 
                                                             <!--select class="form">
@@ -153,7 +177,8 @@
                                                                 'entre4y6'=>'Entre 4 y 6',
                                                                 'entre6y10'=>'Entre 6 y 10',
                                                                 'masde10'=>'Más de 10'
-                                                                ],$embarazos)
+                                                                ],$embarazos,
+                                                                ['disabled' => 'true'])
                                                             !!}
                                                             
                                                             <!--select class="form">
@@ -178,7 +203,8 @@
                                                                 '2'=>'1',
                                                                 '3'=>'2',
                                                                 'masde3'=>'Más de 3'
-                                                                ],$cesa)
+                                                                ],$cesa,
+                                                                ['disabled' => 'true'])
                                                             !!}                                                            
                                                             <!--select class="form">
 									<option>Selecciona</option>
@@ -197,7 +223,7 @@
 						
 						<tr>
 							<td><label>Fecha Ultimo Papanicolau</label></td>
-                                                        <td><input type="date" class="form" name="fechapapa" value="{{ $fechapapa }}"></td>
+                                                        <td><input type="date" class="form" name="fechapapa" value="{{ $fechapapa }}" disabled="true"></td>
 						</tr>
 
 						<tr>
@@ -206,7 +232,7 @@
 
 						<tr>
 							<td><label>Fecha de Ultima Menstruación</label></td>
-							<td><input type="date" class="form" name="fechames" value="{{ $fechames }}"></td>
+							<td><input type="date" class="form" name="fechames" value="{{ $fechames }}" disabled="true"></td>
 						</tr>
 						
 						<tr>
@@ -215,17 +241,16 @@
 
 						<tr>
 							<td><label>Observaciones</label></td>
-                                                        <td><textarea rows="3" cols="30" class="form" name="observaciones">{{ $observaciones }}</textarea></td>
+                                                        <td><textarea rows="3" cols="30" class="form" name="observaciones" disabled="true">{{ $observaciones }}</textarea></td>
 						</tr>
 						
 						<tr>
 							<td class="Separador" colspan="2"></td>
 						</tr>
                                                 
-                                                <tr <?php if($observaprofe == NULL){echo "style='display: none;'";}else{echo "style='display: table-row;'";}?>>
-
+                                                <tr>
                                                     <td><label>Observaciones profesor:</label></td>
-                                                    <td><textarea class="tam" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)" disabled="true">{{$observaprofe}}</textarea>
+                                                    <td><textarea class="tam" name="observaprofesor" id="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)">{{$observaprofe}}</textarea>
                                                 </tr>
 
                                                 <tr>
@@ -233,7 +258,11 @@
                                                 </tr>
 
 						<tr>
-							<td colspan="2"><input type="submit" value="Guardar datos"></td>
+							<td colspan="2">
+                                                            <input type="submit" value="Guardar observaciones">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <input type="button" value="Validar sección" align="center" onclick="validar('Mujeres','mujeres');">
+                                                        </td>
 						</tr>	
 					</table>
 

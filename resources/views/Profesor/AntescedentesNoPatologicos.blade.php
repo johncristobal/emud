@@ -6,28 +6,54 @@
 		
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/main.css" /> 
+		<link rel="stylesheet" href="{{url::asset('/')}}assets/css/inputsStyle.css" /> 
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-                <script type="text/javascript">
-                    function inputs(){
-                    
-                        //get status from expediente...if equals to terminated, then block all the inputs
-                        $.ajax({
-                            type:'POST',
-                            url:'{{url::asset('/')}}Expediente/validarStatus',
-                            data:{'tipo':'nopato'},
-                            success:function(data){
-                                if(data == 5){
-                                    $('#form1 *').attr('readonly','readonly');
-                                    $('#form1 *').attr('disabled','disabled');                                    
-                                }
-                            }
-                        },10000);
-                    }
-                </script>		
-	</head>
 
-        <body class="index" onload="inputs();">
+        <script>
+            function blockall(){
+                $('#form1 input').attr('readonly','readonly');
+                $('#form1 select').attr('disabled','disabled');
+                $('#form1 input').attr('disabled','disabled');                                
+            }
+            
+            function validar(){
+                var a = confirm('¿Desea validar '+arguments[0]+'?');
+                var saved = arguments[0];
+                var observa = document.getElementById("observaprofesor").value;
+                if(a){
+                    //get id expediente y set status from direccion in 5
+                    $.ajax({
+                        type:'POST',
+                        url:'{{url::asset('/')}}Profesor/Expediente/validar/',
+                        data:{'tipo':arguments[1],'obs':observa},
+                        success:function(data){
+                            alert(saved+' validado');
+                            window.location.href = '{{url::asset('/')}}Profesor/Expediente/principal';
+                       }
+                    },10000);
+                }
+            }
+                    
+            function inputs(){                    
+                //get status from expediente...if equals to terminated, then block all the inputs
+                $.ajax({
+                    type:'POST',
+                    url:'{{url::asset('/')}}Expediente/validarStatus',
+                    data:{'tipo':'nopato'},
+                    success:function(data){
+                        if(data == 5){
+                            //alert(data);
+                            $('#form2 *').attr('readonly','readonly');
+                            $('#form2 *').attr('disabled','disabled');                                    
+                        }
+                    }
+                },10000);
+            }
+        </script>
+        
+	</head>
+        <body class="index" onload="blockall(); inputs();">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -36,7 +62,7 @@
 					<nav id="nav">
 						<ul>
 							<li class="submenu">
-							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
+							<li><a href="{{url::asset('/')}}Profesor" class="button special">Menú</a></li>
 							
 						</ul>
 					</nav>
@@ -45,7 +71,7 @@
 			<!-- Banner -->
 				<section id="banner">
 					<div class="inner">
-                                            <form method="post" action="{{url::asset('/')}}Expediente/Alta/Nopatologico" id="form1">
+                                            <form method="post" action="{{url::asset('/')}}Profesor/Expediente/Alta/Nopatologico" id="form1">
 						<!--Se edita desde esta zona-->
 					<h2>Antecedentes Personales No Patológicos</h2>
                                         <fieldset>
@@ -463,32 +489,57 @@
 					
 				</table-->
                                 </fieldset>
-                                <fieldset>
+                                <!--fieldset>
                                     <table width='100%'>
                                         						
+						<tr>
+                                                    <td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2" name="observa" readonly="true">{{ $observacionesss }}</textarea></td>
+						</tr>
+                                   
+
                                         <tr>
-                                            <td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2" name="observa">{{ $observacionesss }}</textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="Separador" colspan="2"></td>
+						<td class="Separador" colspan="2"></td>
 					</tr>
                                                 <tr>
-                                                    <td class="Separador" colspan="3"></td>
-                                                </tr>
-                                                <tr <?php if(($observacionesprofe == NULL) || ($observacionesprofe == '')){echo "style='display: none;'";}else{echo "style='display: table-row;'";}?>>
                                                     <td>Observaciones <br/>profesor:</td>
-                                                    <td colspan ="2"><textarea class="tam" name="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)" disabled="true">{{ $observacionesprofe }}</textarea></td>
+                                                        <td colspan ="2"><textarea class="tam" name="observaprofesor" id="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)">{{ $observacionesprofe }}</textarea></td>
                                                 </tr>
                                                 <tr>
-                                                        <td class="Separador" colspan="6"></td>
+                                                    <td class="Separador" colspan="6"></td>
                                                 </tr>
-					<tr>
-                                            <td colspan="2"><input type="submit" value="Guardar datos"></td>
-					</tr>
+                                                <tr>
+                                                    <td colspan="2"><input type="submit" value="Guardar datos"></td>                                                
+                                                </tr>
                                     </table>
-                                </fieldset>
+                                </fieldset-->
 
                             </form>
+                            <form method="post" action="{{url::asset('/')}}Profesor/Expediente/Alta/NoPatologico" id="form2">
+                            <fieldset>
+                                    <table width='100%'>
+                                        <tr>
+                                            <td>Observaciones</td><td colspan="2"><textarea class="tam" rows="6" cols="2" name="observa" readonly="true">{{ $observacionesss }}</textarea></td>
+                                        </tr>
+                                        <tr>
+						<td class="Separador" colspan="2"></td>
+					</tr>
+                                        <tr>
+                                            <td>Observaciones <br/>profesor:</td>
+                                                <td colspan ="2"><textarea class="tam" name="observaprofesor" id="observaprofesor" rows="6" cols="3" style="background: rgba(100, 100, 100, 0.8)">{{ $observacionesprofe }}</textarea></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="Separador" colspan="6"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <input type="submit" value="Guardar datos">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="button" value="Validar sección" align="center" onclick="validar('Antecedentes no patológicos','nopato');">
+                                            </td>                                                
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </form>    
 				<!--Se ternina de editar aqui-->
 			</div> 
 		</section> 
