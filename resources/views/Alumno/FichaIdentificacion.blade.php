@@ -44,7 +44,7 @@
 				<section id="banner">
 						<!--Se edita desde esta zona-->
 					<h2>FICHA DE IDENTIFICACIÓN</h2>				
-                                            <form id="form1" method="post" action="{{url::asset('/')}}Expediente/Alta/Ficha">
+                                            <form id="form1" method="post" action="{{url::asset('/')}}Expediente/Alta/Ficha" enctype="multipart/form-data" accept-charset="UTF-8">
 						<table border="0" align="center" class="default">
 						<tr>
                                                     <td>Nombre de la instituci&oacute;n:</td> <td><input type="text" name="Institucion" value="{{ $clinica }}" hidden="true" readonly="true"></td>
@@ -63,7 +63,8 @@
 									
 						<tr>
                                                     <td>CURP:</td>	<td><input type="text" name="curp" value="{{ $expediente->curp }}"></td>	
-                                                    <td>Fotografia: </td> <td><input type="file" name="fotografia"></td> <!--it coould be an image-->	
+                                                    <td>Fotografia: </td> <td><input type="file" name="fotografia" value="{{ $expediente->fotopath }}"></td> <!--it coould be an image-->	
+                                                    <td <?php if($expediente->fotopath == null || $expediente->fotopath == ""){echo "style='display:none;'";}?>><img src="{{url::asset('/')}}{{ $expediente->fotopath }}" width="75px" height="100px" alt="Fotografía"></td> <!--it coould be an image-->	
 						</tr>
 
 						<tr>
@@ -72,7 +73,7 @@
 
 												
 						<tr>
-                                                    <td><label>Numero de Recibo de Expediente: </label></td>
+                                                    <td><label>Número de Recibo de Expediente: </label></td>
                                                     <td><input type="text" name="NumReciboExpediente" value="{{$expediente->recibo_pago}}"></td>	
 						</tr>
 
@@ -95,7 +96,7 @@
 						</tr>
 
 							<tr>
-								<td>Genero:</td> <td><select name="GeneroPaciente">
+								<td>Género:</td> <td><select name="GeneroPaciente">
                                                                 @if($expediente->genero == 'masculino')
                                                                         <option value="Masculino" selected="true">Masculino</option>
                                                                         <option value="Femenino">Femenino</option>
@@ -105,7 +106,7 @@
                                                                 @endif
                                                                 </select></td>	
                                                                 
-								<td>Ocupacion: </td> <td><input type="text" name="Ocupacion" value='{{$expediente->ocupacion}}'></td>
+								<td>Ocupación: </td> <td><input type="text" name="Ocupacion" value='{{$expediente->ocupacion}}'></td>
 								<td>Escolaridad: </td> 
                                                                 <td>
                                                                     {!! Form::select('escolaridad',[

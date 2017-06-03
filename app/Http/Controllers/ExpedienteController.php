@@ -512,7 +512,7 @@ class ExpedienteController extends Controller
         }else{
             return redirect("/");
         }
-    }    
+    }
 
 //******************get id alumno and get expedientes....    
     public function getData(Request $request){
@@ -634,9 +634,27 @@ class ExpedienteController extends Controller
         $expediente->fecha_nacimimiento = $fechanac;
         $expediente->edad = $eddda;
         $expediente->status = 1;
-        $expediente->fotopath = $foto;  //hay que ver que onda con la foto....        
-        $expediente->save();
         
+        //save foto
+        $file = $request->file('fotografia');
+        //Validar infor en caso de que haya error...
+        if($expediente->fotopath == null || $expediente->fotopath == ""){
+            if($file == null){
+                return redirect('Expediente/FichaExp');
+            }        
+        }
+        
+        if($file != null){
+            //read folder and get items..        
+            $destinationPath = $expediente->folio_expediente;
+            //$destinationPath = 'uploads';
+            $file->move($destinationPath,$file->getClientOriginalName());        
+
+            $expediente->fotopath = $destinationPath."/".$file->getClientOriginalName();  //hay que ver que onda con la foto....        
+        }
+
+        $expediente->save();
+                                
         //direccion
         $calle = $request->input('CalleNum'); 
         $numero = $request->input('numerohouse'); 
