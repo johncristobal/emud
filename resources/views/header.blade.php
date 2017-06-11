@@ -12,7 +12,7 @@
                             <a href="#">Usuarios</a>
                             <ul>
                                 <li><a href="{{URL::asset('/')}}Usuarios" target="_self">Dar de alta usuario</a></li>
-                                <li><a href="{{URL::asset('/')}}Editarusuario" target="_self">Editar información</a></li>
+                                <li><a href="{{URL::asset('/')}}Editarusuario" target="_self">Usuarios registrados</a></li>
                             </ul>
                         </li>
 

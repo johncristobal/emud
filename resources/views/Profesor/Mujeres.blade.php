@@ -19,7 +19,7 @@
                             //get id expediente y set status from direccion in 5
                             $.ajax({
                                 type:'POST',
-                                url:'{{url::asset('/')}}Profesor/Expediente/validar/',
+                                url:'{{url::asset('/')}}Profesor/Expediente/validar',
                                 data:{'tipo':arguments[1],'obs':observa},
                                 success:function(data){
                                     alert(saved+' validado');

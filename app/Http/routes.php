@@ -231,3 +231,25 @@ Route::get('Profesor/Nota/validarnota','NotaController@validarNotaF');
 Route::post('Profesor/Nota/savesignnota','NotaController@firmarguardar');
 
 Route::post('Profesor/Nota/validarStatus','NotaController@fchecar');
+
+//Ruta que nos lleva al odontograma
+Route::get('Expediente/HigOral/Odontograma', function() {
+    return view('Alumno.Odontograma');
+});
+//Ruta que nos lleva al profesor odontograma
+Route::get('Profesor/Expediente/HigOral/Odontograma', function() {
+    return view('Profesor.Odontograma');
+});
+
+//Ruta 	ue nos lleva a los tratamientos del odontograma
+Route::get('HistorialDental', function() {
+    return view('Alumno.historialDental');
+});
+
+//Ruta que muestra las estadisticas del diente seleccionado
+Route::get('Expediente/HigOral/HistorialDental/{id}', 'OdontogramaController@index');
+//Ruta que muestra las estadisticas del diente seleccionado
+Route::get('Profesor/Expediente/HigOral/HistorialDental/{id}', 'OdontogramaController@indexProfe');
+
+//Ruta que guarda el tratamiento de un diente;
+Route::post('Expediente/HigOral/Odont', 'OdontogramaController@create');

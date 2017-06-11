@@ -31,7 +31,7 @@
                     
                     $.ajax({
                         type:'post',
-                        url:'{{url::asset('/')}}Expediente/saveIdAlumno/',
+                        url:'{{url::asset('/')}}Expediente/saveIdAlumno',
                         data:{'id':idd},
                         success:function(data){
                             

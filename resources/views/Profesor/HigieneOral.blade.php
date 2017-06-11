@@ -33,7 +33,7 @@
                             //get id expediente y set status from direccion in 5
                             $.ajax({
                                 type:'POST',
-                                url:'{{url::asset('/')}}Profesor/Expediente/validar/',
+                                url:'{{url::asset('/')}}Profesor/Expediente/validar',
                                 data:{'tipo':arguments[1],'obs':observa},
                                 success:function(data){
                                     alert(saved+' validado');
@@ -75,7 +75,7 @@
 					
 					<nav id="nav">
 						<ul>
-							<li class="submenu">
+							<li><a href="{{url::asset('/')}}Profesor/Expediente/HigOral/Odontograma" class="button">Odontograma</a></li>
 							<li><a href="{{url::asset('/')}}Profesor" class="button special">Menú</a></li>
 							
 						</ul>
@@ -1061,7 +1061,8 @@
 				</tr>
 
 				<tr>
-					<td colspan="8">
+                                    <td colspan="2"></td>
+					<td>
                                             <input type="submit" value="Guardar observaciones">
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <input type="button" value="Validar sección" align="center" onclick="validar('Higiene bucal','bucal');">
@@ -1071,15 +1072,15 @@
                             </form>
                 </fieldset>
                         
-		<div id="Odontograma">
 	<!-- ODONTOGRAMA -->
+		<!--div id="Odontograma">
 	  		<div>
 				<fieldset>
 				<h3>ODONTOGRAMA</h3>
 	                    <Center><img src="{{url::asset('/')}}Imagenes/odontograma.png" width="700" height="500" alt=""/></Center>
 				</fieldset>
 			</div>
-		</div>	
+		</div-->	
 			
 				<!--Se ternina de editar aqui-->
 			</div> 

@@ -50,9 +50,8 @@
 					
 					<nav id="nav">
 						<ul>
-							<li class="submenu">
-							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>
-							
+							<li><a href="{{url::asset('/')}}Expediente/HigOral/Odontograma" class="button">Odontograma</a></li>
+							<li><a href="{{url::asset('/')}}Alumno" class="button special">Menú</a></li>							
 						</ul>
 					</nav>
 				</header>
@@ -1034,18 +1033,18 @@
 				</tr>
 			</table>
                 </fieldset>
-			</form>
+            </form>
 			
 
-		<div id="Odontograma">
 	<!-- ODONTOGRAMA -->
+		<!--div id="Odontograma">
 	  		<div>
 				<fieldset>
 				<h3>ODONTOGRAMA</h3>
 	                    <Center><img src="{{url::asset('/')}}Imagenes/odontograma.png" width="700" height="500" alt=""/></Center>
 				</fieldset>
 			</div>
-		</div>	
+		</div-->	
 			
 				<!--Se ternina de editar aqui-->
 			</div> 
@@ -1071,7 +1070,6 @@
 					</ul>
 
 				</footer>
-
 		</div>
 
 		<!-- Scripts -->

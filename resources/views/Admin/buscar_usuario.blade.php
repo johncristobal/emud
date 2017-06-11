@@ -72,7 +72,7 @@
                 <!-- Banner -->
                 <section id="banner">
                 <section id="principal">
-                <h3>Búsqueda de expediente</h3>
+                <h3>Usuarios registrados</h3>
                 <input type="text" id="myInput" onkeyup="buscar()" placeholder="Buscar nombre o correo..." style="width:100%;">
 				
 		<form method="" action="">
@@ -90,7 +90,7 @@
                         <tr>  
                             <td>{{ $value->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <td>{{ $value->correo }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td>{{ $value->rol }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td><?php if($value->rol == 1){echo "Administrador";}else if($value->rol == 2){echo "Alumno";}else if($value->rol == 3){echo "Profesor";}?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                             <!--td><img src="{{URL::asset('/')}}imagenes/ic_settings_white_24dp_2x.png" alt="Editar" onclick="actualizar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td-->
                             <td><img src="{{url::asset('/')}}imagenes/ic_delete_white_24dp_2x.png" alt="Eliminar" onclick="eliminar({{ $value->id }});"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         </tr>
